@@ -233,16 +233,16 @@
 
 			cout<< TTTTS1 << ", S1 , " << TTTTS0 << ", S0, 4 top " <<endl;
 			cout<<""<<endl;
-			cout<< (TTTTS1/TTTTS0)*100<<"%"<<", "<<Pt_Cut[NPt]<<" , "<<Jet_HT_Cut<<", "<<HadronTrig<<", NJet>=6 "<<ttttHad_Ch<<", 4 top " <<endl;
+			cout<< (TTTTS1/TTTTS0)*100<<"%"<<", "<<Pt_Cut[NPt]<<" , "<<Jet_HT_Cut<<", "<<HadronTrig<<" , "<<Form("NJet>=%d",NJet[NJ])<<" , "<<ttttHad_Ch<<", 4 top " <<endl;
 			cout<<""<<endl;
 			cout<<""<<endl;
 			cout<< ttbarS1 << ", S1 , " << ttbarS0 << ", S0 , ttbar " <<endl;
 			cout<<""<<endl;
-			cout<< (ttbarS1/ttbarS0)*100<<"%"<<", "<<Pt_Cut[NPt]<<" , "<<Jet_HT_Cut <<", "<<HadronTrig<<", NJet>=6 "<<ttbarHad_Ch <<", ttbar " <<endl;
+			cout<< (ttbarS1/ttbarS0)*100<<"%"<<", "<<Pt_Cut[NPt]<<" , "<<Jet_HT_Cut <<", "<<HadronTrig<<" , "<<Form("NJet>=%d",NJet[NJ])<<" , "<<ttbarHad_Ch <<", ttbar " <<endl;
 			cout<<""<<endl;
 			cout<<""<<endl;
 
-			cout<< (DYJetsS1/DYJetsS0)*100<<"%"<<", "<<Pt_Cut[NPt]<<" , "<<Jet_HT_Cut <<", "<<HadronTrig<<", NJet>=6 "<<", DYJets " <<endl;
+			cout<< (DYJetsS1/DYJetsS0)*100<<"%"<<", "<<Pt_Cut[NPt]<<" , "<<Jet_HT_Cut <<", "<<HadronTrig<<" , "<<Form("NJet>=%d",NJet[NJ])<<", DYJets " <<endl;
 			cout<<""<<endl;
 			cout<<""<<endl;
 
@@ -295,7 +295,7 @@
 			//lt3.DrawLatex(x_2,y_2,"Analysis");
 			lt4.DrawLatex(tx,ty,"13 TeV");
 			l_[NJ][NPt]->Draw();
-			canvIso_[NJ][NPt]->Print("Eff"+Pt_Cut[NPt]+"_"+Form("NJet>=%d",NJet[NJ])+".png");
+			//canvIso_[NJ][NPt]->Print("Eff"+Pt_Cut[NPt]+"_"+Form("NJet>=%d",NJet[NJ])+".png");
 		}
 	}
 	cout<<"13TeV"<<endl;
