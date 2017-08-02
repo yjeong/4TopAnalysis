@@ -128,7 +128,7 @@
 
 	for(int NJ = 0; NJ < NJetNum; NJ++){
 		for(int NPt = 0; NPt < JetPtCut; NPt++){
-			float nbin = 20;
+			float nbin = 28;
 			float xmin = 0;
 			float xmax = 2800;
 			float size = 0.8;
@@ -189,7 +189,7 @@
 			histo_ttbar[NJ][NPt]->SetLineColor(ttbar_c);
 			histo_ttbar[NJ][NPt]->SetMarkerColor(ttbar_c);
 			histo_ttbar[NJ][NPt]->GetYaxis()->SetTitle(Variable+Form(" Normalized Events"));
-			histo_ttbar[NJ][NPt]->GetXaxis()->SetTitle(Pt_Cut[NPt]);
+			histo_ttbar[NJ][NPt]->GetXaxis()->SetTitle(Jet_HT_Cut+Pt_Cut[NPt]);
 
 			histo_ttbar_gen[NJ][NPt] = new TH1F(Form("histo_ttbar_gen_%d_%d",NJ,NPt),Form(""),nbin,xmin,xmax);
 			//histo_ttbar_gen[NJ][NPt]->Sumw2();
@@ -246,11 +246,11 @@
 			cout<<""<<endl;
 			cout<<""<<endl;
 
-			cout<<"number of 4top expected events: "<< 0.0009103*10*BR*BR*BR*BR*(TTTTS1/TTTTS0) <<endl;
+			cout<<"number of 4top expected events: "<< 0.009103*10000*BR*BR*BR*BR*(TTTTS1/TTTTS0) <<endl;
 			cout<<""<<endl;
-			cout<<"number of ttbar expected events: "<< 832.76*10*BR*BR*(ttbarS1/ttbarS0) <<endl;
+			cout<<"number of ttbar expected events: "<< 832.76*10000*BR*BR*(ttbarS1/ttbarS0) <<endl;
 			cout<<""<<endl;
-			cout<<"number of DYJets expected events: "<< 6025.2*10*(DYJetsS1/DYJetsS0) <<endl;
+			cout<<"number of DYJets expected events: "<< 6025.2*10000*(DYJetsS1/DYJetsS0) <<endl;
 			cout<<""<<endl;
 			cout<<""<<endl;
 
@@ -277,7 +277,7 @@
 			//ymin = histo_TTTT[NJ][NPt]->GetMinimum();
 
 			histo_ttbar[NJ][NPt]->SetMaximum(ymax*1.1);
-			histo_ttbar[NJ][NPt]->SetMinimum(0.0001);
+			histo_ttbar[NJ][NPt]->SetMinimum(0.01);
 			histo_ttbar[NJ][NPt]->Draw();
 			histo_TTTT[NJ][NPt]->Draw("same");
 			histo_DYJets[NJ][NPt]->Draw("same");
