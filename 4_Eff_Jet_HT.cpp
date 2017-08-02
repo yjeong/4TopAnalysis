@@ -277,7 +277,7 @@
 			//ymin = histo_TTTT[NJ][NPt]->GetMinimum();
 
 			histo_ttbar[NJ][NPt]->SetMaximum(ymax*1.1);
-			histo_ttbar[NJ][NPt]->SetMinimum(0.0001);
+			histo_ttbar[NJ][NPt]->SetMinimum(0.01);
 			histo_ttbar[NJ][NPt]->Draw();
 			histo_TTTT[NJ][NPt]->Draw("same");
 			histo_DYJets[NJ][NPt]->Draw("same");
