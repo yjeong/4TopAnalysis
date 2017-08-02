@@ -54,28 +54,30 @@
 	float ly2 = 0.78;
 
 	const int JetPtCut = 5;//Pt Cut number
-	const int NJetNum = 2;//Variable
+	const int NJetNum = 3;//Variable
 	//int NJet[] = {4,5,6,7,8,9,10};
-	int NJet[] = {6};
+	int NJet[] = {0,2,6};
 
 	TH1F *histo_TTTT[JetPtCut][NJetNum];
 	TH1F *histo_ttbar[JetPtCut][NJetNum];
+	TH1F *histo_DYJets[JetPtCut][NJetNum];
 
 	TCanvas *canvIso_[JetPtCut][NJetNum];
 	TLegend *l_[JetPtCut][NJetNum];
 
 	TString PATH_samples;
-	PATH_samples = "/cms/scratch/yjeong/CMSSW_8_0_26_patch1/src/CATTools/CatAnalyzer/prod/";//KISTI
+	PATH_samples = "/xrootd/store/user/yjeong/TTTTFullHadronic/";//KISTI
 
 	TString Cut_base_text;
 	TString ttttHad_Ch;
 	TString ttbarHad_Ch;
+	TString dyHad_Ch;
 
 	//TString Variable[] = {"Jet_Pt[0]","Jet_Pt[1]", "Jet_Pt[2]","Jet_Pt[3]","Jet_Pt[4]","Jet_Pt[5]","Jet_Pt[6]","Jet_Pt[7]","Jet_Pt[8]","Jet_Pt[9]"};
 	TString Variable;
 	Variable = "Jet_HT";
 
-	TString Pt_Cut[] = {"Jet_Pt[0] > 100 &&","Jet_Pt[0] > 100 && Jet_Pt[1] > 80 &&","Jet_Pt[0] > 100 && Jet_Pt[1] > 80 && Jet_Pt[2] > 70 &&","Jet_Pt[0] > 100 && Jet_Pt[1] > 80 && Jet_Pt[2] > 70 && Jet_Pt[3] > 60 &&",""};
+	TString Pt_Cut[] = {"Jet_HT > 400 && Jet_Pt[0] > 90 &&","Jet_HT > 400 && Jet_Pt[0] > 90 && Jet_Pt[1] > 70 &&","Jet_HT > 400 && Jet_Pt[0] > 90 && Jet_Pt[1] > 70 && Jet_Pt[2] > 60 &&","Jet_HT > 400 && Jet_Pt[0] > 90 && Jet_Pt[1] > 70 && Jet_Pt[2] > 60 && Jet_Pt[3] > 50 &&",""};
 
 	//Cut_base = "fabs(Muon_Pt) > 30 && fabs(Muon_Eta) < 2.4 &&";
 	ttttHad_Ch = "nq==8 && nl==0 &&";
@@ -88,9 +90,11 @@
 
 	TFile h1(PATH_samples+"vallot.root");
 	TFile h2(PATH_samples+"TT_powheg.root");
+	TFile h3(PATH_samples+"DYJets.root");
 
 	TTree *FourTop = (TTree*)h1.Get("TopTree/events");
 	TTree *TTbar = (TTree*)h2.Get("TopTree/events");
+	TTree *DYJets = (TTree*)h3.Get("TopTree/events");
 
 	TH1F *hNJet;
 	hNJet = new TH1F(Form("hNJet"),Form(""),16,0,16);
@@ -115,12 +119,13 @@
 
 	for(int NJ = 0; NJ < NJetNum; NJ++){
 		for(int NPt = 0; NPt < JetPtCut; NPt++){
-			float nbin = 20;
+			float nbin = 28;
 			float xmin = 0;
 			float xmax = 2800;
 			float size = 0.8;
 			int TTTT_c = 4;
 			int ttbar_c = 2;
+			int dyjets_c = 1;
 
 			canvIso_[NJ][NPt] = new TCanvas();
 			//canvIso_[NJ][NPt]->SetLogy();
@@ -143,6 +148,13 @@
 			l_[NJ][NPt]->SetTextFont(2);
 			l_[NJ][NPt]->SetTextSize(0.035);
 
+			histo_DYJets[NJ][NPt] = new TH1F(Form("histo_DYJets_%d_%d",NJ,NPt),Form(""),nbin,xmin,xmax);
+			DYJets->Project(Form("histo_DYJets_%d_%d",NJ,NPt),Variable,Pt_Cut[NPt]+HadronTrig+Form("NJet>=%d",NJet[NJ]));
+			histo_DYJets[NJ][NPt]->SetLineWidth(2);
+			l_[NJ][NPt]->AddEntry(histo_DYJets[NJ][NPt],"DYJets "+Variable, "lp");
+			histo_DYJets[NJ][NPt]->SetLineColor(dyjets_c);
+			histo_DYJets[NJ][NPt]->SetMarkerColor(dyjets_c);
+
 			histo_TTTT[NJ][NPt] = new TH1F(Form("histo_TTTT_%d_%d",NJ,NPt),Form(""),nbin,xmin,xmax);
 			FourTop->Project(Form("histo_TTTT_%d_%d",NJ,NPt),Variable,ttttHad_Ch+Pt_Cut[NPt]+HadronTrig+Form("NJet>=%d",NJet[NJ]));
 			histo_TTTT[NJ][NPt]->SetLineWidth(2);
@@ -157,19 +169,22 @@
 			l_[NJ][NPt]->AddEntry(histo_ttbar[NJ][NPt],"ttbar "+Variable, "lp");
 			histo_ttbar[NJ][NPt]->SetLineColor(ttbar_c);
 			histo_ttbar[NJ][NPt]->SetMarkerColor(ttbar_c);
-			histo_ttbar[NJ][NPt]->GetYaxis()->SetTitle(Variable+Form(" Events"));
+			histo_ttbar[NJ][NPt]->GetYaxis()->SetTitle(Variable+" Normalized Events");
 			histo_ttbar[NJ][NPt]->GetXaxis()->SetTitle(Pt_Cut[NPt]);
 
 			double nev_1 = histo_TTTT[NJ][NPt]->GetEntries();
 			histo_TTTT[NJ][NPt]->Scale(1/nev_1);
 			double nev_2 = histo_ttbar[NJ][NPt]->GetEntries();
 			histo_ttbar[NJ][NPt]->Scale(1/nev_2);
+			double nev_3 = histo_DYJets[NJ][NPt]->GetEntries();
+			histo_DYJets[NJ][NPt]->Scale(1/nev_3);
 
 			double ymax = 0;
 			ymax = histo_ttbar[NJ][NPt]->GetMaximum();
 
 			histo_ttbar[NJ][NPt]->SetMaximum(ymax*1.1);
 			histo_ttbar[NJ][NPt]->Draw();
+			histo_DYJets[NJ][NPt]->Draw("same");
 			histo_TTTT[NJ][NPt]->Draw("same");
 
 			lt1.DrawLatex(xx_1,yy_1,Cut_base_text+HadronTrig+Form("NJet>=%d",NJet[NJ]));

@@ -77,7 +77,6 @@
 	//Cut_base = "fabs(Muon_Pt) > 30 && fabs(Muon_Eta) < 2.4 && ";
 	ttttHad_Ch = "nq==8 && nl==0 && ";
 	ttbarHad_Ch = "nq==4 && nl==0 && ";
-	dyHad_Ch = "nq==0 && nl==0 && ";
 
 	Cut_base_text = "Hadronic Ch, ";
 
