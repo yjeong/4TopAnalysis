@@ -254,9 +254,9 @@
 			cout<<""<<endl;
 			cout<<""<<endl;
 
-			histo_TTTT[NJ][NPt]->Scale(0.009103*10*BR*BR*BR*BR/TTTTS0);
-			histo_ttbar[NJ][NPt]->Scale(832.76*10*BR*BR/ttbarS0);
-			histo_DYJets[NJ][NPt]->Scale(6025.2*10/DYJetsS0);
+			histo_TTTT[NJ][NPt]->Scale(0.009103*10000*BR*BR*BR*BR/TTTTS0);
+			histo_ttbar[NJ][NPt]->Scale(832.76*10000*BR*BR/ttbarS0);
+			histo_DYJets[NJ][NPt]->Scale(6025.2*10000/DYJetsS0);
 
 			cout<<"4top yield Integral(1,nbin+1): "<<histo_TTTT[NJ][NPt]->Integral(1,nbin+1)<<endl;
 			//cout<<"4top yield Integral: "<<histo_TTTT[NJ][NPt]->Integral()<<endl;
@@ -277,7 +277,7 @@
 			//ymin = histo_TTTT[NJ][NPt]->GetMinimum();
 
 			histo_ttbar[NJ][NPt]->SetMaximum(ymax*1.1);
-			histo_ttbar[NJ][NPt]->SetMinimum(0.01);
+			histo_ttbar[NJ][NPt]->SetMinimum(0.0001);
 			histo_ttbar[NJ][NPt]->Draw();
 			histo_TTTT[NJ][NPt]->Draw("same");
 			histo_DYJets[NJ][NPt]->Draw("same");
