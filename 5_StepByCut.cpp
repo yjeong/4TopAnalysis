@@ -53,7 +53,7 @@
 	float lx2 = 0.94;
 	float ly2 = 0.78;
 
-	const int JetStepCut = 6;//Pt Cut number
+	const int JetStepCut = 7;//Pt Cut number
 	const int NJetNum = 1;//Variable
 	//int NJet[] = {4,5,6,7,8,9,10};
 	int NJet[] = {6};
@@ -95,9 +95,9 @@
 	//TString Pt_Cut[] = {" && Jet_Pt[0] > 80 &&","&& Jet_Pt[0] > 80 && Jet_Pt[1] > 70 &&","&& Jet_Pt[0] > 80 && Jet_Pt[1] > 70 && Jet_Pt[2] > 60 &&","&& Jet_Pt[0] > 80 && Jet_Pt[1] > 70 && Jet_Pt[2] > 60 && Jet_Pt[3] > 50 &&"};
 	//TString Pt_Cut[] = {"&& Jet_Pt[0] > 80 && Jet_Pt[1] > 70 && Jet_Pt[2] > 60 && Jet_Pt[3] > 50 &&"};
 
-	TString Step_Cut[] = {"","Jet_Pt[0] > 80 && Jet_Pt[1] > 70 && Jet_Pt[2] > 60 && Jet_Pt[3] > 50 &&","Jet_Pt[0] > 80 && Jet_Pt[1] > 70 && Jet_Pt[2] > 60 && Jet_Pt[3] > 50 &&  IsHadronTrig==1 &&"," Jet_Pt[0] > 80 && Jet_Pt[1] > 70 && Jet_Pt[2] > 60 && Jet_Pt[3] > 50 &&  IsHadronTrig==1 && Jet_HT > 500 &&","Jet_Pt[0] > 80 && Jet_Pt[1] > 70 && Jet_Pt[2] > 60 && Jet_Pt[3] > 50 && IsHadronTrig==1 && Jet_HT > 500 && (NLooseMuon+NLooseElectron)==0 &&","Jet_Pt[0] > 80 && Jet_Pt[1] > 70 && Jet_Pt[2] > 60 && Jet_Pt[3] > 50 && IsHadronTrig==1 && Jet_HT > 500 && (NLooseMuon+NLooseElectron)==0 && NBJet >= 2 &&"};
+	TString Step_Cut[] = {"","Jet_Pt[0] > 80 && Jet_Pt[1] > 70 && Jet_Pt[2] > 60 && Jet_Pt[3] > 50 &&","Jet_Pt[0] > 80 && Jet_Pt[1] > 70 && Jet_Pt[2] > 60 && Jet_Pt[3] > 50 &&  IsHadronTrig==1 &&"," Jet_Pt[0] > 80 && Jet_Pt[1] > 70 && Jet_Pt[2] > 60 && Jet_Pt[3] > 50 &&  IsHadronTrig==1 && Jet_HT > 500 &&","Jet_Pt[0] > 80 && Jet_Pt[1] > 70 && Jet_Pt[2] > 60 && Jet_Pt[3] > 50 && IsHadronTrig==1 && Jet_HT > 500 && (NLooseMuon+NLooseElectron)==0 &&","Jet_Pt[0] > 80 && Jet_Pt[1] > 70 && Jet_Pt[2] > 60 && Jet_Pt[3] > 50 && IsHadronTrig==1 && Jet_HT > 500 && (NLooseMuon+NLooseElectron)==0 && NBJet >= 2 &&","Jet_Pt[0] > 80 && Jet_Pt[1] > 70 && Jet_Pt[2] > 60 && Jet_Pt[3] > 50 && IsHadronTrig==1 && Jet_HT > 500 && (NLooseMuon+NLooseElectron)==0 && NBJet >= 2 && NBJet >= 3 &&"};
 
-	TString Step_txt[] = {", step1, ",", step2, ",", step3, ",", step4, ",", step5, ",", step6, "};
+	TString Step_txt[] = {", step1, ",", step2, ",", step3, ",", step4, ",", step5, ",", step6, ",", step7, "};
 
 	//Cut_base = "fabs(Muon_Pt) > 30 && fabs(Muon_Eta) < 2.4 &&";
 	ttttHad_Ch = "nq==8 && nl==0 ";
