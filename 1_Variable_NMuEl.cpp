@@ -77,7 +77,7 @@
 
 	//TString Variable[] = {"Muon_Pt","Electron_Pt","Jet_Pt","Muon_Eta","Electron_Eta","Jet_Eta"};
 	//TString Variable[] = {"Jet_Pt[0]","Jet_Pt[1]", "Jet_Pt[2]","Jet_Pt[3]","Jet_Pt[4]","Jet_Pt[5]","Jet_Pt[6]","Jet_Pt[7]","Jet_Pt[8]","Jet_Pt[9]","Jet_Pt[10]"};
-	TString Variable[] = {"NJet","NBJet"};
+	TString Variable[] = {"NLooseMuon+NLooseElectron","NMuon+NElectron"};
 
 	//Cut_base = "fabs(Muon_Pt) > 30 && fabs(Muon_Eta) < 2.4 ";
 	ttttHad_Ch = "nl==0 && nq==8";
@@ -137,11 +137,11 @@
 	  cout << "Branching Ratio : " << TTTT_had/TTTT_tot << " , " << tt_had/tt_tot << endl;
 	  */
 	for(int NT = 0; NT < TreeVar; NT++){
-		float nbin[] = {18,8};
+		float nbin = 6;
 		//float xmin[] = {0,0,0,-3,-3,-3};//
 		//float xmax[] = {350,350,350,3,3,3};//
 		float xmin = 0;//
-		float xmax[] = {18,8};//
+		float xmax = 6;//
 		float size = 0.8;
 		int TTTT_c = 4;
 		int ttbar_c = 2;
@@ -171,28 +171,28 @@
 		l_[NT]->SetTextSize(0.035);
 
 		//histo_TTTT[NT] = new TH1F(Form("histo_TTTT_%d",NT),Form(""),nbin,xmin[NT],xmax[NT]);
-		histo_TTTT[NT] = new TH1F(Form("histo_TTTT_%d",NT),Form(""),nbin[NT],xmin,xmax[NT]);
+		histo_TTTT[NT] = new TH1F(Form("histo_TTTT_%d",NT),Form(""),nbin,xmin,xmax);
 		FourTop->Project(Form("histo_TTTT_%d",NT),Variable[NT]);
 		histo_TTTT[NT]->SetLineWidth(2);
-		l_[NT]->AddEntry(histo_TTTT[NT],"TTTT "+Cut_base_text, "lp");
+		l_[NT]->AddEntry(histo_TTTT[NT],"TTTT", "lp");
 		histo_TTTT[NT]->SetLineColor(TTTT_c);
 		histo_TTTT[NT]->SetMarkerColor(TTTT_c);
 		//histo_TTTT[NT]->GetYaxis()->SetTitle("Events");
 		//histo_TTTT[NT]->GetXaxis()->SetTitle(Variable[NT]);
 		//------------------------------------------------------------------
 
-		histo_DYJets[NT] = new TH1F(Form("histo_DYJets_%d",NT),Form(""),nbin[NT],xmin,xmax[NT]);
+		histo_DYJets[NT] = new TH1F(Form("histo_DYJets_%d",NT),Form(""),nbin,xmin,xmax);
 		DYJets->Project(Form("histo_DYJets_%d",NT),Variable[NT]);
 		histo_DYJets[NT]->SetLineWidth(2);
-		l_[NT]->AddEntry(histo_DYJets[NT],"DYJets "+Cut_base_text, "lp");
+		l_[NT]->AddEntry(histo_DYJets[NT],"DYJets", "lp");
 		histo_DYJets[NT]->SetLineColor(dyjets_c);
 		histo_DYJets[NT]->SetMarkerColor(dyjets_c);
 		//---------------------------------------------------------------------
 
-		histo_WJets[NT] = new TH1F(Form("histo_WJets_%d",NT),Form(""),nbin[NT],xmin,xmax[NT]);
+		histo_WJets[NT] = new TH1F(Form("histo_WJets_%d",NT),Form(""),nbin,xmin,xmax);
 		WJets->Project(Form("histo_WJets_%d",NT),Variable[NT]);
 		histo_WJets[NT]->SetLineWidth(2);
-		l_[NT]->AddEntry(histo_WJets[NT],"WJets "+Cut_base_text, "lp");
+		l_[NT]->AddEntry(histo_WJets[NT],"WJets", "lp");
 		histo_WJets[NT]->SetLineColor(wjets_c);
 		histo_WJets[NT]->SetMarkerColor(wjets_c);
 		histo_WJets[NT]->GetYaxis()->SetTitle("Events");
@@ -200,7 +200,7 @@
 
 		//---------------------------------------------------------------------
 		//histo_ttbar[NT] = new TH1F(Form("histo_ttbar_%d",NT),Form(""),nbin,xmin[NT],xmax[NT]);
-		histo_ttbar[NT] = new TH1F(Form("histo_ttbar_%d",NT),Form(""),nbin[NT],xmin,xmax[NT]);
+		histo_ttbar[NT] = new TH1F(Form("histo_ttbar_%d",NT),Form(""),nbin,xmin,xmax);
 		TTbar->Project(Form("histo_ttbar_%d",NT),Variable[NT]);
 		histo_ttbar[NT]->SetLineWidth(2);
 		l_[NT]->AddEntry(histo_ttbar[NT],"ttbar "+Cut_base_text, "lp");
@@ -209,43 +209,14 @@
 		//histo_ttbar[NT]->GetYaxis()->SetTitle("Events");
 		//histo_ttbar[NT]->GetXaxis()->SetTitle(Variable[NT]);
 
-
-		cout<<"original DYJets Entries: "<<histo_DYJets[NT]->GetEntries()<<endl;
-		cout<<"original WJets Entries: "<<histo_WJets[NT]->GetEntries()<<endl;
-		cout<<"original ttbar Entries: "<<histo_ttbar[NT]->GetEntries()<<endl;
-		cout<<"original TTTT Entries: "<<histo_TTTT[NT]->GetEntries()<<endl;
-		cout<<""<<endl;
-		cout<<"origin-1st bin: "<<histo_DYJets[NT]->GetBinContent(1)<<endl;
-		cout<<"origin-2nd bin: "<<histo_DYJets[NT]->GetBinContent(2)<<endl;
-		cout<<""<<endl;
-		cout<<"DYJets yield Integral(1,nbin+1): "<<histo_DYJets[NT]->Integral(1,nbin[NT]+1)<<endl;
-		cout<<"WJets yield Integral(1,nbin+1): "<<histo_WJets[NT]->Integral(1,nbin[NT]+1)<<endl;
-		cout<<"ttbar yield Integral(1,nbin+1): "<<histo_ttbar[NT]->Integral(1,nbin[NT]+1)<<endl;
-		cout<<"TTTT yield Integral(1,nbin+1): "<<histo_TTTT[NT]->Integral(1,nbin[NT]+1)<<endl;
-
-		cout<<""<<endl;
-		cout<<""<<endl;
-		double nev_1 = histo_TTTT[NT]->Integral(1,nbin[NT]+1);
+		double nev_1 = histo_TTTT[NT]->Integral(1,nbin+1);
 		histo_TTTT[NT]->Scale(1/nev_1);
-		double nev_2 = histo_ttbar[NT]->Integral(1,nbin[NT]+1);
+		double nev_2 = histo_ttbar[NT]->Integral(1,nbin+1);
 		histo_ttbar[NT]->Scale(1/nev_2);
-		double nev_3 = histo_DYJets[NT]->Integral(1,nbin[NT]+1);
+		double nev_3 = histo_DYJets[NT]->Integral(1,nbin+1);
 		histo_DYJets[NT]->Scale(1/nev_3);
-		double nev_4 = histo_WJets[NT]->Integral(1,nbin[NT]+1);
+		double nev_4 = histo_WJets[NT]->Integral(1,nbin+1);
 		histo_WJets[NT]->Scale(1/nev_4);
-
-		cout<<"Norm-1st bin: "<<histo_DYJets[NT]->GetBinContent(1)<<endl;
-		cout<<"Norm-2nd bin: "<<histo_DYJets[NT]->GetBinContent(2)<<endl;
-		cout<<""<<endl;
-		cout<<"DYJets yield Integral(1,nbin+1): "<<histo_DYJets[NT]->Integral(1,nbin[NT]+1)<<endl;
-		cout<<"WJets yield Integral(1,nbin+1): "<<histo_WJets[NT]->Integral(1,nbin[NT]+1)<<endl;
-		cout<<"ttbar yield Integral(1,nbin+1): "<<histo_ttbar[NT]->Integral(1,nbin[NT]+1)<<endl;
-		cout<<"TTTT yield Integral(1,nbin+1): "<<histo_TTTT[NT]->Integral(1,nbin[NT]+1)<<endl;
-		cout<<""<<endl;
-		cout<<"DYJets yield GetSum: "<<histo_DYJets[NT]->GetSum()<<endl;
-		cout<<"WJets yield GetSum: "<<histo_WJets[NT]->GetSum()<<endl;
-		cout<<"ttbar yield GetSum: "<<histo_ttbar[NT]->GetSum()<<endl;
-		cout<<"TTTT yield GetSum: "<<histo_TTTT[NT]->GetSum()<<endl;
 
 		double ymax = 0;
 		ymax = histo_WJets[NT]->GetMaximum();
@@ -255,6 +226,7 @@
 		histo_TTTT[NT]->Draw("same");
 		histo_DYJets[NT]->Draw("same");
 		histo_ttbar[NT]->Draw("same");
+
 		lt1.DrawLatex(xx_1,yy_1,Form("4top ")+Cut_base_text);
 		lt2.DrawLatex(x_1,y_1,"CMS");
 		lt3.DrawLatex(x_2,y_2,"Preliminary");
