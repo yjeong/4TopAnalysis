@@ -284,22 +284,22 @@
 			//ttbar->all hadrons = BR^2.
 
 			cout<<""<<endl;
-			cout<<""<<endl;
 			cout<<"---------------------------------------"<<Step_txt[NStep]<<"-------------------------------------"<<endl;
+			cout<<"lumi : "<<lumi<<" pb-1"<<endl;
 			cout<<""<<endl;
 			cout<<""<<endl;
-			cout<< (TTTTS1/TTTTS0)*100<<"%"<<" , "<<Form("NJet>=%d",NJet[NJ])<<" , "<<ttttHad_Ch<<", 4 top " <<endl;
+			cout<< (TTTTS1/TTTTS0)*100<<"%"<<" , "<<ttttHad_Ch<<", 4 top " <<endl;
 			cout<<""<<endl;
 			cout<<""<<endl;
-			cout<< (ttbarS1/ttbarS0)*100<<"%"<<", "<<Form("NJet>=%d",NJet[NJ])<<" , "<<ttbarHad_Ch <<", ttbar " <<endl;
-			cout<<""<<endl;
-			cout<<""<<endl;
-
-			cout<< (DYJetsS1/DYJetsS0)*100<<"%"<<", "<<Form("NJet>=%d",NJet[NJ])<<", DYJets " <<endl;
+			cout<< (ttbarS1/ttbarS0)*100<<"%"<<", "<<ttbarHad_Ch <<", ttbar " <<endl;
 			cout<<""<<endl;
 			cout<<""<<endl;
 
-			cout<< (WJetsS1/WJetsS0)*100<<"%"<<", "<<Form("NJet>=%d",NJet[NJ])<<", WJets " <<endl;
+			cout<< (DYJetsS1/DYJetsS0)*100<<"%"<<", "<<", DYJets " <<endl;
+			cout<<""<<endl;
+			cout<<""<<endl;
+
+			cout<< (WJetsS1/WJetsS0)*100<<"%"<<", "<<", WJets " <<endl;
 			cout<<""<<endl;
 			cout<<""<<endl;
 
