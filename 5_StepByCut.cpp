@@ -53,7 +53,7 @@
 	float lx2 = 0.94;
 	float ly2 = 0.78;
 
-	const int JetStepCut = 7;//Pt Cut number
+	const int JetStepCut = 6;//Pt Cut number
 	const int NJetNum = 1;//Variable
 	//int NJet[] = {4,5,6,7,8,9,10};
 	int NJet[] = {6};
@@ -95,7 +95,7 @@
 	//TString Pt_Cut[] = {" && Jet_Pt[0] > 80 &&","&& Jet_Pt[0] > 80 && Jet_Pt[1] > 70 &&","&& Jet_Pt[0] > 80 && Jet_Pt[1] > 70 && Jet_Pt[2] > 60 &&","&& Jet_Pt[0] > 80 && Jet_Pt[1] > 70 && Jet_Pt[2] > 60 && Jet_Pt[3] > 50 &&"};
 	//TString Pt_Cut[] = {"&& Jet_Pt[0] > 80 && Jet_Pt[1] > 70 && Jet_Pt[2] > 60 && Jet_Pt[3] > 50 &&"};
 
-	TString Step_Cut[] = {"","Jet_Pt[0] > 80 && Jet_Pt[1] > 70 && Jet_Pt[2] > 60 && Jet_Pt[3] > 50 &&","Jet_Pt[0] > 80 && Jet_Pt[1] > 70 && Jet_Pt[2] > 60 && Jet_Pt[3] > 50 &&  IsHadronTrig==1 &&"," Jet_Pt[0] > 80 && Jet_Pt[1] > 70 && Jet_Pt[2] > 60 && Jet_Pt[3] > 50 &&  IsHadronTrig==1 && Jet_HT > 500 &&","Jet_Pt[0] > 80 && Jet_Pt[1] > 70 && Jet_Pt[2] > 60 && Jet_Pt[3] > 50 && IsHadronTrig==1 && Jet_HT > 500 && (NLooseMuon+NLooseElectron)==0 &&","Jet_Pt[0] > 80 && Jet_Pt[1] > 70 && Jet_Pt[2] > 60 && Jet_Pt[3] > 50 && IsHadronTrig==1 && Jet_HT > 500 && (NLooseMuon+NLooseElectron)==0 && NBJet >= 2 &&","Jet_Pt[0] > 80 && Jet_Pt[1] > 70 && Jet_Pt[2] > 60 && Jet_Pt[3] > 50 && IsHadronTrig==1 && Jet_HT > 500 && (NLooseMuon+NLooseElectron)==0 && NBJet >= 2 && NBJet >= 3 &&"};
+	TString Step_Cut[] = {"","IsHadronTrig == 1 &&","Jet_Pt[0] > 80 && Jet_Pt[1] > 70 && Jet_Pt[2] > 60 && Jet_Pt[3] > 50 &&  IsHadronTrig==1 &&","Jet_Pt[0] > 80 && Jet_Pt[1] > 70 && Jet_Pt[2] > 60 && Jet_Pt[3] > 50 &&  IsHadronTrig==1 && Jet_HT > 500 &&","Jet_Pt[0] > 80 && Jet_Pt[1] > 70 && Jet_Pt[2] > 60 && Jet_Pt[3] > 50 && IsHadronTrig==1 && Jet_HT > 500 && (NLooseMuon+NLooseElectron)==0 &&","Jet_Pt[0] > 80 && Jet_Pt[1] > 70 && Jet_Pt[2] > 60 && Jet_Pt[3] > 50 && IsHadronTrig==1 && Jet_HT > 500 && (NLooseMuon+NLooseElectron)==0 && NBJet >= 3 &&"};
 
 	TString Step_txt[] = {", step1, ",", step2, ",", step3, ",", step4, ",", step5, ",", step6, ",", step7, "};
 
@@ -145,6 +145,20 @@
 	cout<< hNJet->GetBinContent(15) << endl;
 	cout<< hNJet->GetBinContent(16) << endl;
 
+	cout<<"---------------step definition------------------"<<endl;
+	cout<<""<<endl;
+	cout<<"step1: NJet >= 6 && NBJet >= 2"<<endl;
+	cout<<""<<endl;
+	cout<<"step2: HsdronTrid==1"<<endl;
+	cout<<""<<endl;
+	cout<<"step3: Pt[0] > 80 && Pt[1] > 70 && Pt[2] > 60 && Pt[3] > 50"<<endl;
+	cout<<""<<endl;
+	cout<<"step4: Jet_H_{t} > 500" <<endl;
+	cout<<""<<endl;
+	cout<<"step5: (NLooseMuon+NLooseElectron)==0"<<endl;
+	cout<<""<<endl;
+	cout<<"step6: NBJet >= 3"<<endl;
+
 	for(int NJ = 0; NJ < NJetNum; NJ++){
 		for(int NStep = 0; NStep < JetStepCut; NStep++){
 			float nbin = 60;
@@ -178,7 +192,7 @@
 			l_[NJ][NStep]->SetTextSize(0.035);
 
 			histo_DYJets[NJ][NStep] = new TH1F(Form("histo_DYJets_%d_%d",NJ,NStep),Form(""),nbin,xmin,xmax);
-			DYJets->Project(Form("histo_DYJets_%d_%d",NJ,NStep),Variable,Step_Cut[NStep]+Form("NJet>=%d",NJet[NJ]));
+			DYJets->Project(Form("histo_DYJets_%d_%d",NJ,NStep),Variable,Step_Cut[NStep]+Form("NBJet>=2 && NJet>=%d",NJet[NJ]));
 			histo_DYJets[NJ][NStep]->SetLineWidth(2);
 			histo_DYJets[NJ][NStep]->SetLineColor(dyjets_c);
 			//histo_DYJets[NJ][NStep]->SetFillColor(dyjets_c);
@@ -190,7 +204,7 @@
 			//---------------------------------------
 
 			histo_WJets[NJ][NStep] = new TH1F(Form("histo_WJets_%d_%d",NJ,NStep),Form(""),nbin,xmin,xmax);
-			WJets->Project(Form("histo_WJets_%d_%d",NJ,NStep),Variable,Step_Cut[NStep]+Form("NJet>=%d",NJet[NJ]));
+			WJets->Project(Form("histo_WJets_%d_%d",NJ,NStep),Variable,Step_Cut[NStep]+Form("NBJet>=2 && NJet>=%d",NJet[NJ]));
 			histo_WJets[NJ][NStep]->SetLineWidth(2);
 			histo_WJets[NJ][NStep]->SetLineColor(wjets_c);
 			//histo_WJets[NJ][NStep]->SetFillColor(wjets_c);
@@ -203,7 +217,7 @@
 			//-------------------------------------
 			histo_TTTT[NJ][NStep] = new TH1F(Form("histo_TTTT_%d_%d",NJ,NStep),Form(""),nbin,xmin,xmax);
 			//histo_TTTT[NJ][NStep]->Sumw2();
-			FourTop->Project(Form("histo_TTTT_%d_%d",NJ,NStep),Variable,ttttHad_Ch+NBJet+Step_Cut[NStep]+Form("NJet>=%d",NJet[NJ]));
+			FourTop->Project(Form("histo_TTTT_%d_%d",NJ,NStep),Variable,ttttHad_Ch+NBJet+Step_Cut[NStep]+Form("NBJet>=2 && NJet>=%d",NJet[NJ]));
 			histo_TTTT[NJ][NStep]->SetLineWidth(2);
 			l_[NJ][NStep]->AddEntry(histo_TTTT[NJ][NStep],"TTTT ", "lp");
 			histo_TTTT[NJ][NStep]->SetLineColor(TTTT_c);
@@ -217,7 +231,7 @@
 			//-----------------------------------
 			histo_ttbar[NJ][NStep] = new TH1F(Form("histo_ttbar_%d_%d",NJ,NStep),Form("Jet_HT"),nbin,xmin,xmax);
 			//histo_ttbar[NJ][NStep]->Sumw2();
-			TTbar->Project(Form("histo_ttbar_%d_%d",NJ,NStep),Variable,ttbarHad_Ch+NBJet+Step_Cut[NStep]+Form("NJet>=%d",NJet[NJ]));
+			TTbar->Project(Form("histo_ttbar_%d_%d",NJ,NStep),Variable,ttbarHad_Ch+NBJet+Step_Cut[NStep]+Form("NBJet>=2 && NJet>=%d",NJet[NJ]));
 			histo_ttbar[NJ][NStep]->SetLineWidth(2);
 			l_[NJ][NStep]->AddEntry(histo_ttbar[NJ][NStep],"ttbar ", "lp");
 			histo_ttbar[NJ][NStep]->SetLineColor(ttbar_c);
@@ -272,6 +286,7 @@
 			cout<<""<<endl;
 			cout<<""<<endl;
 			cout<<"---------------------------------------"<<Step_txt[NStep]<<"-------------------------------------"<<endl;
+			cout<<""<<endl;
 			cout<<""<<endl;
 			cout<< (TTTTS1/TTTTS0)*100<<"%"<<" , "<<Form("NJet>=%d",NJet[NJ])<<" , "<<ttttHad_Ch<<", 4 top " <<endl;
 			cout<<""<<endl;
