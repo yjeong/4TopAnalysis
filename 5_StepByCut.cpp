@@ -324,7 +324,7 @@
 			//double ymin = 0;
 			//ymin = histo_TTTT[NJ][NStep]->GetMinimum();
 
-			histo_ttbar[NJ][NStep]->SetMaximum(ymax*10);
+			histo_ttbar[NJ][NStep]->SetMaximum(ymax*100);
 			histo_ttbar[NJ][NStep]->SetMinimum(0.01);
 			histo_ttbar[NJ][NStep]->Draw();
 			histo_DYJets[NJ][NStep]->Draw("same");
