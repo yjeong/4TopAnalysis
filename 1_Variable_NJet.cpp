@@ -142,11 +142,11 @@
 	  */
 	for(int NC = 0; NC < CutVar; NC++){
 		for(int NT = 0; NT < TreeVar; NT++){
-			float nbin[] = {24,14};
+			float nbin[] = {18,8};
 			//float xmin[] = {0,0,0,-3,-3,-3};//
 			//float xmax[] = {350,350,350,3,3,3};//
 			float xmin = 0;//
-			float xmax[] = {24,14};//
+			float xmax[] = {18,8};//
 			float size = 0.8;
 			int TTTT_c = 4;
 			int ttbar_c = 2;
