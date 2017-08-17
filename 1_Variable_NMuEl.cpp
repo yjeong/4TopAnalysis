@@ -60,7 +60,7 @@
 	TH1F *histo_ttbar[TreeVar][CutVar];
 	TH1F *histo_DYJets[TreeVar][CutVar];
 	TH1F *histo_WJets[TreeVar][CutVar];
-	TH1F *histo_TT_Jets_aMC[TreeVar][CutVar];
+	TH1F *histo_TTJets_aMC[TreeVar][CutVar];
 
 	/*TH1F *histo_BR_4Top;
 	  TH1F *histo_BR_ttbar;
@@ -92,13 +92,13 @@
 	TFile h2(PATH_samples+"TT_powheg.root");
 	TFile h3(PATH_samples+"DYJets.root");
 	TFile h4(PATH_samples+"WJets.root");
-	TFile h5(PATH_samples+"TT_Jets_aMC.root");
+	TFile h5(PATH_samples+"TTJets_aMC.root");
 
 	TTree *FourTop = (TTree*)h1.Get("TopTree/events");
 	TTree *TTbar = (TTree*)h2.Get("TopTree/events");
 	TTree *DYJets = (TTree*)h3.Get("TopTree/events");
 	TTree *WJets = (TTree*)h4.Get("TopTree/events");
-	TTree *TT_Jets_aMC = (TTree*)h5.Get("TopTree/events");
+	TTree *TTJets_aMC = (TTree*)h5.Get("TopTree/events");
 
 	TH1F *hNJet;
 	hNJet = new TH1F(Form("hNJet"),Form(""),16,1,16);
@@ -207,14 +207,14 @@
 			histo_WJets[NT][NC]->GetXaxis()->SetTitle(Variable[NT]);
 			//---------------------------------------------------------------------
 
-			histo_TT_Jets_aMC[NT][NC] = new TH1F(Form("histo_TT_Jets_aMC_%d_%d",NT,NC),Form(""),nbin[NT],xmin,xmax[NT]);
-			TT_Jets_aMC->Project(Form("histo_TT_Jets_aMC_%d_%d",NT,NC),Variable[NT],Cut_base[NC]);
-			histo_TT_Jets_aMC[NT][NC]->SetLineWidth(2);
-			l_[NT][NC]->AddEntry(histo_TT_Jets_aMC[NT][NC],"TT_Jets_aMC", "lp");
-			histo_TT_Jets_aMC[NT][NC]->SetLineColor(ttjets_c);
-			histo_TT_Jets_aMC[NT][NC]->SetMarkerColor(ttjets_c);
-			histo_TT_Jets_aMC[NT][NC]->GetYaxis()->SetTitle("Events");
-			histo_TT_Jets_aMC[NT][NC]->GetXaxis()->SetTitle(Variable[NT]);
+			histo_TTJets_aMC[NT][NC] = new TH1F(Form("histo_TTJets_aMC_%d_%d",NT,NC),Form(""),nbin[NT],xmin,xmax[NT]);
+			TTJets_aMC->Project(Form("histo_TTJets_aMC_%d_%d",NT,NC),Variable[NT],Cut_base[NC]);
+			histo_TTJets_aMC[NT][NC]->SetLineWidth(2);
+			l_[NT][NC]->AddEntry(histo_TTJets_aMC[NT][NC],"TTJets_aMC", "lp");
+			histo_TTJets_aMC[NT][NC]->SetLineColor(ttjets_c);
+			histo_TTJets_aMC[NT][NC]->SetMarkerColor(ttjets_c);
+			histo_TTJets_aMC[NT][NC]->GetYaxis()->SetTitle("Events");
+			histo_TTJets_aMC[NT][NC]->GetXaxis()->SetTitle(Variable[NT]);
 
 
 			//---------------------------------------------------------------------
@@ -229,11 +229,11 @@
 			histo_ttbar[NT][NC]->GetXaxis()->SetTitle(Variable[NT]);
 
 
-			cout<<"original DYJets Entries: "<<histo_DYJets[NT][NC]->GetEntries()<<endl;
+/*			cout<<"original DYJets Entries: "<<histo_DYJets[NT][NC]->GetEntries()<<endl;
 			cout<<"original WJets Entries: "<<histo_WJets[NT][NC]->GetEntries()<<endl;
-			cout<<"original TT_Jets_aMC Entries: "<<histo_TT_Jets_aMC[NT][NC]->GetEntries()<<endl;
+			cout<<"original TTJets_aMC Entries: "<<histo_TTJets_aMC[NT][NC]->GetEntries()<<endl;
 			cout<<"original ttbar Entries: "<<histo_ttbar[NT][NC]->GetEntries()<<endl;
-			cout<<"original TTTT Entries: "<<histo_TTTT[NT][NC]->GetEntries()<<endl;
+			cout<<"original TTTT Entries: "<<histo_TTTT[NT][NC]->GetEntries()<<endl;*/
 			/*cout<<""<<endl;
 			  cout<<"origin-1st bin: "<<histo_DYJets[NT][NC]->GetBinContent(1)<<endl;
 			  cout<<"origin-2nd bin: "<<histo_DYJets[NT][NC]->GetBinContent(2)<<endl;
@@ -241,10 +241,10 @@
 			  cout<<"DYJets yield Integral(1,nbin+1): "<<histo_DYJets[NT][NC]->Integral(1,nbin[NT][NC]+1)<<endl;
 			  cout<<"WJets yield Integral(1,nbin+1): "<<histo_WJets[NT][NC]->Integral(1,nbin[NT][NC]+1)<<endl;
 			  cout<<"ttbar yield Integral(1,nbin+1): "<<histo_ttbar[NT][NC]->Integral(1,nbin[NT][NC]+1)<<endl;
-			  cout<<"TTTT yield Integral(1,nbin+1): "<<histo_TTTT[NT][NC]->Integral(1,nbin[NT][NC]+1)<<endl;*/
+			  cout<<"TTTT yield Integral(1,nbin+1): "<<histo_TTTT[NT][NC]->Integral(1,nbin[NT][NC]+1)<<endl;
 
 			cout<<""<<endl;
-			cout<<""<<endl;
+			cout<<""<<endl;*/
 			double nev_1 = histo_TTTT[NT][NC]->GetEntries();
 			histo_TTTT[NT][NC]->Scale(1/nev_1);
 			double nev_2 = histo_ttbar[NT][NC]->GetEntries();
@@ -253,8 +253,8 @@
 			histo_DYJets[NT][NC]->Scale(1/nev_3);
 			double nev_4 = histo_WJets[NT][NC]->GetEntries();
 			histo_WJets[NT][NC]->Scale(1/nev_4);
-			double nev_5 = histo_TT_Jets_aMC[NT][NC]->GetEntries();
-			histo_TT_Jets_aMC[NT][NC]->Scale(1/nev_5);
+			double nev_5 = histo_TTJets_aMC[NT][NC]->GetEntries();
+			histo_TTJets_aMC[NT][NC]->Scale(1/nev_5);
 
 			/*double scale_1 = 1/(histo_TTTT[NT][NC]->Integral(1,nbin[NT][NC]+1));
 			  histo_TTTT[NT][NC]->Scale(scale_1);
@@ -285,7 +285,7 @@
 			histo_ttbar[NT][NC]->SetMaximum(ymax*1.2);
 			histo_ttbar[NT][NC]->Draw();
 			histo_TTTT[NT][NC]->Draw("same");
-			histo_TT_Jets_aMC[NT][NC]->Draw("same");
+			histo_TTJets_aMC[NT][NC]->Draw("same");
 			histo_WJets[NT][NC]->Draw("same");
 			histo_DYJets[NT][NC]->Draw("same");
 
