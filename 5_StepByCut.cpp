@@ -82,8 +82,8 @@
 	TLegend *l_[JetStepCut][NJetNum];
 
 	TString PATH_samples;
-	//PATH_samples = "/xrootd/store/user/yjeong/4TopFullHadronic/";//KISTI
-	PATH_samples = "/cms/scratch/yjeong/";//KISTI
+	PATH_samples = "/xrootd/store/user/yjeong/4TopFullHadronic/";//KISTI
+	//PATH_samples = "/cms/scratch/yjeong/";//KISTI
 
 	TString Cut_base_text;
 	TString tttt_Ch_Cut;
@@ -108,11 +108,11 @@
 	Step_5 = "(NLooseMuon+NLooseElectron)==0 &&";
 
 	TString Step_6;
-	Step_6 = "NBJet>=3 &&";
+	Step_6 = "NJet >= 10 && NBJet>=3 &&";
 
 	TString Step_Cut[] = {Step_1, Step_2+Step_1, Step_2+Step_3+Step_1, Step_2+Step_3+Step_4+Step_1, Step_2+Step_3+Step_4+Step_5+Step_1, Step_2+Step_3+Step_4+Step_5+Step_6+Step_1};
 
-	TString Step_txt[] = {", step1, ",", step2, ",", step3, ",", step4, ",", step5, ",", step6, "};
+	TString Step_txt[] = {"step1","step2","step3","step4","step5","step6"};
 
 	ttttHad_Ch = "nq==8 && nl==0 ";
 	ttbarHad_Ch = "nq==4 && nl==0 ";
@@ -408,7 +408,7 @@
 			//lt3.DrawLatex(x_2,y_2,"Preliminary");
 			lt4.DrawLatex(tx,ty,"13 TeV");
 			l_[NJ][NStep]->Draw();
-			canvIso_[NJ][NStep]->Print("Eff"+Step_txt[NStep]+"_"+Form("NJet>=%d",NJet[NJ])+".png");
+			canvIso_[NJ][NStep]->Print(Step_txt[NStep]+"_"+Form("NJet>=%d",NJet[NJ])+".png");
 		}
 	}
 	cout<<"13TeV"<<endl;

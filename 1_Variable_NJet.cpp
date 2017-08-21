@@ -72,8 +72,8 @@
 	TLegend *l_[TreeVar][CutVar];
 
 	TString PATH_samples;
-	//PATH_samples = "/xrootd/store/user/yjeong/4TopFullHadronic/";//KISTI
-	PATH_samples = "/cms/scratch/yjeong/";//KISTI
+	PATH_samples = "/xrootd/store/user/yjeong/4TopFullHadronic/";//KISTI
+	//PATH_samples = "/cms/scratch/yjeong/";//KISTI
 
 	TString Cut_base_text;
 	TString Ch_Cut;
@@ -83,7 +83,7 @@
 	//TString Variable[] = {"Jet_Pt[0]","Jet_Pt[1]", "Jet_Pt[2]","Jet_Pt[3]","Jet_Pt[4]","Jet_Pt[5]","Jet_Pt[6]","Jet_Pt[7]","Jet_Pt[8]","Jet_Pt[9]","Jet_Pt[10]"};
 	TString Variable[] = {"NJet","NBJet"};
 
-	TString Cut_base[] = {" Jet_Pt[0] > 80 && Jet_Pt[1] > 70 && Jet_Pt[2] > 60 && Jet_Pt[3] > 50 ","IsHadronTrig==1"};
+	TString Cut_base[] = {"IsHadronTrig==1",""," Jet_Pt[0] > 80 && Jet_Pt[1] > 70 && Jet_Pt[2] > 60 && Jet_Pt[3] > 50 "};
 	ttttHad_Ch = "nl==0 && nq==8";
 	ttbarHad_Ch = "nl==0 && nq==4";
 	nlep_Ch = "nl==0";
