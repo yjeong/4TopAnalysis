@@ -156,7 +156,7 @@
 	cout<< hNJet->GetBinContent(15) << endl;
 	cout<< hNJet->GetBinContent(16) << endl;
 
-	cout<<"---------------step definition------------------"<<endl;
+	cout<<"--------------------step definition-------------------"<<endl;
 	cout<<""<<endl;
 	cout<<"step1: "<<Step_1<<endl;
 	cout<<""<<endl;
