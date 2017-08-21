@@ -54,7 +54,7 @@
 	float ly2 = 0.78;
 
 	const int TreeVar = 4;//Variable number
-	const int CutVar = 2;
+	const int CutVar = 1;
 
 	TH1F *histo_TTTT[TreeVar][CutVar];
 	TH1F *histo_ttbar[TreeVar][CutVar];
@@ -297,15 +297,22 @@
 			  cout<<"TTTT yield GetSum: "<<histo_TTTT[NT][NC]->GetSum()<<endl;*/
 
 			double ymax = 0;
-			ymax = histo_WJets[NT][NC]->GetMaximum();
-
-			histo_WJets[NT][NC]->SetMaximum(ymax*1.2);
-			histo_WJets[NT][NC]->Draw();
+			if(NT<=2){
+				ymax = histo_DYJets[NT][NC]->GetMaximum();
+				histo_DYJets[NT][NC]->SetMaximum(ymax*1.2);
+				histo_DYJets[NT][NC]->Draw();
+				histo_QCDPt80to120EM[NT][NC]->Draw("same");
+			}
+			if(NT>=2){
+				ymax = histo_QCDPt80to120EM[NT][NC]->GetMaximum();
+				histo_QCDPt80to120EM[NT][NC]->SetMaximum(ymax*1.2);
+				histo_QCDPt80to120EM[NT][NC]->Draw();
+				histo_DYJets[NT][NC]->Draw("same");
+			}
 			histo_TTTT[NT][NC]->Draw("same");
-			histo_QCDPt80to120EM[NT][NC]->Draw("same");
 			histo_QCDPt80to120Mu[NT][NC]->Draw("same");
+			histo_WJets[NT][NC]->Draw("same");
 			histo_ttbar[NT][NC]->Draw("same");
-			histo_DYJets[NT][NC]->Draw("same");
 
 			lt1.DrawLatex(xx_1,yy_1,Form("4top ")+Cut_base_text);
 			//lt2.DrawLatex(x_1,y_1,"CMS");
