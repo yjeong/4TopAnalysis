@@ -303,7 +303,7 @@
 				histo_DYJets[NT][NC]->Draw();
 				histo_QCDPt80to120EM[NT][NC]->Draw("same");
 			}
-			if(NT>=2){
+			if(NT>=3){
 				ymax = histo_QCDPt80to120EM[NT][NC]->GetMaximum();
 				histo_QCDPt80to120EM[NT][NC]->SetMaximum(ymax*1.2);
 				histo_QCDPt80to120EM[NT][NC]->Draw();
