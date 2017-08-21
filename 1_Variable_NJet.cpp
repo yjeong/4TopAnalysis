@@ -258,8 +258,7 @@
 			  cout<<"ttbar yield Integral(1,nbin+1): "<<histo_ttbar[NT][NC]->Integral(1,nbin[NT][NC]+1)<<endl;
 			  cout<<"TTTT yield Integral(1,nbin+1): "<<histo_TTTT[NT][NC]->Integral(1,nbin[NT][NC]+1)<<endl;*/
 
-			cout<<""<<endl;
-			cout<<""<<endl;
+
 			double nev_1 = histo_TTTT[NT][NC]->GetEntries();
 			histo_TTTT[NT][NC]->Scale(1/nev_1);
 			double nev_2 = histo_ttbar[NT][NC]->GetEntries();
@@ -297,13 +296,13 @@
 			  cout<<"TTTT yield GetSum: "<<histo_TTTT[NT][NC]->GetSum()<<endl;*/
 
 			double ymax = 0;
-			if(NT<=2){
+			if(NT<=1){
 				ymax = histo_DYJets[NT][NC]->GetMaximum();
 				histo_DYJets[NT][NC]->SetMaximum(ymax*1.2);
 				histo_DYJets[NT][NC]->Draw();
 				histo_QCDPt80to120EM[NT][NC]->Draw("same");
 			}
-			if(NT>=3){
+			if(NT>=2){
 				ymax = histo_QCDPt80to120EM[NT][NC]->GetMaximum();
 				histo_QCDPt80to120EM[NT][NC]->SetMaximum(ymax*1.2);
 				histo_QCDPt80to120EM[NT][NC]->Draw();
@@ -320,6 +319,8 @@
 			lt4.DrawLatex(tx,ty,"13 TeV");
 			l_[NT][NC]->Draw();
 			canvIso_[NT][NC]->Print(Variable[NT]+Cut_base[NC]+".png");
+			cout<<""<<endl;
+			cout<<""<<endl;
 		}
 	}
 	cout<<"13TeV"<<endl;
