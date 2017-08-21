@@ -53,7 +53,7 @@
 	float lx2 = 0.94;
 	float ly2 = 0.78;
 
-	const int JetStepCut = 6;//Pt Cut number
+	const int JetStepCut = 6;//Step Num
 	const int NJetNum = 1;//Variable
 	//int NJet[] = {4,5,6,7,8,9,10};
 	int NJet[] = {6};
@@ -82,35 +82,42 @@
 	TLegend *l_[JetStepCut][NJetNum];
 
 	TString PATH_samples;
-	PATH_samples = "/xrootd/store/user/yjeong/4TopFullHadronic/";//KISTI
+	//PATH_samples = "/xrootd/store/user/yjeong/4TopFullHadronic/";//KISTI
+	PATH_samples = "/cms/scratch/yjeong/";//KISTI
 
 	TString Cut_base_text;
 	TString tttt_Ch_Cut;
 	TString ttbar_Ch_Cut;
 	TString NBJet;
 
-	//TString Variable[] = {"Jet_Pt[0]","Jet_Pt[1]", "Jet_Pt[2]","Jet_Pt[3]","Jet_Pt[4]","Jet_Pt[5]","Jet_Pt[6]","Jet_Pt[7]","Jet_Pt[8]","Jet_Pt[9]"};
 	TString Variable;
 	Variable = "Jet_HT";
 
-	TString Pt_Cut;
-	Pt_Cut = "Jet_Pt[0] > 80 && Jet_Pt[1] > 70 && Jet_Pt[2] > 60 && Jet_Pt[3] > 50";
+	TString Step_1;
+	Step_1 = "NJet >= 6 && NBJet >= 2";
 
-	//TString Pt_Cut[] = {" && Jet_Pt[0] > 80 &&","&& Jet_Pt[0] > 80 && Jet_Pt[1] > 70 &&","&& Jet_Pt[0] > 80 && Jet_Pt[1] > 70 && Jet_Pt[2] > 60 &&","&& Jet_Pt[0] > 80 && Jet_Pt[1] > 70 && Jet_Pt[2] > 60 && Jet_Pt[3] > 50 &&"};
-	//TString Pt_Cut[] = {"&& Jet_Pt[0] > 80 && Jet_Pt[1] > 70 && Jet_Pt[2] > 60 && Jet_Pt[3] > 50 &&"};
+	TString Step_2;
+	Step_2 = "IsHadronTrig == 1 &&";
 
-	//TString Step_Cut[] = {"","IsHadronTrig == 1 &&","Jet_Pt[0] > 80 && Jet_Pt[1] > 70 && Jet_Pt[2] > 60 && Jet_Pt[3] > 50 &&  IsHadronTrig==1 &&","Jet_Pt[0] > 80 && Jet_Pt[1] > 70 && Jet_Pt[2] > 60 && Jet_Pt[3] > 50 &&  IsHadronTrig==1 && Jet_HT > 500 &&","Jet_Pt[0] > 80 && Jet_Pt[1] > 70 && Jet_Pt[2] > 60 && Jet_Pt[3] > 50 && IsHadronTrig==1 && Jet_HT > 500 && (NLooseMuon+NLooseElectron)==0 &&","Jet_Pt[0] > 80 && Jet_Pt[1] > 70 && Jet_Pt[2] > 60 && Jet_Pt[3] > 50 && IsHadronTrig==1 && Jet_HT > 500 && (NLooseMuon+NLooseElectron)==0 && NBJet >= 3 &&"};
-	TString Step_Cut[] = {"","IsHadronTrig == 1 &&",Pt_Cut+"&& IsHadronTrig==1 &&",Pt_Cut+" && IsHadronTrig==1 && Jet_HT > 500 &&",Pt_Cut+"&& IsHadronTrig==1 && Jet_HT > 500 && (NLooseMuon+NLooseElectron)==0 &&",Pt_Cut+" && IsHadronTrig==1 && Jet_HT > 500 && (NLooseMuon+NLooseElectron)==0 && NBJet >= 3 &&"};
+	TString Step_3;
+	Step_3 = "Jet_Pt[0] > 80 && Jet_Pt[1] > 70 && Jet_Pt[2] > 60 && Jet_Pt[3] > 50 &&";
+	TString Step_4;
+	Step_4 = "Jet_HT > 500 &&";
 
-	TString Step_txt[] = {", step1, ",", step2, ",", step3, ",", step4, ",", step5, ",", step6, ",", step7, "};
+	TString Step_5;
+	Step_5 = "(NLooseMuon+NLooseElectron)==0 &&";
+
+	TString Step_6;
+	Step_6 = "NBJet>=3 &&";
+
+	TString Step_Cut[] = {Step_1, Step_2+Step_1, Step_2+Step_3+Step_1, Step_2+Step_3+Step_4+Step_1, Step_2+Step_3+Step_4+Step_5+Step_1, Step_2+Step_3+Step_4+Step_5+Step_6+Step_1};
+
+	TString Step_txt[] = {", step1, ",", step2, ",", step3, ",", step4, ",", step5, ",", step6, "};
 
 	ttttHad_Ch = "nq==8 && nl==0 ";
 	ttbarHad_Ch = "nq==4 && nl==0 ";
 
-	//NBJet = "NBJet >= 2 &&";
 	NBJet = "&& NBJet &&";
-
-	HadronTrig = "IsHadronTrig==1 ";
 
 	Cut_base_text = "Hadronic ";
 
@@ -151,17 +158,17 @@
 
 	cout<<"---------------step definition------------------"<<endl;
 	cout<<""<<endl;
-	cout<<"step1: NJet >= 6 && NBJet >= 2"<<endl;
+	cout<<"step1: "<<Step_1<<endl;
 	cout<<""<<endl;
-	cout<<"step2: HadronTrid==1"<<endl;
+	cout<<"step2: "<<Step_2<<endl;
 	cout<<""<<endl;
-	cout<<"step3: "<<Pt_Cut<<endl;
+	cout<<"step3: "<<Step_3<<endl;
 	cout<<""<<endl;
-	cout<<"step4: Jet_H_{t} > 500" <<endl;
+	cout<<"step4: "<<Step_4<<endl;
 	cout<<""<<endl;
-	cout<<"step5: (NLooseMuon+NLooseElectron)==0"<<endl;
+	cout<<"step5: "<<Step_5<<endl;
 	cout<<""<<endl;
-	cout<<"step6: NBJet >= 3"<<endl;
+	cout<<"step6: "<<Step_6<<endl;
 
 	for(int NJ = 0; NJ < NJetNum; NJ++){
 		for(int NStep = 0; NStep < JetStepCut; NStep++){
@@ -198,7 +205,7 @@
 			l_[NJ][NStep]->SetTextSize(0.035);
 
 			histo_DYJets[NJ][NStep] = new TH1F(Form("histo_DYJets_%d_%d",NJ,NStep),Form(""),nbin,xmin,xmax);
-			DYJets->Project(Form("histo_DYJets_%d_%d",NJ,NStep),Variable,Step_Cut[NStep]+Form("NBJet>=2 && NJet>=%d",NJet[NJ]));
+			DYJets->Project(Form("histo_DYJets_%d_%d",NJ,NStep),Variable,Step_Cut[NStep]);
 			histo_DYJets[NJ][NStep]->SetLineWidth(2);
 			histo_DYJets[NJ][NStep]->SetLineColor(dyjets_c);
 			//histo_DYJets[NJ][NStep]->SetFillColor(dyjets_c);
@@ -210,7 +217,7 @@
 			//---------------------------------------
 
 			histo_QCDPt80to120EM[NJ][NStep] = new TH1F(Form("histo_QCDPt80to120EM_%d_%d",NJ,NStep),Form(""),nbin,xmin,xmax);
-			QCDPt80to120EM->Project(Form("histo_QCDPt80to120EM_%d_%d",NJ,NStep),Variable,Step_Cut[NStep]+Form("NBJet>=2 && NJet>=%d",NJet[NJ]));
+			QCDPt80to120EM->Project(Form("histo_QCDPt80to120EM_%d_%d",NJ,NStep),Variable,Step_Cut[NStep]);
 			histo_QCDPt80to120EM[NJ][NStep]->SetLineWidth(2);
 			histo_QCDPt80to120EM[NJ][NStep]->SetLineColor(qcdPt80to120EM_c);
 			//histo_QCDPt80to120EM[NJ][NStep]->SetFillColor(qcdPt80to120EM_c);
@@ -221,7 +228,7 @@
 			QCDPt80to120EM->Project(Form("histo_QCDPt80to120EM_gen_%d_%d",NJ,NStep),Variable);
 			//---------------------------------------------
 			histo_QCDPt80to120Mu[NJ][NStep] = new TH1F(Form("histo_QCDPt80to120Mu_%d_%d",NJ,NStep),Form(""),nbin,xmin,xmax);
-			QCDPt80to120Mu->Project(Form("histo_QCDPt80to120Mu_%d_%d",NJ,NStep),Variable,Step_Cut[NStep]+Form("NBJet>=2 && NJet>=%d",NJet[NJ]));
+			QCDPt80to120Mu->Project(Form("histo_QCDPt80to120Mu_%d_%d",NJ,NStep),Variable,Step_Cut[NStep]);
 			histo_QCDPt80to120Mu[NJ][NStep]->SetLineWidth(2);
 			histo_QCDPt80to120Mu[NJ][NStep]->SetLineColor(qcdPt80to120Mu_c);
 			histo_QCDPt80to120Mu[NJ][NStep]->SetMarkerColor(qcdPt80to120Mu_c);
@@ -232,7 +239,7 @@
 
 			//---------------------------------------------
 			histo_WJets[NJ][NStep] = new TH1F(Form("histo_WJets_%d_%d",NJ,NStep),Form(""),nbin,xmin,xmax);
-			WJets->Project(Form("histo_WJets_%d_%d",NJ,NStep),Variable,Step_Cut[NStep]+Form("NBJet>=2 && NJet>=%d",NJet[NJ]));
+			WJets->Project(Form("histo_WJets_%d_%d",NJ,NStep),Variable,Step_Cut[NStep]);
 			histo_WJets[NJ][NStep]->SetLineWidth(2);
 			histo_WJets[NJ][NStep]->SetLineColor(wjets_c);
 			//histo_WJets[NJ][NStep]->SetFillColor(wjets_c);
@@ -245,7 +252,7 @@
 			//-------------------------------------
 			histo_TTTT[NJ][NStep] = new TH1F(Form("histo_TTTT_%d_%d",NJ,NStep),Form(""),nbin,xmin,xmax);
 			//histo_TTTT[NJ][NStep]->Sumw2();
-			FourTop->Project(Form("histo_TTTT_%d_%d",NJ,NStep),Variable,ttttHad_Ch+NBJet+Step_Cut[NStep]+Form("NBJet>=2 && NJet>=%d",NJet[NJ]));
+			FourTop->Project(Form("histo_TTTT_%d_%d",NJ,NStep),Variable,ttttHad_Ch+NBJet+Step_Cut[NStep]);
 			histo_TTTT[NJ][NStep]->SetLineWidth(2);
 			l_[NJ][NStep]->AddEntry(histo_TTTT[NJ][NStep],"TTTT ", "lp");
 			histo_TTTT[NJ][NStep]->SetLineColor(TTTT_c);
@@ -259,7 +266,7 @@
 			//-----------------------------------
 			histo_ttbar[NJ][NStep] = new TH1F(Form("histo_ttbar_%d_%d",NJ,NStep),Form("Jet_HT"),nbin,xmin,xmax);
 			//histo_ttbar[NJ][NStep]->Sumw2();
-			TTbar->Project(Form("histo_ttbar_%d_%d",NJ,NStep),Variable,ttbarHad_Ch+NBJet+Step_Cut[NStep]+Form("NBJet>=2 && NJet>=%d",NJet[NJ]));
+			TTbar->Project(Form("histo_ttbar_%d_%d",NJ,NStep),Variable,ttbarHad_Ch+NBJet+Step_Cut[NStep]);
 			histo_ttbar[NJ][NStep]->SetLineWidth(2);
 			l_[NJ][NStep]->AddEntry(histo_ttbar[NJ][NStep],"ttbar ", "lp");
 			histo_ttbar[NJ][NStep]->SetLineColor(ttbar_c);
