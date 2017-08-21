@@ -53,7 +53,7 @@
 	float lx2 = 0.94;
 	float ly2 = 0.78;
 
-	const int TreeVar = 2;//Variable number
+	const int TreeVar = 4;//Variable number
 	const int CutVar = 2;
 
 	TH1F *histo_TTTT[TreeVar][CutVar];
@@ -81,7 +81,7 @@
 
 	//TString Variable[] = {"Muon_Pt","Electron_Pt","Jet_Pt","Muon_Eta","Electron_Eta","Jet_Eta"};
 	//TString Variable[] = {"Jet_Pt[0]","Jet_Pt[1]", "Jet_Pt[2]","Jet_Pt[3]","Jet_Pt[4]","Jet_Pt[5]","Jet_Pt[6]","Jet_Pt[7]","Jet_Pt[8]","Jet_Pt[9]","Jet_Pt[10]"};
-	TString Variable[] = {"NJet","NBJet"};
+	TString Variable[] = {"NJet","NBJet","NLooseMuon+NLooseElectron","NMuon+NElectron"};
 
 	TString Cut_base[] = {"IsHadronTrig==1",""," Jet_Pt[0] > 80 && Jet_Pt[1] > 70 && Jet_Pt[2] > 60 && Jet_Pt[3] > 50 "};
 	ttttHad_Ch = "nl==0 && nq==8";
@@ -146,11 +146,11 @@
 	  */
 	for(int NC = 0; NC < CutVar; NC++){
 		for(int NT = 0; NT < TreeVar; NT++){
-			float nbin[] = {18,8};
+			float nbin[] = {18,8,6,6};
 			//float xmin[] = {0,0,0,-3,-3,-3};//
 			//float xmax[] = {350,350,350,3,3,3};//
 			float xmin = 0;//
-			float xmax[] = {18,8};//
+			float xmax[] = {18,8,6,6};//
 			float size = 0.8;
 			int TTTT_c = 4;
 			int ttbar_c = 2;
