@@ -351,7 +351,6 @@
 			cout<<""<<endl;
 			cout<<""<<endl;
 			cout<<"number of QCDPt80to120EM expected events: "<< QCDPt80to120EM_ev<<endl;
-			cout<<""<<endl;
 			cout<<"number of QCDPt80to120Mu expected events: "<< QCDPt80to120Mu_ev<<endl;
 			cout<<""<<endl;
 			cout<<""<<endl;
@@ -388,7 +387,6 @@
 			cout<<""<<endl;
 			cout<<""<<endl;
 			cout<<"QCDPt80to120EM yield Integral(1,nbin+1): "<<histo_QCDPt80to120EM[NJ][NStep]->Integral(1,nbin+1)<<endl;
-			cout<<""<<endl;
 			cout<<"QCDPt80to120Mu yield Integral(1,nbin+1): "<<histo_QCDPt80to120Mu[NJ][NStep]->Integral(1,nbin+1)<<endl;
 			cout<<""<<endl;
 
