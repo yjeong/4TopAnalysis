@@ -53,7 +53,7 @@
 	float lx2 = 0.94;
 	float ly2 = 0.78;
 
-	const int JetStepCut = 6;//Step Num
+	const int JetStepCut = 7;//Step Num
 	const int NJetNum = 1;//Variable
 	//int NJet[] = {4,5,6,7,8,9,10};
 	int NJet[] = {6};
@@ -77,6 +77,8 @@
 
 	TH1F *histo_QCDPt80to120Mu[JetStepCut][NJetNum];
 	TH1F *histo_QCDPt80to120Mu_gen[JetStepCut][NJetNum];
+
+	TH1F *histo_QCD[JetStepCut][NJetNum];
 
 	TCanvas *canvIso_[JetStepCut][NJetNum];
 	TLegend *l_[JetStepCut][NJetNum];
@@ -108,11 +110,14 @@
 	Step_5 = "(NLooseMuon+NLooseElectron)==0 &&";
 
 	TString Step_6;
-	Step_6 = "NJet >= 10 && NBJet>=3 &&";
+	Step_6 = "NBJet>=3 &&";
 
-	TString Step_Cut[] = {Step_1, Step_2+Step_1, Step_2+Step_3+Step_1, Step_2+Step_3+Step_4+Step_1, Step_2+Step_3+Step_4+Step_5+Step_1, Step_2+Step_3+Step_4+Step_5+Step_6+Step_1};
+	TString Step_7;
+	Step_7 = "NJet>=10 &&";
 
-	TString Step_txt[] = {"step1","step2","step3","step4","step5","step6"};
+	TString Step_Cut[] = {Step_1, Step_2+Step_1, Step_2+Step_3+Step_1, Step_2+Step_3+Step_4+Step_1, Step_2+Step_3+Step_4+Step_5+Step_1, Step_2+Step_3+Step_4+Step_5+Step_6+Step_1, Step_2+Step_3+Step_4+Step_5+Step_6+Step_7+Step_1};
+
+	TString Step_txt[] = {"step1","step2","step3","step4","step5","step6","step7"};
 
 	ttttHad_Ch = "nq==8 && nl==0 ";
 	ttbarHad_Ch = "nq==4 && nl==0 ";
@@ -139,22 +144,10 @@
 	hNJet = new TH1F(Form("hNJet"),Form(""),16,0,16);
 	FourTop->Project(Form("hNJet"),"NJet");
 	cout<<"NJet events number"<<endl;
-	cout<< hNJet->GetBinContent(1) << endl;
-	cout<< hNJet->GetBinContent(2) << endl;
-	cout<< hNJet->GetBinContent(3) << endl;
-	cout<< hNJet->GetBinContent(4) << endl;
-	cout<< hNJet->GetBinContent(5) << endl;
-	cout<< hNJet->GetBinContent(6) << endl;
-	cout<< hNJet->GetBinContent(7) << endl;
-	cout<< hNJet->GetBinContent(8) << endl;
-	cout<< hNJet->GetBinContent(9) << endl;
-	cout<< hNJet->GetBinContent(10) << endl;
-	cout<< hNJet->GetBinContent(11) << endl;
-	cout<< hNJet->GetBinContent(12) << endl;
-	cout<< hNJet->GetBinContent(13) << endl;
-	cout<< hNJet->GetBinContent(14) << endl;
-	cout<< hNJet->GetBinContent(15) << endl;
-	cout<< hNJet->GetBinContent(16) << endl;
+
+	for(int i = 1; i < 17; i++){
+		cout<< hNJet->GetBinContent(i) << endl;
+	}
 
 	cout<<"--------------------step definition-------------------"<<endl;
 	cout<<""<<endl;
@@ -169,6 +162,8 @@
 	cout<<"step5: "<<Step_5<<endl;
 	cout<<""<<endl;
 	cout<<"step6: "<<Step_6<<endl;
+	cout<<""<<endl;
+	cout<<"step7: "<<Step_7<<endl;
 
 	for(int NJ = 0; NJ < NJetNum; NJ++){
 		for(int NStep = 0; NStep < JetStepCut; NStep++){
@@ -178,10 +173,9 @@
 			float size = 0.8;
 			int TTTT_c = 4;
 			int ttbar_c = 2;
-			int dyjets_c = 1;
+			int dyjets_c = 3;
 			int wjets_c = 6;
-			int qcdPt80to120EM_c = 3;
-			int qcdPt80to120Mu_c = 7;
+			int qcd_c = 1;
 
 			canvIso_[NJ][NStep] = new TCanvas();
 			canvIso_[NJ][NStep]->SetLogy();
@@ -218,21 +212,13 @@
 
 			histo_QCDPt80to120EM[NJ][NStep] = new TH1F(Form("histo_QCDPt80to120EM_%d_%d",NJ,NStep),Form(""),nbin,xmin,xmax);
 			QCDPt80to120EM->Project(Form("histo_QCDPt80to120EM_%d_%d",NJ,NStep),Variable,Step_Cut[NStep]);
-			histo_QCDPt80to120EM[NJ][NStep]->SetLineWidth(2);
-			histo_QCDPt80to120EM[NJ][NStep]->SetLineColor(qcdPt80to120EM_c);
-			//histo_QCDPt80to120EM[NJ][NStep]->SetFillColor(qcdPt80to120EM_c);
-			histo_QCDPt80to120EM[NJ][NStep]->SetMarkerColor(qcdPt80to120EM_c);
-			l_[NJ][NStep]->AddEntry(histo_QCDPt80to120EM[NJ][NStep],"QCDPt80to120EM ", "lp");
 
 			histo_QCDPt80to120EM_gen[NJ][NStep] = new TH1F(Form("histo_QCDPt80to120EM_gen_%d_%d",NJ,NStep),Form(""),nbin,xmin,xmax);
 			QCDPt80to120EM->Project(Form("histo_QCDPt80to120EM_gen_%d_%d",NJ,NStep),Variable);
 			//---------------------------------------------
+
 			histo_QCDPt80to120Mu[NJ][NStep] = new TH1F(Form("histo_QCDPt80to120Mu_%d_%d",NJ,NStep),Form(""),nbin,xmin,xmax);
 			QCDPt80to120Mu->Project(Form("histo_QCDPt80to120Mu_%d_%d",NJ,NStep),Variable,Step_Cut[NStep]);
-			histo_QCDPt80to120Mu[NJ][NStep]->SetLineWidth(2);
-			histo_QCDPt80to120Mu[NJ][NStep]->SetLineColor(qcdPt80to120Mu_c);
-			histo_QCDPt80to120Mu[NJ][NStep]->SetMarkerColor(qcdPt80to120Mu_c);
-			l_[NJ][NStep]->AddEntry(histo_QCDPt80to120Mu[NJ][NStep],"QCDPt80to120Mu ", "lp");
 
 			histo_QCDPt80to120Mu_gen[NJ][NStep] = new TH1F(Form("histo_QCDPt80to120Mu_gen_%d_%d",NJ,NStep),Form(""),nbin,xmin,xmax);
 			QCDPt80to120Mu->Project(Form("histo_QCDPt80to120Mu_gen_%d_%d",NJ,NStep),Variable);
@@ -317,6 +303,10 @@
 			double QCDPt80to120EMS0 = histo_QCDPt80to120EM_gen[NJ][NStep]->GetEntries();
 			double QCDPt80to120MuS1 = histo_QCDPt80to120Mu[NJ][NStep]->GetEntries();
 			double QCDPt80to120MuS0 = histo_QCDPt80to120Mu_gen[NJ][NStep]->GetEntries();
+
+			double QCDS1 = QCDPt80to120EMS1+QCDPt80to120MuS1;
+			double QCDS0 = QCDPt80to120EMS0+QCDPt80to120MuS0;
+
 			double BR = 0.6741;//theoritical value W->Hadron
 			double lumi = 36000;//pb-1
 			//4top->all hadrons = BR^4.
@@ -335,23 +325,29 @@
 			cout<<""<<endl;
 			cout<< (WJetsS1/WJetsS0)*100<<"%"<<", "<<", WJets " <<endl;
 			cout<<""<<endl;
-			cout<< (QCDPt80to120EMS1/QCDPt80to120EMS0)*100<<"%"<<", "<<", QCDPt80to120EM " <<endl;
-			cout<<""<<endl;
-			cout<< (QCDPt80to120MuS1/QCDPt80to120MuS0)*100<<"%"<<", "<<", QCDPt80to120Mu " <<endl;
+			cout<< (QCDS1/QCDS0)*100<<"%"<<", "<<", QCD " <<endl;
 			cout<<""<<endl;
 			cout<<""<<endl;
 
-			cout<<"number of 4top expected events: "<< 0.009103*lumi*BR*BR*BR*BR*(TTTTS1/TTTTS0)<<endl;
+			double tttt_ev = 0.009103*lumi*BR*BR*BR*BR*(TTTTS1/TTTTS0);
+			double ttbar_ev = 832.76*lumi*BR*BR*(ttbarS1/ttbarS0);
+			double DYJets_ev = 6025.2*lumi*(DYJetsS1/DYJetsS0);
+			double WJets_ev = 61526.7*lumi*(WJetsS1/WJetsS0);
+			double QCDPt80to120EM_ev = 350000*lumi*(QCDPt80to120EMS1/QCDPt80to120EMS0);
+			double QCDPt80to120Mu_ev = 106033.6648*lumi*(QCDPt80to120MuS1/QCDPt80to120MuS0);
+			//----------------------
+			double QCD_ev = QCDPt80to120EM_ev+QCDPt80to120Mu_ev;
+
+
+			cout<<"number of 4top expected events: "<< tttt_ev<<endl;
 			cout<<""<<endl;
-			cout<<"number of ttbar expected events: "<< 832.76*lumi*BR*BR*(ttbarS1/ttbarS0)<<endl;
+			cout<<"number of ttbar expected events: "<< ttbar_ev<<endl;
 			cout<<""<<endl;
-			cout<<"number of DYJets expected events: "<< 6025.2*lumi*(DYJetsS1/DYJetsS0)<<endl;
+			cout<<"number of DYJets expected events: "<< DYJets_ev<<endl;
 			cout<<""<<endl;
-			cout<<"number of WJets expected events: "<< 61526.7*lumi*(WJetsS1/WJetsS0)<<endl;
+			cout<<"number of WJets expected events: "<< WJets_ev<<endl;
 			cout<<""<<endl;
-			cout<<"number of QCDPt80to120EM expected events: "<< 350000*lumi*(QCDPt80to120EMS1/QCDPt80to120EMS0)<<endl;
-			cout<<""<<endl;
-			cout<<"number of QCDPt80to120Mu expected events: "<< 106033.6648*lumi*(QCDPt80to120MuS1/QCDPt80to120MuS0)<<endl;
+			cout<<"number of QCD expected events: "<< QCD_ev<<endl;
 			cout<<""<<endl;
 			cout<<""<<endl;
 
@@ -374,12 +370,25 @@
 			cout<<""<<endl;
 			cout<<"WJets yield Integral(1,nbin+1): "<<histo_WJets[NJ][NStep]->Integral(1,nbin+1)<<endl;
 			cout<<""<<endl;
-			cout<<"QCDPt80to120EM yield Integral(1,nbin+1): "<<histo_QCDPt80to120EM[NJ][NStep]->Integral(1,nbin+1)<<endl;
+
+			double QCD80to120EM = histo_QCDPt80to120EM[NJ][NStep]->Integral(1,nbin+1);
+			double QCD80to120Mu = histo_QCDPt80to120Mu[NJ][NStep]->Integral(1,nbin+1);
+
+
+			double QCD_Int = QCD80to120EM+QCD80to120Mu;
+
+			cout<<"QCD yield Integral(1,nbin+1): "<<QCD_Int<<endl;
 			cout<<""<<endl;
-			cout<<"QCDPt80to120Mu yield Integral(1,nbin+1): "<<histo_QCDPt80to120Mu[NJ][NStep]->Integral(1,nbin+1)<<endl;
 			cout<<""<<endl;
 			cout<<""<<endl;
-			cout<<""<<endl;
+
+			histo_QCD[NJ][NStep] = new TH1F(Form("histo_QCD_%d_%d",NJ,NStep),Form(""),nbin,xmin,xmax);
+			histo_QCD[NJ][NStep]->SetLineColor(qcd_c);
+			histo_QCD[NJ][NStep]->SetLineWidth(2);
+			l_[NJ][NStep]->AddEntry(histo_QCD[NJ][NStep],"QCD ", "lp");
+
+			histo_QCD[NJ][NStep]->Add(histo_QCDPt80to120Mu[NJ][NStep]);
+			histo_QCD[NJ][NStep]->Add(histo_QCDPt80to120EM[NJ][NStep]);
 
 			double ymax = 0;
 			ymax = histo_ttbar[NJ][NStep]->GetMaximum();
@@ -391,8 +400,7 @@
 			histo_ttbar[NJ][NStep]->Draw();
 			histo_DYJets[NJ][NStep]->Draw("same");
 			histo_WJets[NJ][NStep]->Draw("same");
-			histo_QCDPt80to120EM[NJ][NStep]->Draw("same");
-			histo_QCDPt80to120Mu[NJ][NStep]->Draw("same");
+			histo_QCD[NJ][NStep]->Draw("same");
 			histo_TTTT[NJ][NStep]->Draw("same");
 
 			/*
@@ -403,12 +411,12 @@
 			   histo_TTTT_eff[NJ][NStep]->Draw();
 			   histo_ttbar_eff[NJ][NStep]->Draw("same");*/
 
-			lt1.DrawLatex(xx_1,yy_1,Cut_base_text+Step_txt[NStep]+Form("NJet>=%d",NJet[NJ]));
+			lt1.DrawLatex(xx_1,yy_1,Cut_base_text+Step_txt[NStep]);
 			//lt2.DrawLatex(x_1,y_1,"CMS");
 			//lt3.DrawLatex(x_2,y_2,"Preliminary");
 			lt4.DrawLatex(tx,ty,"13 TeV");
 			l_[NJ][NStep]->Draw();
-			canvIso_[NJ][NStep]->Print(Step_txt[NStep]+"_"+Form("NJet>=%d",NJet[NJ])+".png");
+			canvIso_[NJ][NStep]->Print(Step_txt[NStep]+".png");
 		}
 	}
 	cout<<"13TeV"<<endl;
