@@ -350,6 +350,13 @@
 			cout<<"number of QCD expected events: "<< QCD_ev<<endl;
 			cout<<""<<endl;
 			cout<<""<<endl;
+			cout<<"number of QCDPt80to120EM expected events: "<< QCDPt80to120EM_ev<<endl;
+			cout<<""<<endl;
+			cout<<"number of QCDPt80to120Mu expected events: "<< QCDPt80to120Mu_ev<<endl;
+			cout<<""<<endl;
+			cout<<""<<endl;
+
+			//--------------------------------------------------------
 
 			histo_TTTT[NJ][NStep]->Scale(0.009103*lumi*BR*BR*BR*BR/TTTTS0);
 			histo_ttbar[NJ][NStep]->Scale(832.76*lumi*BR*BR/ttbarS0);
@@ -358,6 +365,7 @@
 			histo_QCDPt80to120EM[NJ][NStep]->Scale(350000*lumi/QCDPt80to120EMS0);
 			histo_QCDPt80to120Mu[NJ][NStep]->Scale(106033.6648*lumi/QCDPt80to120MuS0);
 
+			cout<<""<<endl;
 			cout<<"4top yield Integral(1,nbin+1): "<<histo_TTTT[NJ][NStep]->Integral(1,nbin+1)<<endl;
 			//cout<<"4top yield Integral: "<<histo_TTTT[NJ][NStep]->Integral()<<endl;
 			//cout<<"4top yield GetSum: "<<histo_TTTT[NJ][NStep]->GetSum()<<endl;
@@ -373,13 +381,15 @@
 
 			double QCD80to120EM = histo_QCDPt80to120EM[NJ][NStep]->Integral(1,nbin+1);
 			double QCD80to120Mu = histo_QCDPt80to120Mu[NJ][NStep]->Integral(1,nbin+1);
-
-
+			//----------------------------------------
 			double QCD_Int = QCD80to120EM+QCD80to120Mu;
 
 			cout<<"QCD yield Integral(1,nbin+1): "<<QCD_Int<<endl;
 			cout<<""<<endl;
 			cout<<""<<endl;
+			cout<<"QCDPt80to120EM yield Integral(1,nbin+1): "<<histo_QCDPt80to120EM[NJ][NStep]->Integral(1,nbin+1)<<endl;
+			cout<<""<<endl;
+			cout<<"QCDPt80to120Mu yield Integral(1,nbin+1): "<<histo_QCDPt80to120Mu[NJ][NStep]->Integral(1,nbin+1)<<endl;
 			cout<<""<<endl;
 
 			histo_QCD[NJ][NStep] = new TH1F(Form("histo_QCD_%d_%d",NJ,NStep),Form(""),nbin,xmin,xmax);
