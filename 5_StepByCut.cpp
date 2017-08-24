@@ -519,7 +519,7 @@
 			cout<<"number of QCDPt120to170Mu expected events: "<< QCDPt120to170Mu_ev<<endl;
 			cout<<"number of QCDPt15to20Mu expected events: "<< QCDPt15to20Mu_ev<<endl;
 			cout<<"number of QCDPt170to300EM expected events: "<< QCDPt170to300EM_ev<<endl;
-			cout<<"number of QCDPt170to300Mu expected events: "<< QCDPt120to300Mu_ev<<endl;
+			cout<<"number of QCDPt170to300Mu expected events: "<< QCDPt170to300Mu_ev<<endl;
 
 			//---------------------------------------------------------------
 			cout<<""<<endl;
