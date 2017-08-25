@@ -133,6 +133,8 @@
 	TString PATH_samples;
 	PATH_samples = "/xrootd/store/user/yjeong/4TopFullHadronic/";//KISTI
 	//PATH_samples = "/cms/scratch/yjeong/";//KISTI
+	TString Save_dir;
+	Save_dir = "/cms/scratch/yjeong/catMacro/plots/";
 
 	TString Cut_base_text;
 	TString tttt_Ch_Cut;
@@ -624,7 +626,9 @@
 			//lt3.DrawLatex(x_2,y_2,"Preliminary");
 			lt4.DrawLatex(tx,ty,"13 TeV");
 			l_[NJ][NStep]->Draw();
-			canvIso_[NJ][NStep]->Print(Step_txt[NStep]+".png");
+			//canvIso_[NJ][NStep]->Print(Step_txt[NStep]+".png");
+			canvIso_[NJ][NStep]->SaveAs(Save_dir+Step_txt[NStep]+".png");
+			//canvIso_[NJ][NStep]->SaveAs(Save_dir+Step_txt[NStep]+".pdf");
 		}
 	}
 	cout<<"13TeV"<<endl;
