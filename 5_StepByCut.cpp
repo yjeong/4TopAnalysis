@@ -585,8 +585,8 @@
 			double QCDPt120to170EM_ev = 62964*lumi*(QCDPt120to170EMS1/QCDPt120to170EMS0);
 			double QCDPt120to170Mu_ev = 25190.51514*lumi*(QCDPt120to170MuS1/QCDPt120to170MuS0);
 			double QCDPt15to20Mu_ev = 3819570*lumi*(QCDPt15to20MuS1/QCDPt15to20MuS0);
-			double QCDPt170to300EM_ev = 5352960.0*lumi*(QCDPt170to300EMS1/QCDPt170to300EMS0);
-			double QCDPt170to300Mu_ev = 2960198.4*lumi*(QCDPt170to300MuS1/QCDPt170to300MuS0);
+			double QCDPt170to300EM_ev = 18810*lumi*(QCDPt170to300EMS1/QCDPt170to300EMS0);
+			double QCDPt170to300Mu_ev = 8654.49315*lumi*(QCDPt170to300MuS1/QCDPt170to300MuS0);
 			double QCDPt20to30EM_ev = 5352960.0*lumi*(QCDPt20to30EMS1/QCDPt20to30EMS0);
 			double QCDPt20to30Mu_ev = 2960198.4*lumi*(QCDPt20to30MuS1/QCDPt20to30MuS0);
 			double QCDPt300to470Mu_ev = 797.35269*lumi*(QCDPt300to470MuS1/QCDPt300to470MuS0);
@@ -649,7 +649,7 @@
 			histo_QCDPt1000toInfMu[NJ][NStep]->Scale(1.62131692*lumi/QCDPt1000toInfMuS0);
 			histo_QCDPt120to170EM[NJ][NStep]->Scale(62964*lumi/QCDPt120to170EMS0);
 			histo_QCDPt120to170Mu[NJ][NStep]->Scale(25190.51514*lumi/QCDPt120to170MuS0);
-			histo_QCDPt15to20Mu[NJ][NStep]->Scale(25190.51514*lumi/QCDPt15to20MuS0);
+			histo_QCDPt15to20Mu[NJ][NStep]->Scale(3819570*lumi/QCDPt15to20MuS0);
 			histo_QCDPt170to300EM[NJ][NStep]->Scale(18810*lumi/QCDPt170to300EMS0);
 			histo_QCDPt170to300Mu[NJ][NStep]->Scale(8654.49315*lumi/QCDPt170to300MuS0);
 			histo_QCDPt20to30EM[NJ][NStep]->Scale(5352960.0*lumi/QCDPt20to30EMS0);
