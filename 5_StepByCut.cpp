@@ -60,11 +60,9 @@
 
 	TH1F *histo_TTTT[JetStepCut][NJetNum];
 	TH1F *histo_TTTT_gen[JetStepCut][NJetNum];
-	//TH1F *histo_TTTT_eff[JetStepCut][NJetNum];
 
 	TH1F *histo_ttbar[JetStepCut][NJetNum];
 	TH1F *histo_ttbar_gen[JetStepCut][NJetNum];
-	//TH1F *histo_ttbar_eff[JetStepCut][NJetNum];
 
 	TH1F *histo_DYJets[JetStepCut][NJetNum];
 	TH1F *histo_DYJets_gen[JetStepCut][NJetNum];
@@ -298,7 +296,7 @@
 			histo_DYJets_gen[NJ][NStep] = new TH1F(Form("histo_DYJets_gen_%d_%d",NJ,NStep),Form(""),nbin,xmin,xmax);
 			DYJets->Project(Form("histo_DYJets_gen_%d_%d",NJ,NStep),Variable);
 
-			//----------------------------QCD-------------------------
+			//////////////////////////////////////////////QCD/////////////////////////////////////////////////////
 
 			histo_QCDPt80to120EM[NJ][NStep] = new TH1F(Form("histo_QCDPt80to120EM_%d_%d",NJ,NStep),Form(""),nbin,xmin,xmax);
 			QCDPt80to120EM->Project(Form("histo_QCDPt80to120EM_%d_%d",NJ,NStep),Variable,Step_Cut[NStep]);
@@ -356,8 +354,95 @@
 
 			histo_QCDPt170to300Mu_gen[NJ][NStep] = new TH1F(Form("histo_QCDPt170to300Mu_gen_%d_%d",NJ,NStep),Form(""),nbin,xmin,xmax);
 			QCDPt170to300Mu->Project(Form("histo_QCDPt170to300Mu_gen_%d_%d",NJ,NStep),Variable);
+			//-----
 
-			//---------------------------------------------------------
+			histo_QCDPt20to30EM[NJ][NStep] = new TH1F(Form("histo_QCDPt20to30EM_%d_%d",NJ,NStep),Form(""),nbin,xmin,xmax);
+			QCDPt20to30EM->Project(Form("histo_QCDPt20to30EM_%d_%d",NJ,NStep),Variable,Step_Cut[NStep]);
+
+			histo_QCDPt20to30EM_gen[NJ][NStep] = new TH1F(Form("histo_QCDPt20to30EM_gen_%d_%d",NJ,NStep),Form(""),nbin,xmin,xmax);
+			QCDPt20to30EM->Project(Form("histo_QCDPt20to30EM_gen_%d_%d",NJ,NStep),Variable);
+			//-----
+
+			histo_QCDPt20to30Mu[NJ][NStep] = new TH1F(Form("histo_QCDPt20to30Mu_%d_%d",NJ,NStep),Form(""),nbin,xmin,xmax);
+			QCDPt20to30Mu->Project(Form("histo_QCDPt20to30Mu_%d_%d",NJ,NStep),Variable,Step_Cut[NStep]);
+
+			histo_QCDPt20to30Mu_gen[NJ][NStep] = new TH1F(Form("histo_QCDPt20to30Mu_gen_%d_%d",NJ,NStep),Form(""),nbin,xmin,xmax);
+			QCDPt20to30Mu->Project(Form("histo_QCDPt20to30Mu_gen_%d_%d",NJ,NStep),Variable);
+
+			//-----
+
+			histo_QCDPt300to470Mu[NJ][NStep] = new TH1F(Form("histo_QCDPt300to470Mu_%d_%d",NJ,NStep),Form(""),nbin,xmin,xmax);
+			QCDPt300to470Mu->Project(Form("histo_QCDPt300to470Mu_%d_%d",NJ,NStep),Variable,Step_Cut[NStep]);
+
+			histo_QCDPt300to470Mu_gen[NJ][NStep] = new TH1F(Form("histo_QCDPt300to470Mu_gen_%d_%d",NJ,NStep),Form(""),nbin,xmin,xmax);
+			QCDPt300to470Mu->Project(Form("histo_QCDPt300to470Mu_gen_%d_%d",NJ,NStep),Variable);
+
+			//-----
+
+			histo_QCDPt300toInfEM[NJ][NStep] = new TH1F(Form("histo_QCDPt300toInfEM_%d_%d",NJ,NStep),Form(""),nbin,xmin,xmax);
+			QCDPt300toInfEM->Project(Form("histo_QCDPt300toInfEM_%d_%d",NJ,NStep),Variable,Step_Cut[NStep]);
+
+			histo_QCDPt300toInfEM_gen[NJ][NStep] = new TH1F(Form("histo_QCDPt300toInfEM_gen_%d_%d",NJ,NStep),Form(""),nbin,xmin,xmax);
+			QCDPt300toInfEM->Project(Form("histo_QCDPt300toInfEM_gen_%d_%d",NJ,NStep),Variable);
+
+			//-----
+
+			histo_QCDPt30to50EM[NJ][NStep] = new TH1F(Form("histo_QCDPt30to50EM_%d_%d",NJ,NStep),Form(""),nbin,xmin,xmax);
+			QCDPt30to50EM->Project(Form("histo_QCDPt30to50EM_%d_%d",NJ,NStep),Variable,Step_Cut[NStep]);
+
+			histo_QCDPt30to50EM_gen[NJ][NStep] = new TH1F(Form("histo_QCDPt30to50EM_gen_%d_%d",NJ,NStep),Form(""),nbin,xmin,xmax);
+			QCDPt30to50EM->Project(Form("histo_QCDPt30to50EM_gen_%d_%d",NJ,NStep),Variable);
+
+			//-----
+
+			histo_QCDPt30to50Mu[NJ][NStep] = new TH1F(Form("histo_QCDPt30to50Mu_%d_%d",NJ,NStep),Form(""),nbin,xmin,xmax);
+			QCDPt30to50Mu->Project(Form("histo_QCDPt30to50Mu_%d_%d",NJ,NStep),Variable,Step_Cut[NStep]);
+
+			histo_QCDPt30to50Mu_gen[NJ][NStep] = new TH1F(Form("histo_QCDPt30to50Mu_gen_%d_%d",NJ,NStep),Form(""),nbin,xmin,xmax);
+			QCDPt30to50Mu->Project(Form("histo_QCDPt30to50Mu_gen_%d_%d",NJ,NStep),Variable);
+
+			//-----
+
+			histo_QCDPt470to600Mu[NJ][NStep] = new TH1F(Form("histo_QCDPt470to600Mu_%d_%d",NJ,NStep),Form(""),nbin,xmin,xmax);
+			QCDPt470to600Mu->Project(Form("histo_QCDPt470to600Mu_%d_%d",NJ,NStep),Variable,Step_Cut[NStep]);
+
+			histo_QCDPt470to600Mu_gen[NJ][NStep] = new TH1F(Form("histo_QCDPt470to600Mu_gen_%d_%d",NJ,NStep),Form(""),nbin,xmin,xmax);
+			QCDPt470to600Mu->Project(Form("histo_QCDPt470to600Mu_gen_%d_%d",NJ,NStep),Variable);
+
+			//-----
+
+			histo_QCDPt50to80EM[NJ][NStep] = new TH1F(Form("histo_QCDPt50to80EM_%d_%d",NJ,NStep),Form(""),nbin,xmin,xmax);
+			QCDPt50to80EM->Project(Form("histo_QCDPt50to80EM_%d_%d",NJ,NStep),Variable,Step_Cut[NStep]);
+
+			histo_QCDPt50to80EM_gen[NJ][NStep] = new TH1F(Form("histo_QCDPt50to80EM_gen_%d_%d",NJ,NStep),Form(""),nbin,xmin,xmax);
+			QCDPt50to80EM->Project(Form("histo_QCDPt50to80EM_gen_%d_%d",NJ,NStep),Variable);
+
+			//-----
+
+			histo_QCDPt50to80Mu[NJ][NStep] = new TH1F(Form("histo_QCDPt50to80Mu_%d_%d",NJ,NStep),Form(""),nbin,xmin,xmax);
+			QCDPt50to80Mu->Project(Form("histo_QCDPt50to80Mu_%d_%d",NJ,NStep),Variable,Step_Cut[NStep]);
+
+			histo_QCDPt50to80Mu_gen[NJ][NStep] = new TH1F(Form("histo_QCDPt50to80Mu_gen_%d_%d",NJ,NStep),Form(""),nbin,xmin,xmax);
+			QCDPt50to80Mu->Project(Form("histo_QCDPt50to80Mu_gen_%d_%d",NJ,NStep),Variable);
+
+			//-----
+
+			histo_QCDPt600to800Mu[NJ][NStep] = new TH1F(Form("histo_QCDPt60to800Mu_%d_%d",NJ,NStep),Form(""),nbin,xmin,xmax);
+                        QCDPt600to800Mu->Project(Form("histo_QCDPt600to800Mu_%d_%d",NJ,NStep),Variable,Step_Cut[NStep]);
+
+                        histo_QCDPt600to800Mu_gen[NJ][NStep] = new TH1F(Form("histo_QCDPt600to800Mu_gen_%d_%d",NJ,NStep),Form(""),nbin,xmin,xmax);
+                        QCDPt600to800Mu->Project(Form("histo_QCDPt600to800Mu_gen_%d_%d",NJ,NStep),Variable);
+
+                        //-----
+
+                        histo_QCDPt800to1000Mu[NJ][NStep] = new TH1F(Form("histo_QCDPt800to1000Mu_%d_%d",NJ,NStep),Form(""),nbin,xmin,xmax);
+                        QCDPt800to1000Mu->Project(Form("histo_QCDPt800to1000Mu_%d_%d",NJ,NStep),Variable,Step_Cut[NStep]);
+
+                        histo_QCDPt800to1000Mu_gen[NJ][NStep] = new TH1F(Form("histo_QCDPt800to1000Mu_gen_%d_%d",NJ,NStep),Form(""),nbin,xmin,xmax);
+                        QCDPt800to1000Mu->Project(Form("histo_QCDPt800to1000Mu_gen_%d_%d",NJ,NStep),Variable);
+
+			//////////////////////////////////////////////////////////////////////////////////////
+
 			histo_WJets[NJ][NStep] = new TH1F(Form("histo_WJets_%d_%d",NJ,NStep),Form(""),nbin,xmin,xmax);
 			WJets->Project(Form("histo_WJets_%d_%d",NJ,NStep),Variable,Step_Cut[NStep]);
 			histo_WJets[NJ][NStep]->SetLineWidth(2);
@@ -400,30 +485,6 @@
 			TTbar->Project(Form("histo_ttbar_gen_%d_%d",NJ,NStep),Variable,ttbarHad_Ch);
 			//------------------------------------------------------
 
-			/*double nev_1 = histo_TTTT[NJ][NStep]->GetEntries();
-			  histo_TTTT[NJ][NStep]->Scale(1/nev_1);
-			  double nev_2 = histo_ttbar[NJ][NStep]->GetEntries();
-			  histo_ttbar[NJ][NStep]->Scale(1/nev_2);
-			  double nev_3 = histo_TTTT_gen[NJ][NStep]->GetEntries();
-			  histo_TTTT_gen[NJ][NStep]->Scale(1/nev_3);
-			  double nev_4 = histo_ttbar_gen[NJ][NStep]->GetEntries();
-			  histo_ttbar_gen[NJ][NStep]->Scale(1/nev_4);*/
-			/*
-			   histo_TTTT_eff[NJ][NStep] = new TH1F(Form("histo_TTTT_eff_%d_%d",NJ,NStep),Form(""),nbin,xmin,xmax);
-			   histo_TTTT_eff[NJ][NStep]->GetYaxis()->SetTitle("Efficiency");
-			   histo_TTTT_eff[NJ][NStep]->GetXaxis()->SetTitle(Variable);
-			   histo_TTTT_eff[NJ][NStep]->SetLineWidth(2);
-
-			   histo_ttbar_eff[NJ][NStep] = new TH1F(Form("histo_ttbar_eff_%d_%d",NJ,NStep),Form(""),nbin,xmin,xmax);
-			//l_[NJ][NStep]->AddEntry(histo_TTTT_eff[NJ][NStep],"TTTT "+Variable, "lp");
-			//l_[NJ][NStep]->AddEntry(histo_ttbar_eff[NJ][NStep],"ttbar "+Variable, "lp");
-
-			histo_ttbar_eff[NJ][NStep]->SetLineWidth(2);
-			histo_ttbar_eff[NJ][NStep]->SetLineColor(ttbar_c);
-			histo_ttbar_eff[NJ][NStep]->SetMarkerColor(ttbar_c);
-
-			histo_TTTT_eff[NJ][NStep]->Divide(histo_TTTT[NJ][NStep],histo_TTTT_gen[NJ][NStep],1,1,"b");
-			histo_ttbar_eff[NJ][NStep]->Divide(histo_ttbar[NJ][NStep],histo_ttbar_gen[NJ][NStep],1,1,"b");*/
 
 			double TTTTS1 = histo_TTTT[NJ][NStep]->GetEntries();
 			double TTTTS0 = histo_TTTT_gen[NJ][NStep]->GetEntries();
@@ -452,18 +513,46 @@
 			double QCDPt15to20MuS0 = histo_QCDPt15to20Mu_gen[NJ][NStep]->GetEntries();
 
 			double QCDPt170to300EMS1 = histo_QCDPt170to300EM[NJ][NStep]->GetEntries();
-                        double QCDPt170to300EMS0 = histo_QCDPt170to300EM_gen[NJ][NStep]->GetEntries();
-                        double QCDPt170to300MuS1 = histo_QCDPt170to300Mu[NJ][NStep]->GetEntries();
-                        double QCDPt170to300MuS0 = histo_QCDPt170to300Mu_gen[NJ][NStep]->GetEntries();
+			double QCDPt170to300EMS0 = histo_QCDPt170to300EM_gen[NJ][NStep]->GetEntries();
+			double QCDPt170to300MuS1 = histo_QCDPt170to300Mu[NJ][NStep]->GetEntries();
+			double QCDPt170to300MuS0 = histo_QCDPt170to300Mu_gen[NJ][NStep]->GetEntries();
 
+			double QCDPt20to30EMS1 = histo_QCDPt20to30EM[NJ][NStep]->GetEntries();
+			double QCDPt20to30EMS0 = histo_QCDPt20to30EM_gen[NJ][NStep]->GetEntries();
+			double QCDPt20to30MuS1 = histo_QCDPt20to30Mu[NJ][NStep]->GetEntries();
+			double QCDPt20to30MuS0 = histo_QCDPt20to30Mu_gen[NJ][NStep]->GetEntries();
+
+			double QCDPt300to470MuS1 = histo_QCDPt300to470Mu[NJ][NStep]->GetEntries();
+			double QCDPt300to470MuS0 = histo_QCDPt300to470Mu_gen[NJ][NStep]->GetEntries();
+
+			double QCDPt300toInfEMS1 = histo_QCDPt300toInfEM[NJ][NStep]->GetEntries();
+			double QCDPt300toInfEMS0 = histo_QCDPt300toInfEM_gen[NJ][NStep]->GetEntries();
+
+			double QCDPt30to50EMS1 = histo_QCDPt30to50EM[NJ][NStep]->GetEntries();
+			double QCDPt30to50MuS1 = histo_QCDPt30to50Mu[NJ][NStep]->GetEntries();
+			double QCDPt30to50EMS0 = histo_QCDPt30to50EM_gen[NJ][NStep]->GetEntries();
+			double QCDPt30to50MuS0 = histo_QCDPt30to50Mu_gen[NJ][NStep]->GetEntries();
+
+			double QCDPt470to600MuS1 = histo_QCDPt470to600Mu[NJ][NStep]->GetEntries();
+			double QCDPt470to600MuS0 = histo_QCDPt470to600Mu_gen[NJ][NStep]->GetEntries();
+
+			double QCDPt50to80EMS1 = histo_QCDPt50to80EM[NJ][NStep]->GetEntries();
+			double QCDPt50to80MuS1 = histo_QCDPt50to80Mu[NJ][NStep]->GetEntries();
+			double QCDPt50to80EMS0 = histo_QCDPt50to80EM_gen[NJ][NStep]->GetEntries();
+			double QCDPt50to80MuS0 = histo_QCDPt50to80Mu_gen[NJ][NStep]->GetEntries();
+
+			double QCDPt600to800MuS1 = histo_QCDPt600to800Mu[NJ][NStep]->GetEntries();
+                        double QCDPt800to1000MuS1 = histo_QCDPt800to1000Mu[NJ][NStep]->GetEntries();
+                        double QCDPt600to800MuS0 = histo_QCDPt600to800Mu_gen[NJ][NStep]->GetEntries();
+                        double QCDPt800to1000MuS0 = histo_QCDPt800to1000Mu_gen[NJ][NStep]->GetEntries();
 
 			//-------------------------------------------------------------------
 
-			double QCDS1 = QCDPt80to120EMS1+QCDPt80to120MuS1+QCDPt1000toInfMuS1+QCDPt120to170EMS1+QCDPt120to170MuS1+QCDPt15to20MuS1+QCDPt170to300EMS1+QCDPt170to300MuS1;
-			double QCDS0 = QCDPt80to120EMS0+QCDPt80to120MuS0+QCDPt1000toInfMuS0+QCDPt120to170EMS0+QCDPt120to170MuS0+QCDPt15to20MuS0+QCDPt170to300EMS0+QCDPt170to300MuS0;
+			double QCDS1 = QCDPt80to120EMS1+QCDPt80to120MuS1+QCDPt1000toInfMuS1+QCDPt120to170EMS1+QCDPt120to170MuS1+QCDPt15to20MuS1+QCDPt170to300EMS1+QCDPt170to300MuS1+QCDPt20to30EMS1+QCDPt20to30MuS1+QCDPt300to470MuS1+QCDPt300toInfEMS1+QCDPt30to50EMS1+QCDPt30to50MuS1+QCDPt470to600MuS1+QCDPt50to80EMS1+QCDPt50to80MuS1+QCDPt600to800MuS1+QCDPt800to1000MuS1;
+			double QCDS0 = QCDPt80to120EMS0+QCDPt80to120MuS0+QCDPt1000toInfMuS0+QCDPt120to170EMS0+QCDPt120to170MuS0+QCDPt15to20MuS0+QCDPt170to300EMS0+QCDPt170to300MuS0+QCDPt20to30EMS0+QCDPt20to30MuS0+QCDPt300to470MuS0+QCDPt300toInfEMS0+QCDPt30to50EMS0+QCDPt30to50MuS0+QCDPt470to600MuS0+QCDPt50to80EMS0+QCDPt50to80MuS0+QCDPt600to800MuS0+QCDPt800to1000MuS0;
 
 			double BR = 0.6741;//theoritical value W->Hadron
-			double lumi = 36000;//pb-1
+			double lumi = 36*1000;//pb-1
 			//4top->all hadrons = BR^4.
 			//ttbar->all hadrons = BR^2.
 
@@ -496,10 +585,21 @@
 			double QCDPt120to170EM_ev = 62964*lumi*(QCDPt120to170EMS1/QCDPt120to170EMS0);
 			double QCDPt120to170Mu_ev = 25190.51514*lumi*(QCDPt120to170MuS1/QCDPt120to170MuS0);
 			double QCDPt15to20Mu_ev = 3819570*lumi*(QCDPt15to20MuS1/QCDPt15to20MuS0);
-			double QCDPt170to300EM_ev = 18810*lumi*(QCDPt170to300EMS1/QCDPt170to300EMS0);
-                        double QCDPt170to300Mu_ev = 8654.49315*lumi*(QCDPt170to300MuS1/QCDPt170to300MuS0);
+			double QCDPt170to300EM_ev = 5352960.0*lumi*(QCDPt170to300EMS1/QCDPt170to300EMS0);
+			double QCDPt170to300Mu_ev = 2960198.4*lumi*(QCDPt170to300MuS1/QCDPt170to300MuS0);
+			double QCDPt20to30EM_ev = 5352960.0*lumi*(QCDPt20to30EMS1/QCDPt20to30EMS0);
+			double QCDPt20to30Mu_ev = 2960198.4*lumi*(QCDPt20to30MuS1/QCDPt20to30MuS0);
+			double QCDPt300to470Mu_ev = 797.35269*lumi*(QCDPt300to470MuS1/QCDPt300to470MuS0);
+			double QCDPt300toInfEM_ev = 1350*lumi*(QCDPt300toInfEMS1/QCDPt300toInfEMS0);
+			double QCDPt30to50EM_ev = 9928000.0*lumi*(QCDPt30to50EMS1/QCDPt30to50EMS0);
+			double QCDPt30to50Mu_ev = 1652471.46*lumi*(QCDPt30to50MuS1/QCDPt30to50MuS0);
+			double QCDPt470to600Mu_ev = 79.02553776*lumi*(QCDPt470to600MuS1/QCDPt470to600MuS0);
+			double QCDPt50to80EM_ev = 2890800.0*lumi*(QCDPt50to80EMS1/QCDPt50to80EMS0);
+			double QCDPt50to80Mu_ev = 437504.1*lumi*(QCDPt50to80MuS1/QCDPt50to80MuS0);
+			double QCDPt600to800Mu_ev = 25.09505908*lumi*(QCDPt600to800MuS1/QCDPt600to800MuS0);
+			double QCDPt800to1000Mu_ev = 4.707368272*lumi*(QCDPt800to1000MuS1/QCDPt800to1000MuS0);
 			//-------------------------------------------------------------
-			double QCD_ev = QCDPt80to120EM_ev+QCDPt80to120Mu_ev+QCDPt1000toInfMu_ev+QCDPt120to170EM_ev+QCDPt120to170Mu_ev+QCDPt15to20Mu_ev+QCDPt170to300EM_ev+QCDPt170to300Mu_ev;
+			double QCD_ev = QCDPt80to120EM_ev+QCDPt80to120Mu_ev+QCDPt1000toInfMu_ev+QCDPt120to170EM_ev+QCDPt120to170Mu_ev+QCDPt15to20Mu_ev+QCDPt170to300EM_ev+QCDPt170to300Mu_ev+QCDPt20to30EM_ev+QCDPt20to30Mu_ev+QCDPt300to470Mu_ev+QCDPt300toInfEM_ev+QCDPt30to50EM_ev+QCDPt30to50Mu_ev+QCDPt470to600Mu_ev+QCDPt50to80EM_ev+QCDPt50to80Mu_ev+QCDPt600to800Mu_ev+QCDPt800to1000Mu_ev;
 
 			cout<<"number of 4top expected events: "<< tttt_ev<<endl;
 			cout<<""<<endl;
@@ -522,6 +622,17 @@
 			cout<<"number of QCDPt15to20Mu expected events: "<< QCDPt15to20Mu_ev<<endl;
 			cout<<"number of QCDPt170to300EM expected events: "<< QCDPt170to300EM_ev<<endl;
 			cout<<"number of QCDPt170to300Mu expected events: "<< QCDPt170to300Mu_ev<<endl;
+			cout<<"number of QCDPt20to30EM expected events: "<< QCDPt20to30EM_ev<<endl;
+			cout<<"number of QCDPt20to30Mu expected events: "<< QCDPt20to30Mu_ev<<endl;
+			cout<<"number of QCDPt300to470Mu expected events: "<< QCDPt300to470Mu_ev<<endl;
+			cout<<"number of QCDPt300toInfEM expected events: "<< QCDPt300toInfEM_ev<<endl;
+			cout<<"number of QCDPt30to50EM expected events: "<< QCDPt30to50EM_ev<<endl;
+			cout<<"number of QCDPt30to50Mu expected events: "<< QCDPt30to50Mu_ev<<endl;
+			cout<<"number of QCDPt470to600Mu expected events: "<< QCDPt470to600Mu_ev<<endl;
+			cout<<"number of QCDPt50to80EM expected events: "<< QCDPt50to80EM_ev<<endl;
+			cout<<"number of QCDPt50to80Mu expected events: "<< QCDPt50to80Mu_ev<<endl;
+			cout<<"number of QCDPt600to800Mu expected events: "<< QCDPt600to800Mu_ev<<endl;
+			cout<<"number of QCDPt800to1000Mu expected events: "<< QCDPt800to1000Mu_ev<<endl;
 
 			//---------------------------------------------------------------
 			cout<<""<<endl;
@@ -541,6 +652,17 @@
 			histo_QCDPt15to20Mu[NJ][NStep]->Scale(25190.51514*lumi/QCDPt15to20MuS0);
 			histo_QCDPt170to300EM[NJ][NStep]->Scale(18810*lumi/QCDPt170to300EMS0);
 			histo_QCDPt170to300Mu[NJ][NStep]->Scale(8654.49315*lumi/QCDPt170to300MuS0);
+			histo_QCDPt20to30EM[NJ][NStep]->Scale(5352960.0*lumi/QCDPt20to30EMS0);
+			histo_QCDPt20to30Mu[NJ][NStep]->Scale(2960198.4*lumi/QCDPt20to30MuS0);
+			histo_QCDPt300to470Mu[NJ][NStep]->Scale(797.35269*lumi/QCDPt300to470MuS0);
+			histo_QCDPt300toInfEM[NJ][NStep]->Scale(1350*lumi/QCDPt300toInfEMS0);
+			histo_QCDPt30to50EM[NJ][NStep]->Scale(9928000.0*lumi/QCDPt30to50EMS0);
+			histo_QCDPt30to50Mu[NJ][NStep]->Scale(1652471.46*lumi/QCDPt30to50MuS0);
+			histo_QCDPt470to600Mu[NJ][NStep]->Scale(79.02553776*lumi/QCDPt470to600MuS0);
+			histo_QCDPt50to80EM[NJ][NStep]->Scale(2890800.0*lumi/QCDPt50to80EMS0);
+			histo_QCDPt50to80Mu[NJ][NStep]->Scale(437504.1*lumi/QCDPt50to80MuS0);
+			histo_QCDPt600to800Mu[NJ][NStep]->Scale(25.09505908*lumi/QCDPt600to800MuS0);
+			histo_QCDPt800to1000Mu[NJ][NStep]->Scale(4.707368272*lumi/QCDPt800to1000MuS0);
 			//--------------------------------------------------------------------
 			cout<<""<<endl;
 			cout<<"4top yield Integral(1,nbin+1): "<<histo_TTTT[NJ][NStep]->Integral(1,nbin+1)<<endl;
@@ -565,9 +687,20 @@
 			double QCD15to20Mu = histo_QCDPt15to20Mu[NJ][NStep]->Integral(1,nbin+1);
 			double QCD170to300EM = histo_QCDPt170to300EM[NJ][NStep]->Integral(1,nbin+1);
 			double QCD170to300Mu = histo_QCDPt170to300Mu[NJ][NStep]->Integral(1,nbin+1);
+			double QCD20to30EM = histo_QCDPt20to30EM[NJ][NStep]->Integral(1,nbin+1);
+			double QCD20to30Mu = histo_QCDPt20to30Mu[NJ][NStep]->Integral(1,nbin+1);
+			double QCD300to470Mu = histo_QCDPt300to470Mu[NJ][NStep]->Integral(1,nbin+1);
+			double QCD300toInfEM = histo_QCDPt300toInfEM[NJ][NStep]->Integral(1,nbin+1);
+			double QCD30to50EM = histo_QCDPt30to50EM[NJ][NStep]->Integral(1,nbin+1);
+			double QCD30to50Mu = histo_QCDPt30to50Mu[NJ][NStep]->Integral(1,nbin+1);
+			double QCD470to600Mu = histo_QCDPt470to600Mu[NJ][NStep]->Integral(1,nbin+1);
+			double QCD50to80EM = histo_QCDPt50to80EM[NJ][NStep]->Integral(1,nbin+1);
+			double QCD50to80Mu = histo_QCDPt50to80Mu[NJ][NStep]->Integral(1,nbin+1);
+			double QCD600to800Mu = histo_QCDPt600to800Mu[NJ][NStep]->Integral(1,nbin+1);
+			double QCD800to1000Mu = histo_QCDPt800to1000Mu[NJ][NStep]->Integral(1,nbin+1);
 			//------------------------------------------------------------------
 
-			double QCD_Int = QCD80to120EM+QCD80to120Mu+QCD1000toInfMu+QCD120to170EM+QCD120to170Mu+QCD15to20Mu+QCD170to300EM+QCD170to300Mu;
+			double QCD_Int = QCD80to120EM+QCD80to120Mu+QCD1000toInfMu+QCD120to170EM+QCD120to170Mu+QCD15to20Mu+QCD170to300EM+QCD170to300Mu+QCD20to30EM+QCD20to30Mu+QCD300to470Mu+QCD300toInfEM+QCD30to50EM+QCD30to50Mu+QCD470to600Mu+QCD50to80EM+QCD50to80Mu+QCD600to800Mu+QCD800to1000Mu;
 
 			cout<<"QCD yield Integral(1,nbin+1): "<<QCD_Int<<endl;
 			cout<<""<<endl;
@@ -582,6 +715,17 @@
 			cout<<"QCDPt15to20Mu yield Integral(1,nbin+1): "<<histo_QCDPt15to20Mu[NJ][NStep]->Integral(1,nbin+1)<<endl;
 			cout<<"QCDPt170to300EM yield Integral(1,nbin+1): "<<histo_QCDPt170to300EM[NJ][NStep]->Integral(1,nbin+1)<<endl;
 			cout<<"QCDPt170to300Mu yield Integral(1,nbin+1): "<<histo_QCDPt170to300Mu[NJ][NStep]->Integral(1,nbin+1)<<endl;
+			cout<<"QCDPt20to30EM yield Integral(1,nbin+1): "<<histo_QCDPt20to30EM[NJ][NStep]->Integral(1,nbin+1)<<endl;
+			cout<<"QCDPt20to30Mu yield Integral(1,nbin+1): "<<histo_QCDPt20to30Mu[NJ][NStep]->Integral(1,nbin+1)<<endl;
+			cout<<"QCDPt300to470Mu yield Integral(1,nbin+1): "<<histo_QCDPt300to470Mu[NJ][NStep]->Integral(1,nbin+1)<<endl;
+			cout<<"QCDPt300toInfEM yield Integral(1,nbin+1): "<<histo_QCDPt300toInfEM[NJ][NStep]->Integral(1,nbin+1)<<endl;
+			cout<<"QCDPt30to50EM yield Integral(1,nbin+1): "<<histo_QCDPt30to50EM[NJ][NStep]->Integral(1,nbin+1)<<endl;
+			cout<<"QCDPt30to50Mu yield Integral(1,nbin+1): "<<histo_QCDPt30to50Mu[NJ][NStep]->Integral(1,nbin+1)<<endl;
+			cout<<"QCDPt470to600Mu yield Integral(1,nbin+1): "<<histo_QCDPt470to600Mu[NJ][NStep]->Integral(1,nbin+1)<<endl;
+			cout<<"QCDPt50to80EM yield Integral(1,nbin+1): "<<histo_QCDPt50to80EM[NJ][NStep]->Integral(1,nbin+1)<<endl;
+			cout<<"QCDPt50to80Mu yield Integral(1,nbin+1): "<<histo_QCDPt50to80Mu[NJ][NStep]->Integral(1,nbin+1)<<endl;
+			cout<<"QCDPt600to800Mu yield Integral(1,nbin+1): "<<histo_QCDPt600to800Mu[NJ][NStep]->Integral(1,nbin+1)<<endl;
+			cout<<"QCDPt800to1000Mu yield Integral(1,nbin+1): "<<histo_QCDPt800to1000Mu[NJ][NStep]->Integral(1,nbin+1)<<endl;
 			//------------------------------------------------------------------------------
 
 			cout<<""<<endl;
@@ -599,27 +743,30 @@
 			histo_QCD[NJ][NStep]->Add(histo_QCDPt15to20Mu[NJ][NStep]);
 			histo_QCD[NJ][NStep]->Add(histo_QCDPt170to300Mu[NJ][NStep]);
 			histo_QCD[NJ][NStep]->Add(histo_QCDPt170to300EM[NJ][NStep]);
+			histo_QCD[NJ][NStep]->Add(histo_QCDPt20to30Mu[NJ][NStep]);
+			histo_QCD[NJ][NStep]->Add(histo_QCDPt20to30EM[NJ][NStep]);
+			histo_QCD[NJ][NStep]->Add(histo_QCDPt300to470Mu[NJ][NStep]);
+			histo_QCD[NJ][NStep]->Add(histo_QCDPt300toInfEM[NJ][NStep]);
+			histo_QCD[NJ][NStep]->Add(histo_QCDPt30to50EM[NJ][NStep]);
+			histo_QCD[NJ][NStep]->Add(histo_QCDPt30to50Mu[NJ][NStep]);
+			histo_QCD[NJ][NStep]->Add(histo_QCDPt470to600Mu[NJ][NStep]);
+			histo_QCD[NJ][NStep]->Add(histo_QCDPt50to80EM[NJ][NStep]);
+			histo_QCD[NJ][NStep]->Add(histo_QCDPt50to80Mu[NJ][NStep]);
+			histo_QCD[NJ][NStep]->Add(histo_QCDPt600to800Mu[NJ][NStep]);
+			histo_QCD[NJ][NStep]->Add(histo_QCDPt800to1000Mu[NJ][NStep]);
 
 			double ymax = 0;
-			ymax = histo_ttbar[NJ][NStep]->GetMaximum();
+			ymax = histo_QCD[NJ][NStep]->GetMaximum();
 			//double ymin = 0;
 			//ymin = histo_TTTT[NJ][NStep]->GetMinimum();
 
-			histo_ttbar[NJ][NStep]->SetMaximum(ymax*100);
-			histo_ttbar[NJ][NStep]->SetMinimum(0.01);
-			histo_ttbar[NJ][NStep]->Draw();
+			histo_QCD[NJ][NStep]->SetMaximum(ymax*100);
+			histo_QCD[NJ][NStep]->SetMinimum(0.01);
+			histo_QCD[NJ][NStep]->Draw();
 			histo_DYJets[NJ][NStep]->Draw("same");
 			histo_WJets[NJ][NStep]->Draw("same");
-			histo_QCD[NJ][NStep]->Draw("same");
+			histo_ttbar[NJ][NStep]->Draw("same");
 			histo_TTTT[NJ][NStep]->Draw("same");
-
-			/*
-			   double ymax = 0;
-			   ymax = histo_TTTT[NJ][NStep]->GetMaximum();
-
-			   histo_TTTT_eff[NJ][NStep]->SetMaximum(1.5);
-			   histo_TTTT_eff[NJ][NStep]->Draw();
-			   histo_ttbar_eff[NJ][NStep]->Draw("same");*/
 
 			lt1.DrawLatex(xx_1,yy_1,Cut_base_text+Step_txt[NStep]);
 			//lt2.DrawLatex(x_1,y_1,"CMS");
