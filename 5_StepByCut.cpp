@@ -469,7 +469,7 @@
 			FourTop->Project(Form("histo_TTTT_gen_%d_%d",NJ,NStep),Variable,ttttHad_Ch);
 
 			//------------------------------------------------------
-			histo_ttbar[NJ][NStep] = new TH1F(Form("histo_ttbar_%d_%d",NJ,NStep),Form("Jet_HT"),nbin,xmin,xmax);
+			histo_ttbar[NJ][NStep] = new TH1F(Form("histo_ttbar_%d_%d",NJ,NStep),Form(""),nbin,xmin,xmax);
 			//histo_ttbar[NJ][NStep]->Sumw2();
 			TTbar->Project(Form("histo_ttbar_%d_%d",NJ,NStep),Variable,ttbarHad_Ch+NBJet+Step_Cut[NStep]);
 			histo_ttbar[NJ][NStep]->SetLineWidth(2);
@@ -769,9 +769,9 @@
 			histo_TTTT[NJ][NStep]->Draw("same");
 
 			lt1.DrawLatex(xx_1,yy_1,Cut_base_text+Step_txt[NStep]);
-			//lt2.DrawLatex(x_1,y_1,"CMS");
-			//lt3.DrawLatex(x_2,y_2,"Preliminary");
-			lt4.DrawLatex(tx,ty,"13 TeV");
+			lt2.DrawLatex(x_1,y_1,"CMS");
+			lt3.DrawLatex(x_2,y_2,"Preliminary");
+			lt4.DrawLatex(tx,ty,"13 TeV, 36 fb^{-1}");
 			l_[NJ][NStep]->Draw();
 			//canvIso_[NJ][NStep]->Print(Step_txt[NStep]+".png");
 			canvIso_[NJ][NStep]->SaveAs(Save_dir+Step_txt[NStep]+".png");
