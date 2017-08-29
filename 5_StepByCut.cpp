@@ -733,6 +733,8 @@
 			histo_QCD[NJ][NStep] = new TH1F(Form("histo_QCD_%d_%d",NJ,NStep),Form(""),nbin,xmin,xmax);
 			histo_QCD[NJ][NStep]->SetLineColor(qcd_c);
 			histo_QCD[NJ][NStep]->SetLineWidth(2);
+			histo_QCD[NJ][NStep]->GetYaxis()->SetTitle(Form("# of Normalized Events"));
+			histo_QCD[NJ][NStep]->GetXaxis()->SetTitle("Jet_HT");
 			l_[NJ][NStep]->AddEntry(histo_QCD[NJ][NStep],"QCD ", "lp");
 
 			histo_QCD[NJ][NStep]->Add(histo_QCDPt80to120Mu[NJ][NStep]);
