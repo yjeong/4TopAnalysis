@@ -72,6 +72,9 @@
 	TH1F *histo_WJets[JetPtCut][NJetNum];
 	TH1F *histo_WJets_gen[JetPtCut][NJetNum];
 
+	TH1F *histo_TTJets_aMC[JetPtCut][NJetNum];
+	TH1F *histo_TTJets_aMC_gen[JetPtCut][NJetNum];
+
 	TCanvas *canvIso_[JetPtCut][NJetNum];
 	TLegend *l_[JetPtCut][NJetNum];
 
@@ -87,25 +90,27 @@
 	TString Jet_mass;
 	TString NBJet;
 	TString nRecolep;
-	
+	TString defualt;
+
 	//TString Variable[] = {"Jet_Pt[0]","Jet_Pt[1]", "Jet_Pt[2]","Jet_Pt[3]","Jet_Pt[4]","Jet_Pt[5]","Jet_Pt[6]","Jet_Pt[7]","Jet_Pt[8]","Jet_Pt[9]"};
 	TString Variable;
 	Variable = "Jet_HT";
 
-	TString Pt_Cut[] = {" && Jet_Pt[0] > 100 &&","&& Jet_Pt[0] > 100 && Jet_Pt[1] > 80 &&","&& Jet_Pt[0] > 100 && Jet_Pt[1] > 80 && Jet_Pt[2] > 70 &&","&& Jet_Pt[0] > 100 && Jet_Pt[1] > 80 && Jet_Pt[2] > 70 && Jet_Pt[3] > 60 &&"};
+	TString Pt_Cut[] = {" Jet_Pt[0] > 80 &&"," Jet_Pt[0] > 80 && Jet_Pt[1] > 70 &&"," Jet_Pt[0] > 80 && Jet_Pt[1] > 70 && Jet_Pt[2] > 60 &&"," Jet_Pt[0] > 80 && Jet_Pt[1] > 70 && Jet_Pt[2] > 60 && Jet_Pt[3] > 50 &&"};
 	//TString Pt_Cut[] = {"&& Jet_Pt[0] > 80 && Jet_Pt[1] > 70 && Jet_Pt[2] > 60 && Jet_Pt[3] > 50 &&"};
 
 	//Cut_base = "fabs(Muon_Pt) > 30 && fabs(Muon_Eta) < 2.4 &&";
-	ttttHad_Ch = "nq==8 && nl==0 ";
-	ttbarHad_Ch = "nq==4 && nl==0 ";
-	nRecolep = "(NLooseMuon+NLooseElectron)==0";
+	ttttHad_Ch = "nq==8 && nl==0 &&";
+	ttbarHad_Ch = "nq==4 && nl==0 &&";
+	defualt = "NJet";
+	nRecolep = "(NLooseMuon+NLooseElectron)==0 &&";
 
-	Jet_HT_Cut = "&& Jet_HT > 500 &&";
+	Jet_HT_Cut = "Jet_HT > 500 &&";
 	//Jet_mass = "Jet_mass_sum[5] > 400 && Jet_mass_sum[6] > 450 && Jet_mass_sum[7] > 500 && Jet_mass_sum[8] > 500 && Jet_mass_sum[9] > 500 && Jet_mass_sum[10] > 500 && Jet_mass_sum[11] > 500 &&";
 	//Jet_mass = "Jet_mass_tot > 500 &&";
 	NBJet = "NBJet>=2 &&";
 
-	HadronTrig = "IsHadronTrig==1 ";
+	HadronTrig = "IsHadronTrig==1 &&";
 
 	Cut_base_text = "Hadronic";
 
@@ -113,11 +118,13 @@
 	TFile h2(PATH_samples+"TT_powheg.root");
 	TFile h3(PATH_samples+"DYJets.root");
 	TFile h4(PATH_samples+"WJets.root");
+	TFile h5(PATH_samples+"TTJets_aMC.root");
 
 	TTree *FourTop = (TTree*)h1.Get("TopTree/events");
 	TTree *TTbar = (TTree*)h2.Get("TopTree/events");
 	TTree *DYJets = (TTree*)h3.Get("TopTree/events");
 	TTree *WJets = (TTree*)h4.Get("TopTree/events");
+	TTree *TTJets_aMC = (TTree*)h5.Get("TopTree/events");
 
 	TH1F *hNJet;
 	hNJet = new TH1F(Form("hNJet"),Form(""),16,0,16);
@@ -150,6 +157,7 @@
 			int ttbar_c = 2;
 			int dyjets_c = 1;
 			int wjets_c = 6;
+			int ttjets_c = 3;
 
 			canvIso_[NJ][NPt] = new TCanvas();
 			canvIso_[NJ][NPt]->SetLogy();
@@ -182,6 +190,20 @@
 
 			histo_DYJets_gen[NJ][NPt] = new TH1F(Form("histo_DYJets_gen_%d_%d",NJ,NPt),Form(""),nbin,xmin,xmax);
 			DYJets->Project(Form("histo_DYJets_gen_%d_%d",NJ,NPt),Variable);
+			//-----------------------------------------------
+
+			histo_TTJets_aMC[NJ][NPt] = new TH1F(Form("histo_TTJets_aMC_%d_%d",NJ,NPt),Form(""),nbin,xmin,xmax);
+			TTJets_aMC->Project(Form("histo_TTJets_aMC_%d_%d",NJ,NPt),Variable,nRecolep+Pt_Cut[NPt]+HadronTrig+Jet_HT_Cut+NBJet+Form(" NJet>=%d",NJet[NJ]));
+			histo_TTJets_aMC[NJ][NPt]->SetLineWidth(2);
+			histo_TTJets_aMC[NJ][NPt]->SetLineColor(ttjets_c);
+			//histo_TTJets_aMC[NJ][NPt]->SetFillColor(ttjets_c);
+			histo_TTJets_aMC[NJ][NPt]->SetMarkerColor(ttjets_c);
+			l_[NJ][NPt]->AddEntry(histo_TTJets_aMC[NJ][NPt],"TTJets_aMC "+Cut_base_text, "lp");
+
+			histo_TTJets_aMC_gen[NJ][NPt] = new TH1F(Form("histo_TTJets_aMC_gen_%d_%d",NJ,NPt),Form(""),nbin,xmin,xmax);
+			TTJets_aMC->Project(Form("histo_TTJets_aMC_gen_%d_%d",NJ,NPt),Variable);
+
+
 			//---------------------------------------
 
 			histo_WJets[NJ][NPt] = new TH1F(Form("histo_WJets_%d_%d",NJ,NPt),Form(""),nbin,xmin,xmax);
@@ -207,7 +229,7 @@
 
 			histo_TTTT_gen[NJ][NPt] = new TH1F(Form("histo_TTTT_gen_%d_%d",NJ,NPt),Form(""),nbin,xmin,xmax);
 			//histo_TTTT_gen[NJ][NPt]->Sumw2();
-			FourTop->Project(Form("histo_TTTT_gen_%d_%d",NJ,NPt),Variable,ttttHad_Ch);
+			FourTop->Project(Form("histo_TTTT_gen_%d_%d",NJ,NPt),Variable,ttttHad_Ch+defualt);
 
 			//-----------------------------------
 			histo_ttbar[NJ][NPt] = new TH1F(Form("histo_ttbar_%d_%d",NJ,NPt),Form("Jet_HT"),nbin,xmin,xmax);
@@ -223,7 +245,7 @@
 
 			histo_ttbar_gen[NJ][NPt] = new TH1F(Form("histo_ttbar_gen_%d_%d",NJ,NPt),Form(""),nbin,xmin,xmax);
 			//histo_ttbar_gen[NJ][NPt]->Sumw2();
-			TTbar->Project(Form("histo_ttbar_gen_%d_%d",NJ,NPt),Variable,ttbarHad_Ch);
+			TTbar->Project(Form("histo_ttbar_gen_%d_%d",NJ,NPt),Variable,ttbarHad_Ch+defualt);
 			//----------------------------------
 
 			/*double nev_1 = histo_TTTT[NJ][NPt]->GetEntries();
@@ -259,6 +281,8 @@
 			double DYJetsS0 = histo_DYJets_gen[NJ][NPt]->GetEntries();
 			double WJetsS1 = histo_WJets[NJ][NPt]->GetEntries();
 			double WJetsS0 = histo_WJets_gen[NJ][NPt]->GetEntries();
+			double TTJets_aMCS1 = histo_TTJets_aMC[NJ][NPt]->GetEntries();
+			double TTJets_aMCS0 = histo_TTJets_aMC_gen[NJ][NPt]->GetEntries();
 			double BR = 0.6741;//theoritical value W->Hadron
 			double lumi = 36000;//pb-1
 			//4top->all hadrons = BR^4.
@@ -280,6 +304,10 @@
 			cout<<""<<endl;
 			cout<<""<<endl;
 
+			cout<< (TTJets_aMCS1/TTJets_aMCS0)*100<<"%"<<", "<<NBJet<<", "<<NBJet<<", "<<Pt_Cut[NPt]<<" , "<<Jet_HT_Cut <<", "<<HadronTrig<<" , "<<Form("NJet>=%d",NJet[NJ])<<", WJets " <<endl;
+			cout<<""<<endl;
+			cout<<""<<endl;
+
 
 			cout<<"number of 4top expected events: "<< 0.009103*lumi*BR*BR*BR*BR*(TTTTS1/TTTTS0) <<endl;
 			cout<<""<<endl;
@@ -289,12 +317,15 @@
 			cout<<""<<endl;
 			cout<<"number of WJets expected events: "<< 61526.7*lumi*(WJetsS1/WJetsS0) <<endl;
 			cout<<""<<endl;
+			cout<<"number of TTJets_aMC expected events: "<< 831.76*lumi*(TTJets_aMCS1/TTJets_aMCS0) <<endl;
+			cout<<""<<endl;
 			cout<<""<<endl;
 
 			histo_TTTT[NJ][NPt]->Scale(0.009103*lumi*BR*BR*BR*BR/TTTTS0);
 			histo_ttbar[NJ][NPt]->Scale(832.76*lumi*BR*BR/ttbarS0);
 			histo_DYJets[NJ][NPt]->Scale(6025.2*lumi/DYJetsS0);
 			histo_WJets[NJ][NPt]->Scale(61526.7*lumi/WJetsS0);
+			histo_TTJets_aMC[NJ][NPt]->Scale(831.76*lumi/WJetsS0);
 
 			cout<<"4top yield Integral(1,nbin+1): "<<histo_TTTT[NJ][NPt]->Integral(1,nbin+1)<<endl;
 			//cout<<"4top yield Integral: "<<histo_TTTT[NJ][NPt]->Integral()<<endl;
@@ -307,6 +338,8 @@
 			cout<<"DYJets yield Integral(1,nbin+1): "<<histo_DYJets[NJ][NPt]->Integral(1,nbin+1)<<endl;
 			cout<<""<<endl;
 			cout<<"WJets yield Integral(1,nbin+1): "<<histo_WJets[NJ][NPt]->Integral(1,nbin+1)<<endl;
+			cout<<""<<endl;
+			cout<<"TTJets_aMC yield Integral(1,nbin+1): "<<histo_TTJets_aMC[NJ][NPt]->Integral(1,nbin+1)<<endl;
 			cout<<""<<endl;
 			cout<<""<<endl;
 			cout<<""<<endl;
@@ -321,6 +354,7 @@
 			histo_ttbar[NJ][NPt]->Draw();
 			histo_DYJets[NJ][NPt]->Draw("same");
 			histo_WJets[NJ][NPt]->Draw("same");
+			histo_TTJets_aMC[NJ][NPt]->Draw("same");
 			histo_TTTT[NJ][NPt]->Draw("same");
 
 			/*

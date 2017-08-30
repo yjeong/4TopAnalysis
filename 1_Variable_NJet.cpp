@@ -60,8 +60,11 @@
 	TH1F *histo_ttbar[TreeVar][CutVar];
 	TH1F *histo_DYJets[TreeVar][CutVar];
 	TH1F *histo_WJets[TreeVar][CutVar];
+
 	TH1F *histo_QCDPt80to120EM[TreeVar][CutVar];
 	TH1F *histo_QCDPt80to120Mu[TreeVar][CutVar];
+
+	TH1F *histo_QCD[TreeVar][CutVar];
 
 	/*TH1F *histo_BR_4Top;
 	  TH1F *histo_BR_ttbar;
@@ -74,6 +77,8 @@
 	TString PATH_samples;
 	PATH_samples = "/xrootd/store/user/yjeong/4TopFullHadronic/";//KISTI
 	//PATH_samples = "/cms/scratch/yjeong/";//KISTI
+	TString Save_dir;
+	Save_dir = "/cms/scratch/yjeong/catMacro/plots/";//KISTI
 
 	TString Cut_base_text;
 	TString Ch_Cut;
@@ -83,54 +88,49 @@
 	//TString Variable[] = {"Jet_Pt[0]","Jet_Pt[1]", "Jet_Pt[2]","Jet_Pt[3]","Jet_Pt[4]","Jet_Pt[5]","Jet_Pt[6]","Jet_Pt[7]","Jet_Pt[8]","Jet_Pt[9]","Jet_Pt[10]"};
 	TString Variable[] = {"NJet","NBJet","NLooseMuon+NLooseElectron","NMuon+NElectron"};
 
-	TString Cut_base[] = {"IsHadronTrig==1",""," Jet_Pt[0] > 80 && Jet_Pt[1] > 70 && Jet_Pt[2] > 60 && Jet_Pt[3] > 50 "};
+	//TString Cut_base[] = {"IsHadronTrig==1",""," Jet_Pt[0] > 80 && Jet_Pt[1] > 70 && Jet_Pt[2] > 60 && Jet_Pt[3] > 50 "};
+	TString Cut_base[] = {"IsHadronTrig==1","IsHadronTrig==1","IsHadronTrig==1","IsHadronTrig==1"};
 	ttttHad_Ch = "nl==0 && nq==8";
 	ttbarHad_Ch = "nl==0 && nq==4";
 	nlep_Ch = "nl==0";
 
 	Cut_base_text = "Hadronic";
 
-	TFile h1(PATH_samples+"vallot.root");
-	TFile h2(PATH_samples+"TT_powheg.root");
-	TFile h3(PATH_samples+"DYJets.root");
-	TFile h4(PATH_samples+"WJets.root");
-	TFile h5(PATH_samples+"QCDPt80to120EM.root");
-	TFile h6(PATH_samples+"QCDPt80to120Mu.root");
+	////////////////////////////////Get Samples/////////////////////////////////
+        const int Sample_Num = 6;
+        TString Sample_name[Sample_Num] = {"vallot","TT_powheg","DYJets","WJets","QCDPt80to120EM","QCDPt80to120Mu"};
+        TFile *tfile[Sample_Num];
 
-	TTree *FourTop = (TTree*)h1.Get("TopTree/events");
-	TTree *TTbar = (TTree*)h2.Get("TopTree/events");
-	TTree *DYJets = (TTree*)h3.Get("TopTree/events");
-	TTree *WJets = (TTree*)h4.Get("TopTree/events");
-	TTree *QCDPt80to120EM = (TTree*)h5.Get("TopTree/events");
-	TTree *QCDPt80to120Mu = (TTree*)h6.Get("TopTree/events");
+        for(int i = 0; i < Sample_Num; i++){
+                tfile[i] = new TFile(PATH_samples+Sample_name[i]+".root");
+        }
+
+        TTree *tree[Sample_Num];
+        for(int i = 0; i < Sample_Num; i++){
+                tree[i] = (TTree*)tfile[i]->Get("TopTree/events");
+        }
+        /////////////////////////////////////////////////////////////////////////////
 
 	TH1F *hNJet;
-	hNJet = new TH1F(Form("hNJet"),Form(""),16,1,16);
-	FourTop->Project(Form("hNJet"),"nq");
-	//TTbar->Project(Form("hNJet"),"nq");
-	cout<< hNJet->GetBinContent(1) << endl;
-	cout<< hNJet->GetBinContent(2) << endl;
-	cout<< hNJet->GetBinContent(3) << endl;
-	cout<< hNJet->GetBinContent(4) << endl;
-	cout<< hNJet->GetBinContent(5) << endl;
-	cout<< hNJet->GetBinContent(6) << endl;
-	cout<< hNJet->GetBinContent(7) << endl;
-	cout<< hNJet->GetBinContent(8) << endl;
-	cout<< hNJet->GetBinContent(9) << endl;
+	hNJet = new TH1F(Form("hNJet"),Form(""),16,0,16);
+	tree[0]->Project(Form("hNJet"),"NJet");
+	for(int i = 1; i < 17; i++){
+		cout<< hNJet->GetBinContent(i) << endl;
+	}
 
 	//--------------------------------Branching ratio---------------------------------
 	/*histo_BR_4Top = new TH1F(Form("histo_BR_4top"),Form(""),20,0,270);
-	  FourTop->Project(Form("histo_BR_4top"),"EVENT",Cut_base+" && nb==2&&nbbar==2&&nWp==2&&nWm==2&&nl==0&&nq==8");
+	  tree[0]->Project(Form("histo_BR_4top"),"EVENT",Cut_base+" && nb==2&&nbbar==2&&nWp==2&&nWm==2&&nl==0&&nq==8");
 	  histo_BR_4Top_total = new TH1F(Form("histo_BR_4Top_total"),Form(""),20,0,270);
-	  FourTop->Project(Form("histo_BR_4Top_total"),"EVENT",Cut_base);
+	  tree[0]->Project(Form("histo_BR_4Top_total"),"EVENT",Cut_base);
 
 	  double nev_4T = histo_BR_4Top->GetEntries();
 	  double nev_4T_tot = histo_BR_4Top_total->GetEntries();
 
 	  histo_BR_ttbar = new TH1F(Form("histo_BR_ttbar"),Form(""),20,0,270);
-	  TTbar->Project(Form("histo_BR_ttbar"),"EVENT",Cut_base+" && nb==1&&nbbar==1&&nWp==1&&nWm==1&&nl==0&&nq==8");
+	  tree[1]->Project(Form("histo_BR_ttbar"),"EVENT",Cut_base+" && nb==1&&nbbar==1&&nWp==1&&nWm==1&&nl==0&&nq==8");
 	  histo_BR_ttbar_total = new TH1F(Form("histo_BR_ttbar_total"),Form(""),20,0,270);
-	  TTbar->Project(Form("histo_BR_ttbar_total"),"EVENT",Cut_base);
+	  tree[2]->Project(Form("histo_BR_ttbar_total"),"EVENT",Cut_base);
 
 	  double nev_tt = histo_BR_ttbar->GetEntries();
 	  double nev_tt_tot = histo_BR_ttbar_total->GetEntries();
@@ -154,10 +154,9 @@
 			float size = 0.8;
 			int TTTT_c = 4;
 			int ttbar_c = 2;
-			int dyjets_c = 1;
+			int dyjets_c = 3;
 			int wjets_c = 6;
-			int qcdPt80to120EM_c = 3;
-			int qcdPt80to120Mu_c = 7;
+			int qcd_c = 1;
 			//double ymax[] = {0.5,0.5,0.5,0.15,0.15,0.15};//
 
 			canvIso_[NT][NC] = new TCanvas();
@@ -183,72 +182,55 @@
 
 			//histo_TTTT[NT][NC] = new TH1F(Form("histo_TTTT_%d_%d",NT,NC),Form(""),nbin,xmin[NT][NC],xmax[NT][NC]);
 			histo_TTTT[NT][NC] = new TH1F(Form("histo_TTTT_%d_%d",NT,NC),Form(""),nbin[NT],xmin,xmax[NT]);
-			FourTop->Project(Form("histo_TTTT_%d_%d",NT,NC),Variable[NT],Cut_base[NC]);
+			tree[0]->Project(Form("histo_TTTT_%d_%d",NT,NC),Variable[NT],Cut_base[NT]);
 			histo_TTTT[NT][NC]->SetLineWidth(2);
 			l_[NT][NC]->AddEntry(histo_TTTT[NT][NC],"TTTT", "lp");
 			histo_TTTT[NT][NC]->SetLineColor(TTTT_c);
 			histo_TTTT[NT][NC]->SetMarkerColor(TTTT_c);
-			//histo_TTTT[NT][NC]->GetYaxis()->SetTitle("Events");
-			//histo_TTTT[NT][NC]->GetXaxis()->SetTitle(Variable[NT]);
+			histo_TTTT[NT][NC]->GetYaxis()->SetTitle("# of Normalized Events");
+			histo_TTTT[NT][NC]->GetXaxis()->SetTitle(Variable[NT]);
+
+			//----------------------------------------------------------------
+
+			histo_ttbar[NT][NC] = new TH1F(Form("histo_ttbar_%d_%d",NT,NC),Form(""),nbin[NT],xmin,xmax[NT]);
+                        tree[1]->Project(Form("histo_ttbar_%d_%d",NT,NC),Variable[NT],Cut_base[NC]);
+                        histo_ttbar[NT][NC]->SetLineWidth(2);
+                        l_[NT][NC]->AddEntry(histo_ttbar[NT][NC],"ttbar", "lp");
+                        histo_ttbar[NT][NC]->SetLineColor(ttbar_c);
+                        histo_ttbar[NT][NC]->SetMarkerColor(ttbar_c);
+                        histo_ttbar[NT][NC]->GetYaxis()->SetTitle("# of Normalized Events");
+                        histo_ttbar[NT][NC]->GetXaxis()->SetTitle(Variable[NT]);
+
 			//------------------------------------------------------------------
 
 			histo_DYJets[NT][NC] = new TH1F(Form("histo_DYJets_%d_%d",NT,NC),Form(""),nbin[NT],xmin,xmax[NT]);
-			DYJets->Project(Form("histo_DYJets_%d_%d",NT,NC),Variable[NT],Cut_base[NC]);
+			tree[2]->Project(Form("histo_DYJets_%d_%d",NT,NC),Variable[NT],Cut_base[NT]);
 			histo_DYJets[NT][NC]->SetLineWidth(2);
 			l_[NT][NC]->AddEntry(histo_DYJets[NT][NC],"DYJets", "lp");
 			histo_DYJets[NT][NC]->SetLineColor(dyjets_c);
 			histo_DYJets[NT][NC]->SetMarkerColor(dyjets_c);
-			histo_DYJets[NT][NC]->GetYaxis()->SetTitle("Events");
+			histo_DYJets[NT][NC]->GetYaxis()->SetTitle("# of Normalized Events");
 			histo_DYJets[NT][NC]->GetXaxis()->SetTitle(Variable[NT]);
 			//---------------------------------------------------------------------
 
 			histo_WJets[NT][NC] = new TH1F(Form("histo_WJets_%d_%d",NT,NC),Form(""),nbin[NT],xmin,xmax[NT]);
-			WJets->Project(Form("histo_WJets_%d_%d",NT,NC),Variable[NT],Cut_base[NC]);
+			tree[3]->Project(Form("histo_WJets_%d_%d",NT,NC),Variable[NT],Cut_base[NT]);
 			histo_WJets[NT][NC]->SetLineWidth(2);
 			l_[NT][NC]->AddEntry(histo_WJets[NT][NC],"WJets", "lp");
 			histo_WJets[NT][NC]->SetLineColor(wjets_c);
 			histo_WJets[NT][NC]->SetMarkerColor(wjets_c);
-			histo_WJets[NT][NC]->GetYaxis()->SetTitle("Events");
+			histo_WJets[NT][NC]->GetYaxis()->SetTitle("# of Normalized Events");
 			histo_WJets[NT][NC]->GetXaxis()->SetTitle(Variable[NT]);
 			//---------------------------------------------------------------------
 
 			histo_QCDPt80to120EM[NT][NC] = new TH1F(Form("histo_QCDPt80to120EM_%d_%d",NT,NC),Form(""),nbin[NT],xmin,xmax[NT]);
-			QCDPt80to120EM->Project(Form("histo_QCDPt80to120EM_%d_%d",NT,NC),Variable[NT],Cut_base[NC]);
-			histo_QCDPt80to120EM[NT][NC]->SetLineWidth(2);
-			l_[NT][NC]->AddEntry(histo_QCDPt80to120EM[NT][NC],"QCDPt80to120EM", "lp");
-			histo_QCDPt80to120EM[NT][NC]->SetLineColor(qcdPt80to120EM_c);
-			histo_QCDPt80to120EM[NT][NC]->SetMarkerColor(qcdPt80to120EM_c);
-			histo_QCDPt80to120EM[NT][NC]->GetYaxis()->SetTitle("Events");
-			histo_QCDPt80to120EM[NT][NC]->GetXaxis()->SetTitle(Variable[NT]);
+			tree[4]->Project(Form("histo_QCDPt80to120EM_%d_%d",NT,NC),Variable[NT],Cut_base[NT]);
 			//------------------------------------------------------------------
 			histo_QCDPt80to120Mu[NT][NC] = new TH1F(Form("histo_QCDPt80to120Mu_%d_%d",NT,NC),Form(""),nbin[NT],xmin,xmax[NT]);
-			QCDPt80to120Mu->Project(Form("histo_QCDPt80to120Mu_%d_%d",NT,NC),Variable[NT],Cut_base[NC]);
-			histo_QCDPt80to120Mu[NT][NC]->SetLineWidth(2);
-			l_[NT][NC]->AddEntry(histo_QCDPt80to120Mu[NT][NC],"QCDPt80to120Mu", "lp");
-			histo_QCDPt80to120Mu[NT][NC]->SetLineColor(qcdPt80to120Mu_c);
-			histo_QCDPt80to120Mu[NT][NC]->SetMarkerColor(qcdPt80to120Mu_c);
-			histo_QCDPt80to120Mu[NT][NC]->GetYaxis()->SetTitle("Events");
-			histo_QCDPt80to120Mu[NT][NC]->GetXaxis()->SetTitle(Variable[NT]);
-
+			tree[5]->Project(Form("histo_QCDPt80to120Mu_%d_%d",NT,NC),Variable[NT],Cut_base[NT]);
 
 			//---------------------------------------------------------------------
-			//histo_ttbar[NT][NC] = new TH1F(Form("histo_ttbar_%d_%d",NT,NC),Form(""),nbin,xmin[NT][NC],xmax[NT][NC]);
-			histo_ttbar[NT][NC] = new TH1F(Form("histo_ttbar_%d_%d",NT,NC),Form(""),nbin[NT],xmin,xmax[NT]);
-			TTbar->Project(Form("histo_ttbar_%d_%d",NT,NC),Variable[NT],Cut_base[NC]);
-			histo_ttbar[NT][NC]->SetLineWidth(2);
-			l_[NT][NC]->AddEntry(histo_ttbar[NT][NC],"ttbar", "lp");
-			histo_ttbar[NT][NC]->SetLineColor(ttbar_c);
-			histo_ttbar[NT][NC]->SetMarkerColor(ttbar_c);
-			histo_ttbar[NT][NC]->GetYaxis()->SetTitle("Events");
-			histo_ttbar[NT][NC]->GetXaxis()->SetTitle(Variable[NT]);
 
-
-			cout<<"original DYJets Entries: "<<histo_DYJets[NT][NC]->GetEntries()<<endl;
-			cout<<"original WJets Entries: "<<histo_WJets[NT][NC]->GetEntries()<<endl;
-			cout<<"original QCDPt80to120EM Entries: "<<histo_QCDPt80to120EM[NT][NC]->GetEntries()<<endl;
-			cout<<"original QCDPt80to120Mu Entries: "<<histo_QCDPt80to120Mu[NT][NC]->GetEntries()<<endl;
-			cout<<"original ttbar Entries: "<<histo_ttbar[NT][NC]->GetEntries()<<endl;
-			cout<<"original TTTT Entries: "<<histo_TTTT[NT][NC]->GetEntries()<<endl;
 			/*cout<<""<<endl;
 			  cout<<"origin-1st bin: "<<histo_DYJets[NT][NC]->GetBinContent(1)<<endl;
 			  cout<<"origin-2nd bin: "<<histo_DYJets[NT][NC]->GetBinContent(2)<<endl;
@@ -258,6 +240,21 @@
 			  cout<<"ttbar yield Integral(1,nbin+1): "<<histo_ttbar[NT][NC]->Integral(1,nbin[NT][NC]+1)<<endl;
 			  cout<<"TTTT yield Integral(1,nbin+1): "<<histo_TTTT[NT][NC]->Integral(1,nbin[NT][NC]+1)<<endl;*/
 
+			histo_QCD[NT][NC] = new TH1F(Form("histo_QCD_%d_%d",NT,NC),Form(""),nbin[NT],xmin,xmax[NT]);
+			histo_QCD[NT][NC]->SetLineColor(qcd_c);
+			histo_QCD[NT][NC]->SetLineWidth(2);
+			histo_QCD[NT][NC]->GetYaxis()->SetTitle(Form("# of Normalized Events"));
+			histo_QCD[NT][NC]->GetXaxis()->SetTitle(Variable[NT]);
+			l_[NT][NC]->AddEntry(histo_QCD[NT][NC],"QCD ", "lp");
+
+			histo_QCD[NT][NC]->Add(histo_QCDPt80to120Mu[NT][NC]);
+			histo_QCD[NT][NC]->Add(histo_QCDPt80to120EM[NT][NC]);
+
+			cout<<"original DYJets Entries: "<<histo_DYJets[NT][NC]->GetEntries()<<endl;
+			cout<<"original WJets Entries: "<<histo_WJets[NT][NC]->GetEntries()<<endl;
+			cout<<"original ttbar Entries: "<<histo_ttbar[NT][NC]->GetEntries()<<endl;
+			cout<<"original TTTT Entries: "<<histo_TTTT[NT][NC]->GetEntries()<<endl;
+			cout<<"original QCDM Entries: "<<histo_QCD[NT][NC]->GetEntries()<<endl;
 
 			double nev_1 = histo_TTTT[NT][NC]->GetEntries();
 			histo_TTTT[NT][NC]->Scale(1/nev_1);
@@ -267,60 +264,25 @@
 			histo_DYJets[NT][NC]->Scale(1/nev_3);
 			double nev_4 = histo_WJets[NT][NC]->GetEntries();
 			histo_WJets[NT][NC]->Scale(1/nev_4);
-			double nev_5 = histo_QCDPt80to120EM[NT][NC]->GetEntries();
-			histo_QCDPt80to120EM[NT][NC]->Scale(1/nev_5);
-			double nev_6 = histo_QCDPt80to120Mu[NT][NC]->GetEntries();
-			histo_QCDPt80to120Mu[NT][NC]->Scale(1/nev_6);
-
-			/*double scale_1 = 1/(histo_TTTT[NT][NC]->Integral(1,nbin[NT][NC]+1));
-			  histo_TTTT[NT][NC]->Scale(scale_1);
-			  double scale_2 = 1/(histo_ttbar[NT][NC]->Integral(1,nbin[NT][NC]+1));
-			  histo_ttbar[NT][NC]->Scale(scale_2);
-			  double scale_3 = 1/(histo_DYJets[NT][NC]->Integral(1,nbin[NT][NC]+1));
-			  histo_DYJets[NT][NC]->Scale(scale_3);
-			  double scale_4 = 1/(histo_WJets[NT][NC]->Integral(1,nbin[NT][NC]+1));
-			  histo_WJets[NT][NC]->Scale(scale_4);*/
-
-
-			/*cout<<"Norm-1st bin: "<<histo_DYJets[NT][NC]->GetBinContent(1)<<endl;
-			  cout<<"Norm-2nd bin: "<<histo_DYJets[NT][NC]->GetBinContent(2)<<endl;
-			  cout<<""<<endl;
-			  cout<<"DYJets yield Integral(1,nbin+1): "<<histo_DYJets[NT][NC]->Integral(1,nbin[NT][NC]+1)<<endl;
-			  cout<<"WJets yield Integral(1,nbin+1): "<<histo_WJets[NT][NC]->Integral(1,nbin[NT][NC]+1)<<endl;
-			  cout<<"ttbar yield Integral(1,nbin+1): "<<histo_ttbar[NT][NC]->Integral(1,nbin[NT][NC]+1)<<endl;
-			  cout<<"TTTT yield Integral(1,nbin+1): "<<histo_TTTT[NT][NC]->Integral(1,nbin[NT][NC]+1)<<endl;
-			  cout<<""<<endl;
-			  cout<<"DYJets yield GetSum: "<<histo_DYJets[NT][NC]->GetSum()<<endl;
-			  cout<<"WJets yield GetSum: "<<histo_WJets[NT][NC]->GetSum()<<endl;
-			  cout<<"ttbar yield GetSum: "<<histo_ttbar[NT][NC]->GetSum()<<endl;
-			  cout<<"TTTT yield GetSum: "<<histo_TTTT[NT][NC]->GetSum()<<endl;*/
+			double nev_5 = histo_QCD[NT][NC]->GetEntries();
+			histo_QCD[NT][NC]->Scale(1/nev_5);
 
 			double ymax = 0;
-			if(NT<=1){
-				ymax = histo_DYJets[NT][NC]->GetMaximum();
-				histo_DYJets[NT][NC]->SetMaximum(ymax*1.2);
-				histo_DYJets[NT][NC]->Draw();
-				histo_QCDPt80to120EM[NT][NC]->Draw("same");
-			}
-			if(NT>=2){
-				ymax = histo_QCDPt80to120EM[NT][NC]->GetMaximum();
-				histo_QCDPt80to120EM[NT][NC]->SetMaximum(ymax*1.2);
-				histo_QCDPt80to120EM[NT][NC]->Draw();
-				histo_DYJets[NT][NC]->Draw("same");
-			}
+			ymax = histo_QCD[NT][NC]->GetMaximum();
+
+			histo_QCD[NT][NC]->SetMaximum(ymax*1.3);
+			histo_QCD[NT][NC]->Draw();
+			histo_DYJets[NT][NC]->Draw("same");
 			histo_TTTT[NT][NC]->Draw("same");
-			histo_QCDPt80to120Mu[NT][NC]->Draw("same");
 			histo_WJets[NT][NC]->Draw("same");
 			histo_ttbar[NT][NC]->Draw("same");
 
-			lt1.DrawLatex(xx_1,yy_1,Form("4top ")+Cut_base_text);
-			//lt2.DrawLatex(x_1,y_1,"CMS");
-			//lt3.DrawLatex(x_2,y_2,"Preliminary");
-			lt4.DrawLatex(tx,ty,"13 TeV");
+			lt1.DrawLatex(xx_1,yy_1,Cut_base_text);
+			lt2.DrawLatex(x_1,y_1,"CMS");
+			lt3.DrawLatex(x_2,y_2,"Preliminary");
+			lt4.DrawLatex(tx,ty,"13 TeV, 36 fb^{-1}");
 			l_[NT][NC]->Draw();
-			canvIso_[NT][NC]->Print(Variable[NT]+Cut_base[NC]+".png");
-			cout<<""<<endl;
-			cout<<""<<endl;
+			canvIso_[NT][NC]->SaveAs(Save_dir+Variable[NT]+".png");
 		}
 	}
 	cout<<"13TeV"<<endl;
