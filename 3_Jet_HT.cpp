@@ -230,7 +230,7 @@
 			lt3.DrawLatex(x_2,y_2,"Preliminary");
 			lt4.DrawLatex(tx,ty,"13 TeV, 36 fb^{-1}");
 			l_[NJ][NPt]->Draw();
-			canv_[NJ][NPt]->SaveAs(Save_dir+Variable+Pt_Cut[NPt]+".png");
+			canv_[NJ][NPt]->SaveAs(Save_dir+Pt_Cut[NPt]+Variable+".png");
 		}
 	}
 	cout<<"13TeV"<<endl;

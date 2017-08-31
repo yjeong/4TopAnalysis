@@ -243,10 +243,11 @@
 			double nev_qcd = histo_QCD[NT][NC]->GetEntries();
 			histo_QCD[NT][NC]->Scale(1/nev_qcd);
 
+			double ymax[] = {0.7,0.5,0.8,1.1};
 			//double ymax = 0;
 			//ymax = histo_QCD[NT][NC]->GetMaximum();
 			//histo_QCD[NT][NC]->SetMaximum(ymax*1.3);
-			histo_QCD[NT][NC]->SetMaximum(1.1);
+			histo_QCD[NT][NC]->SetMaximum(ymax[NT]);
 			histo_QCD[NT][NC]->Draw();
 			for(int nSam = 0; nSam < nSample; nSam++){
 				histo_Sample[NT][NC][nSam]->Draw("same");

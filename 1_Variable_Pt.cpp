@@ -122,7 +122,8 @@
 		for(int NPt = 0; NPt < JetPtCut; NPt++){
 			float nbin = 35;
 			float xmin = 0;
-			float xmax = 350;
+			//float xmax = 350;
+			float xmax = 550-(550-200)/10*NPt;
 			float size = 0.8;
 			int TTTT_c = 4;
 			int ttbar_c = 2;
