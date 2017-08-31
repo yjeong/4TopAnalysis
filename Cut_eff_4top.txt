@@ -1,0 +1,583 @@
+--------------------step definition-------------------
+
+step1: NJet >= 6 && NBJet >= 2
+
+step2: IsHadronTrig == 1 &&
+
+step3: Jet_Pt[0] > 80 && Jet_Pt[1] > 70 && Jet_Pt[2] > 60 && Jet_Pt[3] > 50 &&
+
+step4: Jet_HT > 500 &&
+
+step5: (NLooseMuon+NLooseElectron)==0 &&
+
+step6: NBJet>=3 &&
+
+step7: NJet>=10 &&
+
+---------------------------------------step1-------------------------------------
+lumi : 36000 pb-1
+
+
+70.9458% , nq==8 && nl==0 , 4 top
+
+10.6457%, nq==4 && nl==0 , ttbar
+
+0.00530969%, , DYJets
+
+0.00140666%, , WJets
+
+0.364685%, , QCD
+
+
+number of 4top expected events: 48.0077
+
+number of ttbar expected events: 1.45025e+06
+
+number of DYJets expected events: 11517.1
+
+number of WJets expected events: 31157.1
+
+number of QCD expected events: 1.58902e+07
+
+
+number of QCDPt80to120EM expected events: 1.66519e+06
+number of QCDPt80to120Mu expected events: 1.90091e+06
+number of QCDPt1000toInfMu expected events: 1975.49
+number of QCDPt120to170EM expected events: 5.11265e+06
+number of QCDPt120to170Mu expected events: 552940
+number of QCDPt15to20Mu expected events: 70319.4
+number of QCDPt170to300EM expected events: 1.29411e+06
+number of QCDPt170to300Mu expected events: 2.04285e+06
+number of QCDPt20to30EM expected events: 83640.8
+number of QCDPt20to30Mu expected events: 52890.4
+number of QCDPt300to470Mu expected events: 454347
+number of QCDPt300toInfEM expected events: 276797
+number of QCDPt30to50EM expected events: 316833
+number of QCDPt30to50Mu expected events: 105919
+number of QCDPt470to600Mu expected events: 66642
+number of QCDPt50to80EM expected events: 1.2072e+06
+number of QCDPt50to80Mu expected events: 679713
+number of QCDPt600to800Mu expected events: 0
+number of QCDPt800to1000Mu expected events: 5304.11
+
+------------------------------------------------
+
+4top yield Integral(1,nbin+1): 48.0077
+
+ttbar yield Integral(1,nbin+1): 1.45025e+06
+
+DYJets yield Integral(1,nbin+1): 11517.1
+
+WJets yield Integral(1,nbin+1): 31157.1
+
+QCD yield Integral(1,nbin+1): 1.58902e+07
+
+
+QCDPt80to120EM yield Integral(1,nbin+1): 1.66519e+06
+QCDPt80to120Mu yield Integral(1,nbin+1): 1.90091e+06
+QCDPt1000toInfMu yield Integral(1,nbin+1): 1975.49
+QCDPt120to170EM yield Integral(1,nbin+1): 5.11265e+06
+QCDPt120to170Mu yield Integral(1,nbin+1): 552940
+QCDPt15to20Mu yield Integral(1,nbin+1): 70319.4
+QCDPt170to300EM yield Integral(1,nbin+1): 1.29411e+06
+QCDPt170to300Mu yield Integral(1,nbin+1): 2.04285e+06
+QCDPt20to30EM yield Integral(1,nbin+1): 83640.8
+QCDPt20to30Mu yield Integral(1,nbin+1): 52890.4
+QCDPt300to470Mu yield Integral(1,nbin+1): 454347
+QCDPt300toInfEM yield Integral(1,nbin+1): 276797
+QCDPt30to50EM yield Integral(1,nbin+1): 316833
+QCDPt30to50Mu yield Integral(1,nbin+1): 105919
+QCDPt470to600Mu yield Integral(1,nbin+1): 66642
+QCDPt50to80EM yield Integral(1,nbin+1): 1.2072e+06
+QCDPt50to80Mu yield Integral(1,nbin+1): 679713
+QCDPt600to800Mu yield Integral(1,nbin+1): 0
+QCDPt800to1000Mu yield Integral(1,nbin+1): 5304.11
+
+Info in <TCanvas::Print>: png file /cms/scratch/yjeong/catMacro/plots/step1.png has been created
+
+---------------------------------------step2-------------------------------------
+lumi : 36000 pb-1
+
+
+70.4553% , nq==8 && nl==0 , 4 top
+
+6.53811%, nq==4 && nl==0 , ttbar
+
+0.00247412%, , DYJets
+
+0.000740788%, , WJets
+
+0.305709%, , QCD
+
+
+number of 4top expected events: 47.6758
+
+number of ttbar expected events: 890683
+
+number of DYJets expected events: 5366.55
+
+number of WJets expected events: 16408.2
+
+number of QCD expected events: 7.10227e+06
+
+
+number of QCDPt80to120EM expected events: 369533
+number of QCDPt80to120Mu expected events: 383701
+number of QCDPt1000toInfMu expected events: 1777.91
+number of QCDPt120to170EM expected events: 2.64148e+06
+number of QCDPt120to170Mu expected events: 281756
+number of QCDPt15to20Mu expected events: 70319.4
+number of QCDPt170to300EM expected events: 936742
+number of QCDPt170to300Mu expected events: 1.50775e+06
+number of QCDPt20to30EM expected events: 0
+number of QCDPt20to30Mu expected events: 24682.2
+number of QCDPt300to470Mu expected events: 377603
+number of QCDPt300toInfEM expected events: 230340
+number of QCDPt30to50EM expected events: 52805.5
+number of QCDPt30to50Mu expected events: 16295.3
+number of QCDPt470to600Mu expected events: 57772
+number of QCDPt50to80EM expected events: 108885
+number of QCDPt50to80Mu expected events: 36083.5
+number of QCDPt600to800Mu expected events: 0
+number of QCDPt800to1000Mu expected events: 4741.71
+
+------------------------------------------------
+
+4top yield Integral(1,nbin+1): 47.6758
+
+ttbar yield Integral(1,nbin+1): 890683
+
+DYJets yield Integral(1,nbin+1): 5366.55
+
+WJets yield Integral(1,nbin+1): 16408.2
+
+QCD yield Integral(1,nbin+1): 7.10227e+06
+
+
+QCDPt80to120EM yield Integral(1,nbin+1): 369533
+QCDPt80to120Mu yield Integral(1,nbin+1): 383701
+QCDPt1000toInfMu yield Integral(1,nbin+1): 1777.91
+QCDPt120to170EM yield Integral(1,nbin+1): 2.64148e+06
+QCDPt120to170Mu yield Integral(1,nbin+1): 281756
+QCDPt15to20Mu yield Integral(1,nbin+1): 70319.4
+QCDPt170to300EM yield Integral(1,nbin+1): 936742
+QCDPt170to300Mu yield Integral(1,nbin+1): 1.50775e+06
+QCDPt20to30EM yield Integral(1,nbin+1): 0
+QCDPt20to30Mu yield Integral(1,nbin+1): 24682.2
+QCDPt300to470Mu yield Integral(1,nbin+1): 377603
+QCDPt300toInfEM yield Integral(1,nbin+1): 230340
+QCDPt30to50EM yield Integral(1,nbin+1): 52805.5
+QCDPt30to50Mu yield Integral(1,nbin+1): 16295.3
+QCDPt470to600Mu yield Integral(1,nbin+1): 57772
+QCDPt50to80EM yield Integral(1,nbin+1): 108885
+QCDPt50to80Mu yield Integral(1,nbin+1): 36083.5
+QCDPt600to800Mu yield Integral(1,nbin+1): 0
+QCDPt800to1000Mu yield Integral(1,nbin+1): 4741.71
+
+Info in <TCanvas::Print>: png file /cms/scratch/yjeong/catMacro/plots/step2.png has been created
+
+---------------------------------------step3-------------------------------------
+lumi : 36000 pb-1
+
+
+69.335% , nq==8 && nl==0 , 4 top
+
+5.42123%, nq==4 && nl==0 , ttbar
+
+0.00194966%, , DYJets
+
+0.000611774%, , WJets
+
+0.288199%, , QCD
+
+
+number of 4top expected events: 46.9177
+
+number of ttbar expected events: 738531
+
+number of DYJets expected events: 4228.95
+
+number of WJets expected events: 13550.6
+
+number of QCD expected events: 5.29184e+06
+
+
+number of QCDPt80to120EM expected events: 205092
+number of QCDPt80to120Mu expected events: 207768
+number of QCDPt1000toInfMu expected events: 1736.93
+number of QCDPt120to170EM expected events: 1.83966e+06
+number of QCDPt120to170Mu expected events: 191495
+number of QCDPt15to20Mu expected events: 35159.7
+number of QCDPt170to300EM expected events: 768735
+number of QCDPt170to300Mu expected events: 1.24889e+06
+number of QCDPt20to30EM expected events: 0
+number of QCDPt20to30Mu expected events: 17630.1
+number of QCDPt300to470Mu expected events: 351086
+number of QCDPt300toInfEM expected events: 214018
+number of QCDPt30to50EM expected events: 52805.5
+number of QCDPt30to50Mu expected events: 6110.73
+number of QCDPt470to600Mu expected events: 55354.1
+number of QCDPt50to80EM expected events: 75745.9
+number of QCDPt50to80Mu expected events: 15943.9
+number of QCDPt600to800Mu expected events: 0
+number of QCDPt800to1000Mu expected events: 4616.82
+
+------------------------------------------------
+
+4top yield Integral(1,nbin+1): 46.9177
+
+ttbar yield Integral(1,nbin+1): 738531
+
+DYJets yield Integral(1,nbin+1): 4228.95
+
+WJets yield Integral(1,nbin+1): 13550.6
+
+QCD yield Integral(1,nbin+1): 5.29184e+06
+
+
+QCDPt80to120EM yield Integral(1,nbin+1): 205092
+QCDPt80to120Mu yield Integral(1,nbin+1): 207768
+QCDPt1000toInfMu yield Integral(1,nbin+1): 1736.93
+QCDPt120to170EM yield Integral(1,nbin+1): 1.83966e+06
+QCDPt120to170Mu yield Integral(1,nbin+1): 191495
+QCDPt15to20Mu yield Integral(1,nbin+1): 35159.7
+QCDPt170to300EM yield Integral(1,nbin+1): 768735
+QCDPt170to300Mu yield Integral(1,nbin+1): 1.24889e+06
+QCDPt20to30EM yield Integral(1,nbin+1): 0
+QCDPt20to30Mu yield Integral(1,nbin+1): 17630.1
+QCDPt300to470Mu yield Integral(1,nbin+1): 351086
+QCDPt300toInfEM yield Integral(1,nbin+1): 214018
+QCDPt30to50EM yield Integral(1,nbin+1): 52805.5
+QCDPt30to50Mu yield Integral(1,nbin+1): 6110.73
+QCDPt470to600Mu yield Integral(1,nbin+1): 55354.1
+QCDPt50to80EM yield Integral(1,nbin+1): 75745.9
+QCDPt50to80Mu yield Integral(1,nbin+1): 15943.9
+QCDPt600to800Mu yield Integral(1,nbin+1): 0
+QCDPt800to1000Mu yield Integral(1,nbin+1): 4616.82
+
+Info in <TCanvas::Print>: png file /cms/scratch/yjeong/catMacro/plots/step3.png has been created
+
+---------------------------------------step4-------------------------------------
+lumi : 36000 pb-1
+
+
+68.7036% , nq==8 && nl==0 , 4 top
+
+4.03682%, nq==4 && nl==0 , ttbar
+
+0.00159233%, , DYJets
+
+0.000549348%, , WJets
+
+0.283803%, , QCD
+
+
+number of 4top expected events: 46.4905
+
+number of ttbar expected events: 549933
+
+number of DYJets expected events: 3453.88
+
+number of WJets expected events: 12167.9
+
+number of QCD expected events: 3.80109e+06
+
+
+number of QCDPt80to120EM expected events: 52572.1
+number of QCDPt80to120Mu expected events: 53896.8
+number of QCDPt1000toInfMu expected events: 1736.93
+number of QCDPt120to170EM expected events: 1.09176e+06
+number of QCDPt120to170Mu expected events: 112370
+number of QCDPt15to20Mu expected events: 0
+number of QCDPt170to300EM expected events: 690203
+number of QCDPt170to300Mu expected events: 1.1312e+06
+number of QCDPt20to30EM expected events: 0
+number of QCDPt20to30Mu expected events: 10578.1
+number of QCDPt300to470Mu expected events: 350423
+number of QCDPt300toInfEM expected events: 213607
+number of QCDPt30to50EM expected events: 0
+number of QCDPt30to50Mu expected events: 4073.82
+number of QCDPt470to600Mu expected events: 55351.4
+number of QCDPt50to80EM expected events: 23670.6
+number of QCDPt50to80Mu expected events: 5034.91
+number of QCDPt600to800Mu expected events: 0
+number of QCDPt800to1000Mu expected events: 4616.82
+
+------------------------------------------------
+
+4top yield Integral(1,nbin+1): 46.4905
+
+ttbar yield Integral(1,nbin+1): 549933
+
+DYJets yield Integral(1,nbin+1): 3453.88
+
+WJets yield Integral(1,nbin+1): 12167.9
+
+QCD yield Integral(1,nbin+1): 3.80109e+06
+
+
+QCDPt80to120EM yield Integral(1,nbin+1): 52572.1
+QCDPt80to120Mu yield Integral(1,nbin+1): 53896.8
+QCDPt1000toInfMu yield Integral(1,nbin+1): 1736.93
+QCDPt120to170EM yield Integral(1,nbin+1): 1.09176e+06
+QCDPt120to170Mu yield Integral(1,nbin+1): 112370
+QCDPt15to20Mu yield Integral(1,nbin+1): 0
+QCDPt170to300EM yield Integral(1,nbin+1): 690203
+QCDPt170to300Mu yield Integral(1,nbin+1): 1.1312e+06
+QCDPt20to30EM yield Integral(1,nbin+1): 0
+QCDPt20to30Mu yield Integral(1,nbin+1): 10578.1
+QCDPt300to470Mu yield Integral(1,nbin+1): 350423
+QCDPt300toInfEM yield Integral(1,nbin+1): 213607
+QCDPt30to50EM yield Integral(1,nbin+1): 0
+QCDPt30to50Mu yield Integral(1,nbin+1): 4073.82
+QCDPt470to600Mu yield Integral(1,nbin+1): 55351.4
+QCDPt50to80EM yield Integral(1,nbin+1): 23670.6
+QCDPt50to80Mu yield Integral(1,nbin+1): 5034.91
+QCDPt600to800Mu yield Integral(1,nbin+1): 0
+QCDPt800to1000Mu yield Integral(1,nbin+1): 4616.82
+
+Info in <TCanvas::Print>: png file /cms/scratch/yjeong/catMacro/plots/step4.png has been created
+
+---------------------------------------step5-------------------------------------
+lumi : 36000 pb-1
+
+
+51.1205% , nq==8 && nl==0 , 4 top
+
+3.3793%, nq==4 && nl==0 , ttbar
+
+0.000350741%, , DYJets
+
+0.000183116%, , WJets
+
+0.159583%, , QCD
+
+
+number of 4top expected events: 34.5923
+
+number of ttbar expected events: 460360
+
+number of DYJets expected events: 760.782
+
+number of WJets expected events: 4055.95
+
+number of QCD expected events: 2.56541e+06
+
+
+number of QCDPt80to120EM expected events: 47070.4
+number of QCDPt80to120Mu expected events: 35465.8
+number of QCDPt1000toInfMu expected events: 929.079
+number of QCDPt120to170EM expected events: 671193
+number of QCDPt120to170Mu expected events: 99356.4
+number of QCDPt15to20Mu expected events: 0
+number of QCDPt170to300EM expected events: 595846
+number of QCDPt170to300Mu expected events: 669490
+number of QCDPt20to30EM expected events: 0
+number of QCDPt20to30Mu expected events: 7052.06
+number of QCDPt300to470Mu expected events: 195946
+number of QCDPt300toInfEM expected events: 179584
+number of QCDPt30to50EM expected events: 0
+number of QCDPt30to50Mu expected events: 4073.82
+number of QCDPt470to600Mu expected events: 29911.8
+number of QCDPt50to80EM expected events: 23670.6
+number of QCDPt50to80Mu expected events: 3356.61
+number of QCDPt600to800Mu expected events: 0
+number of QCDPt800to1000Mu expected events: 2468.4
+
+------------------------------------------------
+
+4top yield Integral(1,nbin+1): 34.5923
+
+ttbar yield Integral(1,nbin+1): 460360
+
+DYJets yield Integral(1,nbin+1): 760.782
+
+WJets yield Integral(1,nbin+1): 4055.95
+
+QCD yield Integral(1,nbin+1): 2.56541e+06
+
+
+QCDPt80to120EM yield Integral(1,nbin+1): 47070.4
+QCDPt80to120Mu yield Integral(1,nbin+1): 35465.8
+QCDPt1000toInfMu yield Integral(1,nbin+1): 929.079
+QCDPt120to170EM yield Integral(1,nbin+1): 671193
+QCDPt120to170Mu yield Integral(1,nbin+1): 99356.4
+QCDPt15to20Mu yield Integral(1,nbin+1): 0
+QCDPt170to300EM yield Integral(1,nbin+1): 595846
+QCDPt170to300Mu yield Integral(1,nbin+1): 669490
+QCDPt20to30EM yield Integral(1,nbin+1): 0
+QCDPt20to30Mu yield Integral(1,nbin+1): 7052.06
+QCDPt300to470Mu yield Integral(1,nbin+1): 195946
+QCDPt300toInfEM yield Integral(1,nbin+1): 179584
+QCDPt30to50EM yield Integral(1,nbin+1): 0
+QCDPt30to50Mu yield Integral(1,nbin+1): 4073.82
+QCDPt470to600Mu yield Integral(1,nbin+1): 29911.8
+QCDPt50to80EM yield Integral(1,nbin+1): 23670.6
+QCDPt50to80Mu yield Integral(1,nbin+1): 3356.61
+QCDPt600to800Mu yield Integral(1,nbin+1): 0
+QCDPt800to1000Mu yield Integral(1,nbin+1): 2468.4
+
+Info in <TCanvas::Print>: png file /cms/scratch/yjeong/catMacro/plots/step5.png has been created
+
+---------------------------------------step6-------------------------------------
+lumi : 36000 pb-1
+
+
+26.1566% , nq==8 && nl==0 , 4 top
+
+0.577018%, nq==4 && nl==0 , ttbar
+
+4.28134e-05%, , DYJets
+
+2.08087e-05%, , WJets
+
+0.0259139%, , QCD
+
+
+number of 4top expected events: 17.6997
+
+number of ttbar expected events: 78606.8
+
+number of DYJets expected events: 92.8654
+
+number of WJets expected events: 460.904
+
+number of QCD expected events: 352636
+
+
+number of QCDPt80to120EM expected events: 4279.13
+number of QCDPt80to120Mu expected events: 5026.65
+number of QCDPt1000toInfMu expected events: 159.277
+number of QCDPt120to170EM expected events: 100442
+number of QCDPt120to170Mu expected events: 11296
+number of QCDPt15to20Mu expected events: 0
+number of QCDPt170to300EM expected events: 68355.6
+number of QCDPt170to300Mu expected events: 104205
+number of QCDPt20to30EM expected events: 0
+number of QCDPt20to30Mu expected events: 0
+number of QCDPt300to470Mu expected events: 31338
+number of QCDPt300toInfEM expected events: 22184.4
+number of QCDPt30to50EM expected events: 0
+number of QCDPt30to50Mu expected events: 0
+number of QCDPt470to600Mu expected events: 4931.65
+number of QCDPt50to80EM expected events: 0
+number of QCDPt50to80Mu expected events: 0
+number of QCDPt600to800Mu expected events: 0
+number of QCDPt800to1000Mu expected events: 419.154
+
+------------------------------------------------
+
+4top yield Integral(1,nbin+1): 17.6997
+
+ttbar yield Integral(1,nbin+1): 78606.8
+
+DYJets yield Integral(1,nbin+1): 92.8654
+
+WJets yield Integral(1,nbin+1): 460.904
+
+QCD yield Integral(1,nbin+1): 352636
+
+
+QCDPt80to120EM yield Integral(1,nbin+1): 4279.13
+QCDPt80to120Mu yield Integral(1,nbin+1): 5026.65
+QCDPt1000toInfMu yield Integral(1,nbin+1): 159.277
+QCDPt120to170EM yield Integral(1,nbin+1): 100442
+QCDPt120to170Mu yield Integral(1,nbin+1): 11296
+QCDPt15to20Mu yield Integral(1,nbin+1): 0
+QCDPt170to300EM yield Integral(1,nbin+1): 68355.6
+QCDPt170to300Mu yield Integral(1,nbin+1): 104205
+QCDPt20to30EM yield Integral(1,nbin+1): 0
+QCDPt20to30Mu yield Integral(1,nbin+1): 0
+QCDPt300to470Mu yield Integral(1,nbin+1): 31338
+QCDPt300toInfEM yield Integral(1,nbin+1): 22184.4
+QCDPt30to50EM yield Integral(1,nbin+1): 0
+QCDPt30to50Mu yield Integral(1,nbin+1): 0
+QCDPt470to600Mu yield Integral(1,nbin+1): 4931.65
+QCDPt50to80EM yield Integral(1,nbin+1): 0
+QCDPt50to80Mu yield Integral(1,nbin+1): 0
+QCDPt600to800Mu yield Integral(1,nbin+1): 0
+QCDPt800to1000Mu yield Integral(1,nbin+1): 419.154
+
+Info in <TCanvas::Print>: png file /cms/scratch/yjeong/catMacro/plots/step6.png has been created
+
+---------------------------------------step7-------------------------------------
+lumi : 36000 pb-1
+
+
+16.3196% , nq==8 && nl==0 , 4 top
+
+0.0286262%, nq==4 && nl==0 , ttbar
+
+0%, , DYJets
+
+0%, , WJets
+
+0.00182907%, , QCD
+
+
+number of 4top expected events: 11.0432
+
+number of ttbar expected events: 3899.73
+
+number of DYJets expected events: 0
+
+number of WJets expected events: 0
+
+number of QCD expected events: 6866.57
+
+
+number of QCDPt80to120EM expected events: 0
+number of QCDPt80to120Mu expected events: 279.258
+number of QCDPt1000toInfMu expected events: 15.9496
+number of QCDPt120to170EM expected events: 759.483
+number of QCDPt120to170Mu expected events: 134.157
+number of QCDPt15to20Mu expected events: 0
+number of QCDPt170to300EM expected events: 1470.64
+number of QCDPt170to300Mu expected events: 1842.6
+number of QCDPt20to30EM expected events: 0
+number of QCDPt20to30Mu expected events: 0
+number of QCDPt300to470Mu expected events: 1133.27
+number of QCDPt300toInfEM expected events: 915.23
+number of QCDPt30to50EM expected events: 0
+number of QCDPt30to50Mu expected events: 0
+number of QCDPt470to600Mu expected events: 277.695
+number of QCDPt50to80EM expected events: 0
+number of QCDPt50to80Mu expected events: 0
+number of QCDPt600to800Mu expected events: 0
+number of QCDPt800to1000Mu expected events: 38.2843
+
+------------------------------------------------
+
+4top yield Integral(1,nbin+1): 11.0432
+
+ttbar yield Integral(1,nbin+1): 3899.73
+
+DYJets yield Integral(1,nbin+1): 0
+
+WJets yield Integral(1,nbin+1): 0
+
+QCD yield Integral(1,nbin+1): 6866.57
+
+
+QCDPt80to120EM yield Integral(1,nbin+1): 0
+QCDPt80to120Mu yield Integral(1,nbin+1): 279.258
+QCDPt1000toInfMu yield Integral(1,nbin+1): 15.9496
+QCDPt120to170EM yield Integral(1,nbin+1): 759.483
+QCDPt120to170Mu yield Integral(1,nbin+1): 134.157
+QCDPt15to20Mu yield Integral(1,nbin+1): 0
+QCDPt170to300EM yield Integral(1,nbin+1): 1470.64
+QCDPt170to300Mu yield Integral(1,nbin+1): 1842.6
+QCDPt20to30EM yield Integral(1,nbin+1): 0
+QCDPt20to30Mu yield Integral(1,nbin+1): 0
+QCDPt300to470Mu yield Integral(1,nbin+1): 1133.27
+QCDPt300toInfEM yield Integral(1,nbin+1): 915.23
+QCDPt30to50EM yield Integral(1,nbin+1): 0
+QCDPt30to50Mu yield Integral(1,nbin+1): 0
+QCDPt470to600Mu yield Integral(1,nbin+1): 277.695
+QCDPt50to80EM yield Integral(1,nbin+1): 0
+QCDPt50to80Mu yield Integral(1,nbin+1): 0
+QCDPt600to800Mu yield Integral(1,nbin+1): 0
+QCDPt800to1000Mu yield Integral(1,nbin+1): 38.2843
+
+Info in <TCanvas::Print>: png file /cms/scratch/yjeong/catMacro/plots/step7.png has been created
+13TeV
