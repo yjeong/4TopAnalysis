@@ -55,7 +55,7 @@
 
 	const int JetPtCut = 6;//Pt Cut number
 	const int NJetNum = 1;//Variable
-	const int nSample = 4;
+	const int nSample = 4;//==============================check
 	const int nQCD = 19;
 
 	TH1F *histo_Sample[JetPtCut][NJetNum][nSample];
@@ -94,10 +94,10 @@
 	Cut_base_text = "Hadronic ";
 
 	////////////////////////////////Get Samples/////////////////////////////////
-	const int Sample_Num = 23;
-	TString Sample_name[Sample_Num] = {"QCDPt80to120EM","QCDPt80to120Mu","QCDPt1000toInfMu","QCDPt120to170EM","QCDPt120to170Mu","QCDPt15to20Mu","QCDPt170to300EM","QCDPt170to300Mu","QCDPt20to30EM","QCDPt20to30Mu","QCDPt300to470Mu","QCDPt300toInfEM","QCDPt30to50EM","QCDPt30to50Mu","QCDPt470to600Mu","QCDPt50to80EM","QCDPt50to80Mu","QCDPt600to800Mu","QCDPt800to1000Mu","vallot","TT_powheg","DYJets","WJets"};
+	const int Sample_Num = 23;//================================check
+	TString Sample_name[Sample_Num] = {"QCDPt80to120EM","QCDPt80to120Mu","QCDPt1000toInfMu","QCDPt120to170EM","QCDPt120to170Mu","QCDPt15to20Mu","QCDPt170to300EM","QCDPt170to300Mu","QCDPt20to30EM","QCDPt20to30Mu","QCDPt300to470Mu","QCDPt300toInfEM","QCDPt30to50EM","QCDPt30to50Mu","QCDPt470to600Mu","QCDPt50to80EM","QCDPt50to80Mu","QCDPt600to800Mu","QCDPt800to1000Mu","vallot","TT_powheg","DYJets","WJets"};//========================check
 
-	TString Legend_Name[] = {"TTTT","ttbar","DYJets","WJets"};
+	TString Legend_Name[] = {"TTTT","ttbar","DYJets","WJets"};//=================================check
 
 	TFile *tfile[Sample_Num];
 
@@ -151,7 +151,7 @@
 			l_[NJ][NPt]->SetTextFont(2);
 			l_[NJ][NPt]->SetTextSize(0.035);
 
-			for(int nSam = 0; nSam < nSample; nSam++){
+			for(int nSam = 0; nSam < nSample; nSam++){//=============================check
 				histo_Sample[NJ][NPt][nSam] = new TH1F(Form("histo_Sample_%d_%d_%d",NJ,NPt,nSam),Form(""),nbin,xmin,xmax);
 				if(nSam==0)tree[nSam+19]->Project(Form("histo_Sample_%d_%d_%d",NJ,NPt,nSam),Variable[NPt],ttttHad_Ch+Cut_base[NJ]+Triger+nRecolep);
 				if(nSam==1)tree[nSam+19]->Project(Form("histo_Sample_%d_%d_%d",NJ,NPt,nSam),Variable[NPt],ttbarHad_Ch+Cut_base[NJ]+Triger+nRecolep);
@@ -204,8 +204,8 @@
 				histo_Sample[NJ][NPt][nSam]->Scale(1/nev_[nSam]);
 			}
 
-			double nev_5 = histo_QCD[NJ][NPt]->GetEntries();
-			histo_QCD[NJ][NPt]->Scale(1/nev_5);
+			double nev_qcd = histo_QCD[NJ][NPt]->GetEntries();
+			histo_QCD[NJ][NPt]->Scale(1/nev_qcd);
 
 			double ymax = 0;
 			ymax = histo_Sample[NJ][NPt][1]->GetMaximum();
