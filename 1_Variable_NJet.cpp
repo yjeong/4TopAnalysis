@@ -55,14 +55,14 @@
 
 	const int TreeVar = 4;//Variable number
 	const int CutVar = 1;
+	const int nSample = 4;
+	const int nQCD = 19;
 
-	TH1F *histo_TTTT[TreeVar][CutVar];
-	TH1F *histo_ttbar[TreeVar][CutVar];
-	TH1F *histo_DYJets[TreeVar][CutVar];
-	TH1F *histo_WJets[TreeVar][CutVar];
+	TH1F *histo_Sample[TreeVar][CutVar][nSample];
+	TH1F *histo_Sample_gen[TreeVar][CutVar][nSample];
 
-	TH1F *histo_QCDPt80to120EM[TreeVar][CutVar];
-	TH1F *histo_QCDPt80to120Mu[TreeVar][CutVar];
+	TH1F *histo_nQCD[TreeVar][CutVar][nQCD];
+	TH1F *histo_nQCD_gen[TreeVar][CutVar][nQCD];
 
 	TH1F *histo_QCD[TreeVar][CutVar];
 
@@ -71,7 +71,7 @@
 	  TH1F *histo_BR_4Top_total;
 	  TH1F *histo_BR_ttbar_total;*/
 
-	TCanvas *canvIso_[TreeVar][CutVar];
+	TCanvas *canv_[TreeVar][CutVar];
 	TLegend *l_[TreeVar][CutVar];
 
 	TString PATH_samples;
@@ -89,7 +89,7 @@
 	TString Variable[] = {"NJet","NBJet","NLooseMuon+NLooseElectron","NMuon+NElectron"};
 
 	//TString Cut_base[] = {"IsHadronTrig==1",""," Jet_Pt[0] > 80 && Jet_Pt[1] > 70 && Jet_Pt[2] > 60 && Jet_Pt[3] > 50 "};
-	TString Cut_base[] = {"IsHadronTrig==1","IsHadronTrig==1","IsHadronTrig==1","IsHadronTrig==1"};
+	TString Cut_base[] = {"IsHadronTrig==1"};
 	ttttHad_Ch = "nl==0 && nq==8";
 	ttbarHad_Ch = "nl==0 && nq==4";
 	nlep_Ch = "nl==0";
@@ -97,23 +97,27 @@
 	Cut_base_text = "Hadronic";
 
 	////////////////////////////////Get Samples/////////////////////////////////
-        const int Sample_Num = 6;
-        TString Sample_name[Sample_Num] = {"vallot","TT_powheg","DYJets","WJets","QCDPt80to120EM","QCDPt80to120Mu"};
-        TFile *tfile[Sample_Num];
+	const int Sample_Num = 23;
+	TString Sample_name[Sample_Num] = {"QCDPt80to120EM","QCDPt80to120Mu","QCDPt1000toInfMu","QCDPt120to170EM","QCDPt120to170Mu","QCDPt15to20Mu","QCDPt170to300EM","QCDPt170to300Mu","QCDPt20to30EM","QCDPt20to30Mu","QCDPt300to470Mu","QCDPt300toInfEM","QCDPt30to50EM","QCDPt30to50Mu","QCDPt470to600Mu","QCDPt50to80EM","QCDPt50to80Mu","QCDPt600to800Mu","QCDPt800to1000Mu","vallot","TT_powheg","DYJets","WJets"};
+	TString Legend_Name[] = {"TTTT","ttbar","DYJets","WJets"};
 
-        for(int i = 0; i < Sample_Num; i++){
-                tfile[i] = new TFile(PATH_samples+Sample_name[i]+".root");
-        }
+	TFile *tfile[Sample_Num];
 
-        TTree *tree[Sample_Num];
-        for(int i = 0; i < Sample_Num; i++){
-                tree[i] = (TTree*)tfile[i]->Get("TopTree/events");
-        }
-        /////////////////////////////////////////////////////////////////////////////
+	for(int i = 0; i < Sample_Num; i++){
+		tfile[i] = new TFile(PATH_samples+Sample_name[i]+".root");
+	}
+
+	TTree *tree[Sample_Num];
+	for(int i = 0; i < Sample_Num; i++){
+		tree[i] = (TTree*)tfile[i]->Get("TopTree/events");
+	}
+	/////////////////////////////////////////////////////////////////////////////
 
 	TH1F *hNJet;
 	hNJet = new TH1F(Form("hNJet"),Form(""),16,0,16);
-	tree[0]->Project(Form("hNJet"),"NJet");
+	tree[19]->Project(Form("hNJet"),"NJet");
+	cout<<"NJet events number"<<endl;
+
 	for(int i = 1; i < 17; i++){
 		cout<< hNJet->GetBinContent(i) << endl;
 	}
@@ -147,8 +151,6 @@
 	for(int NC = 0; NC < CutVar; NC++){
 		for(int NT = 0; NT < TreeVar; NT++){
 			float nbin[] = {18,8,6,6};
-			//float xmin[] = {0,0,0,-3,-3,-3};//
-			//float xmax[] = {350,350,350,3,3,3};//
 			float xmin = 0;//
 			float xmax[] = {18,8,6,6};//
 			float size = 0.8;
@@ -157,19 +159,18 @@
 			int dyjets_c = 3;
 			int wjets_c = 6;
 			int qcd_c = 1;
-			//double ymax[] = {0.5,0.5,0.5,0.15,0.15,0.15};//
 
-			canvIso_[NT][NC] = new TCanvas();
-			//canvIso_[NT][NC]->SetLogy();
-			canvIso_[NT][NC]->SetFillColor(0);
-			canvIso_[NT][NC]->SetBorderMode(2);
-			canvIso_[NT][NC]->SetFrameFillStyle(3);
-			canvIso_[NT][NC]->SetFrameBorderMode(0);
-			canvIso_[NT][NC]->SetTickx(1);
-			canvIso_[NT][NC]->SetTicky(1);
-			canvIso_[NT][NC]->Update();
-			canvIso_[NT][NC]->RedrawAxis();
-			canvIso_[NT][NC]->GetFrame()->Draw();
+			canv_[NT][NC] = new TCanvas();
+			//canv_[NT][NC]->SetLogy();
+			canv_[NT][NC]->SetFillColor(0);
+			canv_[NT][NC]->SetBorderMode(2);
+			canv_[NT][NC]->SetFrameFillStyle(3);
+			canv_[NT][NC]->SetFrameBorderMode(0);
+			canv_[NT][NC]->SetTickx(1);
+			canv_[NT][NC]->SetTicky(1);
+			canv_[NT][NC]->Update();
+			canv_[NT][NC]->RedrawAxis();
+			canv_[NT][NC]->GetFrame()->Draw();
 
 			l_[NT][NC] = new TLegend(lx1,ly1,lx2,ly2);
 			l_[NT][NC]->SetFillColor(0);
@@ -180,65 +181,39 @@
 			l_[NT][NC]->SetTextFont(2);
 			l_[NT][NC]->SetTextSize(0.035);
 
-			//histo_TTTT[NT][NC] = new TH1F(Form("histo_TTTT_%d_%d",NT,NC),Form(""),nbin,xmin[NT][NC],xmax[NT][NC]);
-			histo_TTTT[NT][NC] = new TH1F(Form("histo_TTTT_%d_%d",NT,NC),Form(""),nbin[NT],xmin,xmax[NT]);
-			tree[0]->Project(Form("histo_TTTT_%d_%d",NT,NC),Variable[NT],Cut_base[NT]);
-			histo_TTTT[NT][NC]->SetLineWidth(2);
-			l_[NT][NC]->AddEntry(histo_TTTT[NT][NC],"TTTT", "lp");
-			histo_TTTT[NT][NC]->SetLineColor(TTTT_c);
-			histo_TTTT[NT][NC]->SetMarkerColor(TTTT_c);
-			histo_TTTT[NT][NC]->GetYaxis()->SetTitle("# of Normalized Events");
-			histo_TTTT[NT][NC]->GetXaxis()->SetTitle(Variable[NT]);
+			for(int nSam = 0; nSam < nSample; nSam++){
+				histo_Sample[NT][NC][nSam] = new TH1F(Form("histo_Sample_%d_%d_%d",NT,NC,nSam),Form(""),nbin[NT],xmin,xmax[NT]);
+				tree[nSam+19]->Project(Form("histo_Sample_%d_%d_%d",NT,NC,nSam),Variable[NT],Cut_base[NC]);
+				histo_Sample[NT][NC][nSam]->SetLineWidth(2);
+				if(nSam == 0){
+					histo_Sample[NT][NC][nSam]->SetLineColor(TTTT_c);
+					histo_Sample[NT][NC][nSam]->SetMarkerColor(TTTT_c);
+				}
+				if(nSam == 1){
+					histo_Sample[NT][NC][nSam]->SetLineColor(ttbar_c);
+					histo_Sample[NT][NC][nSam]->SetMarkerColor(ttbar_c);
+				}
+				if(nSam == 2){
+					histo_Sample[NT][NC][nSam]->SetLineColor(dyjets_c);
+					histo_Sample[NT][NC][nSam]->SetMarkerColor(dyjets_c);
+				}
+				if(nSam == 3){
+					histo_Sample[NT][NC][nSam]->SetLineColor(wjets_c);
+					histo_Sample[NT][NC][nSam]->SetMarkerColor(wjets_c);
+				}
+				histo_Sample[NT][NC][nSam]->GetYaxis()->SetTitle(Form("# of Normalized Events"));
+				histo_Sample[NT][NC][nSam]->GetXaxis()->SetTitle(Variable[NT]);
+				l_[NT][NC]->AddEntry(histo_Sample[NT][NC][nSam],Legend_Name[nSam], "lp");
+			}
 
 			//----------------------------------------------------------------
 
-			histo_ttbar[NT][NC] = new TH1F(Form("histo_ttbar_%d_%d",NT,NC),Form(""),nbin[NT],xmin,xmax[NT]);
-                        tree[1]->Project(Form("histo_ttbar_%d_%d",NT,NC),Variable[NT],Cut_base[NC]);
-                        histo_ttbar[NT][NC]->SetLineWidth(2);
-                        l_[NT][NC]->AddEntry(histo_ttbar[NT][NC],"ttbar", "lp");
-                        histo_ttbar[NT][NC]->SetLineColor(ttbar_c);
-                        histo_ttbar[NT][NC]->SetMarkerColor(ttbar_c);
-                        histo_ttbar[NT][NC]->GetYaxis()->SetTitle("# of Normalized Events");
-                        histo_ttbar[NT][NC]->GetXaxis()->SetTitle(Variable[NT]);
-
-			//------------------------------------------------------------------
-
-			histo_DYJets[NT][NC] = new TH1F(Form("histo_DYJets_%d_%d",NT,NC),Form(""),nbin[NT],xmin,xmax[NT]);
-			tree[2]->Project(Form("histo_DYJets_%d_%d",NT,NC),Variable[NT],Cut_base[NT]);
-			histo_DYJets[NT][NC]->SetLineWidth(2);
-			l_[NT][NC]->AddEntry(histo_DYJets[NT][NC],"DYJets", "lp");
-			histo_DYJets[NT][NC]->SetLineColor(dyjets_c);
-			histo_DYJets[NT][NC]->SetMarkerColor(dyjets_c);
-			histo_DYJets[NT][NC]->GetYaxis()->SetTitle("# of Normalized Events");
-			histo_DYJets[NT][NC]->GetXaxis()->SetTitle(Variable[NT]);
-			//---------------------------------------------------------------------
-
-			histo_WJets[NT][NC] = new TH1F(Form("histo_WJets_%d_%d",NT,NC),Form(""),nbin[NT],xmin,xmax[NT]);
-			tree[3]->Project(Form("histo_WJets_%d_%d",NT,NC),Variable[NT],Cut_base[NT]);
-			histo_WJets[NT][NC]->SetLineWidth(2);
-			l_[NT][NC]->AddEntry(histo_WJets[NT][NC],"WJets", "lp");
-			histo_WJets[NT][NC]->SetLineColor(wjets_c);
-			histo_WJets[NT][NC]->SetMarkerColor(wjets_c);
-			histo_WJets[NT][NC]->GetYaxis()->SetTitle("# of Normalized Events");
-			histo_WJets[NT][NC]->GetXaxis()->SetTitle(Variable[NT]);
-			//---------------------------------------------------------------------
-
-			histo_QCDPt80to120EM[NT][NC] = new TH1F(Form("histo_QCDPt80to120EM_%d_%d",NT,NC),Form(""),nbin[NT],xmin,xmax[NT]);
-			tree[4]->Project(Form("histo_QCDPt80to120EM_%d_%d",NT,NC),Variable[NT],Cut_base[NT]);
-			//------------------------------------------------------------------
-			histo_QCDPt80to120Mu[NT][NC] = new TH1F(Form("histo_QCDPt80to120Mu_%d_%d",NT,NC),Form(""),nbin[NT],xmin,xmax[NT]);
-			tree[5]->Project(Form("histo_QCDPt80to120Mu_%d_%d",NT,NC),Variable[NT],Cut_base[NT]);
+			for(int NQ = 0; NQ < nQCD; NQ++){
+				histo_nQCD[NT][NC][NQ] = new TH1F(Form("histo_nQCD_%d_%d_%d",NT,NC,NQ),Form(""),nbin[NT],xmin,xmax[NT]);
+				tree[NQ]->Project(Form("histo_nQCD_%d_%d_%d",NT,NC,NQ),Variable[NT],Cut_base[NC]);
+			}
 
 			//---------------------------------------------------------------------
-
-			/*cout<<""<<endl;
-			  cout<<"origin-1st bin: "<<histo_DYJets[NT][NC]->GetBinContent(1)<<endl;
-			  cout<<"origin-2nd bin: "<<histo_DYJets[NT][NC]->GetBinContent(2)<<endl;
-			  cout<<""<<endl;
-			  cout<<"DYJets yield Integral(1,nbin+1): "<<histo_DYJets[NT][NC]->Integral(1,nbin[NT][NC]+1)<<endl;
-			  cout<<"WJets yield Integral(1,nbin+1): "<<histo_WJets[NT][NC]->Integral(1,nbin[NT][NC]+1)<<endl;
-			  cout<<"ttbar yield Integral(1,nbin+1): "<<histo_ttbar[NT][NC]->Integral(1,nbin[NT][NC]+1)<<endl;
-			  cout<<"TTTT yield Integral(1,nbin+1): "<<histo_TTTT[NT][NC]->Integral(1,nbin[NT][NC]+1)<<endl;*/
 
 			histo_QCD[NT][NC] = new TH1F(Form("histo_QCD_%d_%d",NT,NC),Form(""),nbin[NT],xmin,xmax[NT]);
 			histo_QCD[NT][NC]->SetLineColor(qcd_c);
@@ -247,42 +222,41 @@
 			histo_QCD[NT][NC]->GetXaxis()->SetTitle(Variable[NT]);
 			l_[NT][NC]->AddEntry(histo_QCD[NT][NC],"QCD ", "lp");
 
-			histo_QCD[NT][NC]->Add(histo_QCDPt80to120Mu[NT][NC]);
-			histo_QCD[NT][NC]->Add(histo_QCDPt80to120EM[NT][NC]);
+			for(int NQ = 0; NQ < nQCD; NQ++){
+				histo_QCD[NT][NC]->Add(histo_nQCD[NT][NC][NQ]);
+			}
 
-			cout<<"original DYJets Entries: "<<histo_DYJets[NT][NC]->GetEntries()<<endl;
-			cout<<"original WJets Entries: "<<histo_WJets[NT][NC]->GetEntries()<<endl;
-			cout<<"original ttbar Entries: "<<histo_ttbar[NT][NC]->GetEntries()<<endl;
-			cout<<"original TTTT Entries: "<<histo_TTTT[NT][NC]->GetEntries()<<endl;
-			cout<<"original QCDM Entries: "<<histo_QCD[NT][NC]->GetEntries()<<endl;
+			TString Sample_Name[] = {"TTTT","ttbar","DYJets","WJets"};
+			for(int nSam = 0; nSam < nSample; nSam++){
+				cout<<"original "<<Sample_Name[nSam] <<" Entries: "<< histo_Sample[NT][NC][nSam]->GetEntries()<<endl;
+			}
 
-			double nev_1 = histo_TTTT[NT][NC]->GetEntries();
-			histo_TTTT[NT][NC]->Scale(1/nev_1);
-			double nev_2 = histo_ttbar[NT][NC]->GetEntries();
-			histo_ttbar[NT][NC]->Scale(1/nev_2);
-			double nev_3 = histo_DYJets[NT][NC]->GetEntries();
-			histo_DYJets[NT][NC]->Scale(1/nev_3);
-			double nev_4 = histo_WJets[NT][NC]->GetEntries();
-			histo_WJets[NT][NC]->Scale(1/nev_4);
+			cout<<"original QCD Entries: "<<histo_QCD[NT][NC]->GetEntries()<<endl;
+
+			double nev_[nSample];
+			for(int nSam = 0; nSam < nSample; nSam++){
+				nev_[nSam] = histo_Sample[NT][NC][nSam]->GetEntries();
+				histo_Sample[NT][NC][nSam]->Scale(1/nev_[nSam]);
+			}
+
 			double nev_5 = histo_QCD[NT][NC]->GetEntries();
 			histo_QCD[NT][NC]->Scale(1/nev_5);
 
-			double ymax = 0;
-			ymax = histo_QCD[NT][NC]->GetMaximum();
-
-			histo_QCD[NT][NC]->SetMaximum(ymax*1.3);
+			//double ymax = 0;
+			//ymax = histo_QCD[NT][NC]->GetMaximum();
+			//histo_QCD[NT][NC]->SetMaximum(ymax*1.3);
+			histo_QCD[NT][NC]->SetMaximum(1.1);
 			histo_QCD[NT][NC]->Draw();
-			histo_DYJets[NT][NC]->Draw("same");
-			histo_TTTT[NT][NC]->Draw("same");
-			histo_WJets[NT][NC]->Draw("same");
-			histo_ttbar[NT][NC]->Draw("same");
+			for(int nSam = 0; nSam < nSample; nSam++){
+				histo_Sample[NT][NC][nSam]->Draw("same");
+			}
 
 			lt1.DrawLatex(xx_1,yy_1,Cut_base_text);
 			lt2.DrawLatex(x_1,y_1,"CMS");
 			lt3.DrawLatex(x_2,y_2,"Preliminary");
 			lt4.DrawLatex(tx,ty,"13 TeV, 36 fb^{-1}");
 			l_[NT][NC]->Draw();
-			canvIso_[NT][NC]->SaveAs(Save_dir+Variable[NT]+".png");
+			canv_[NT][NC]->SaveAs(Save_dir+Variable[NT]+".png");
 		}
 	}
 	cout<<"13TeV"<<endl;

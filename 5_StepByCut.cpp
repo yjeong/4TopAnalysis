@@ -63,12 +63,8 @@
 	TH1F *histo_Sample[JetStepCut][NJetNum][nSample];
 	TH1F *histo_Sample_gen[JetStepCut][NJetNum][nSample];
 
-	//----------------------------QCD samples----------------------------
-
 	TH1F *histo_nQCD[JetStepCut][NJetNum][nQCD];
 	TH1F *histo_nQCD_gen[JetStepCut][NJetNum][nQCD];
-
-	//----------------------------------------------------------
 
 	TH1F *histo_QCD[JetStepCut][NJetNum];
 
@@ -306,7 +302,6 @@
 			//----------------------------------Cut Effciency----------------------------------
 
 			cout<< (QCD_S1/QCD_S0)*100<<"%"<<", "<<", QCD " <<endl;
-			cout<<""<<endl;
 			cout<<""<<endl;
 			//---------------------------------------------------------------------------------
 			for(int NQ = 0; NQ < nQCD; NQ++){
