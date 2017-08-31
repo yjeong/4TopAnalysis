@@ -143,7 +143,7 @@
 
 	TH1F *hNJet;
 	hNJet = new TH1F(Form("hNJet"),Form(""),16,0,16);
-	tree[0]->Project(Form("hNJet"),"NJet");
+	tree[19]->Project(Form("hNJet"),"NJet");
 	cout<<"NJet events number"<<endl;
 
 	for(int i = 1; i < 17; i++){
@@ -175,7 +175,7 @@
 			int TTTT_c = 4;
 			int ttbar_c = 2;
 			int dyjets_c = 3;
-			jets_c = 6;
+			int wjets_c = 6;
 			int qcd_c = 1;
 
 			canv_[NJ][NStep] = new TCanvas();
@@ -298,44 +298,42 @@
 				nQCDS0[NQ] = histo_nQCD_gen[NJ][NStep][NQ]->GetEntries();
 			}
 
-			//-------------------------------Total, Cut event of QCD---------------------------------
-			double QCD_S1 = 0, QCD_S0 = 0;
+			double QCD_S1 = 0, QCD_S0 = 0;//selected events, total events
 			for(int NQ = 0; NQ < nQCD; NQ++){
 				QCD_S1 += nQCDS1[NQ];
 				QCD_S0 += nQCDS0[NQ];
 			}
-			//------------------------------------------------------------------------------
+			//----------------------------------Cut Effciency----------------------------------
 
 			cout<< (QCD_S1/QCD_S0)*100<<"%"<<", "<<", QCD " <<endl;
 			cout<<""<<endl;
 			cout<<""<<endl;
-
+			//---------------------------------------------------------------------------------
 			for(int NQ = 0; NQ < nQCD; NQ++){
 				histo_nQCD[NJ][NStep][NQ]->Scale(QCD_xsec[NQ]*lumi/nQCDS0[NQ]);
 				QCD_Int[NQ] = histo_nQCD[NJ][NStep][NQ]->Integral(1,nbin+1);
 				nQCD_ev[NQ] = QCD_xsec[NQ]*lumi*(nQCDS1[NQ]/nQCDS0[NQ]);
 			}
 
-			//--------------------------------------Integral, Expected ev of QCd------------------------------
-			double QCD_Integral = 0, QCD_ev = 0;
+			double QCD_Integral = 0, QCD_ev = 0;//histo Integral, total expected events
 			for(int NQ = 0; NQ < nQCD; NQ++ ){
 				QCD_Integral += QCD_Int[NQ];
 				QCD_ev += nQCD_ev[NQ];
 			}
-			//------------------------------------------------------------------------------------------
 
 			cout<<"QCD expected events: "<<QCD_ev <<endl;
 			cout<<"QCD yield Integral(1,nbin+1): "<<QCD_Integral<<endl;
 			cout<<""<<endl;
 			cout<<""<<endl;
 
+			//----------------------------------expected events, yield----------------------------
 			for(int NQ = 0; NQ < nQCD; NQ++){
 				cout <<"number of "<< QCD_name[NQ] << " expected events: " << nQCD_ev[NQ] << endl;
 				cout << QCD_name[NQ] << " yield Integral(1,nbin+1): " << QCD_Int[NQ] <<endl;
 				cout<<""<<endl;
 			}
+			//--------------------------------------------------------------------------------
 
-			//////////////////////////////////////////// QCD histo //////////////////////////////////////////////
 			histo_QCD[NJ][NStep] = new TH1F(Form("histo_QCD_%d_%d",NJ,NStep),Form(""),nbin,xmin,xmax);
 			histo_QCD[NJ][NStep]->SetLineColor(qcd_c);
 			histo_QCD[NJ][NStep]->SetLineWidth(2);
