@@ -74,7 +74,7 @@
 
 	//-----------------------------------------------------------
 
-	TCanvas *canvIso_[JetStepCut][NJetNum];
+	TCanvas *canv_[JetStepCut][NJetNum];
 	TLegend *l_[JetStepCut][NJetNum];
 
 	TString PATH_samples;
@@ -125,7 +125,7 @@
 	////////////////////////////////Get Samples/////////////////////////////////
 
 	const int Sample_Num = 23;//=======================================check
-	TString Sample_name[Sample_Num] = {"vallot","TT_powheg","DYJets","WJets","QCDPt80to120EM","QCDPt80to120Mu","QCDPt1000toInfMu","QCDPt120to170EM","QCDPt120to170Mu","QCDPt15to20Mu","QCDPt170to300EM","QCDPt170to300Mu","QCDPt20to30EM","QCDPt20to30Mu","QCDPt300to470Mu","QCDPt300toInfEM","QCDPt30to50EM","QCDPt30to50Mu","QCDPt470to600Mu","QCDPt50to80EM","QCDPt50to80Mu","QCDPt600to800Mu","QCDPt800to1000Mu"};//===============================check
+	TString Sample_name[Sample_Num] = {"QCDPt80to120EM","QCDPt80to120Mu","QCDPt1000toInfMu","QCDPt120to170EM","QCDPt120to170Mu","QCDPt15to20Mu","QCDPt170to300EM","QCDPt170to300Mu","QCDPt20to30EM","QCDPt20to30Mu","QCDPt300to470Mu","QCDPt300toInfEM","QCDPt30to50EM","QCDPt30to50Mu","QCDPt470to600Mu","QCDPt50to80EM","QCDPt50to80Mu","QCDPt600to800Mu","QCDPt800to1000Mu","vallot","TT_powheg","DYJets","WJets"};//===============================check
 
 	TString Legend_Name[] = {"TTTT","ttbar","DYJets","WJets"};//===============================check
 
@@ -175,20 +175,20 @@
 			int TTTT_c = 4;
 			int ttbar_c = 2;
 			int dyjets_c = 3;
-			int wjets_c = 6;
+			jets_c = 6;
 			int qcd_c = 1;
 
-			canvIso_[NJ][NStep] = new TCanvas();
-			canvIso_[NJ][NStep]->SetLogy();
-			canvIso_[NJ][NStep]->SetFillColor(0);
-			canvIso_[NJ][NStep]->SetBorderMode(2);
-			canvIso_[NJ][NStep]->SetFrameFillStyle(3);
-			canvIso_[NJ][NStep]->SetFrameBorderMode(0);
-			canvIso_[NJ][NStep]->SetTickx(1);
-			canvIso_[NJ][NStep]->SetTicky(1);
-			canvIso_[NJ][NStep]->Update();
-			canvIso_[NJ][NStep]->RedrawAxis();
-			canvIso_[NJ][NStep]->GetFrame()->Draw();
+			canv_[NJ][NStep] = new TCanvas();
+			canv_[NJ][NStep]->SetLogy();
+			canv_[NJ][NStep]->SetFillColor(0);
+			canv_[NJ][NStep]->SetBorderMode(2);
+			canv_[NJ][NStep]->SetFrameFillStyle(3);
+			canv_[NJ][NStep]->SetFrameBorderMode(0);
+			canv_[NJ][NStep]->SetTickx(1);
+			canv_[NJ][NStep]->SetTicky(1);
+			canv_[NJ][NStep]->Update();
+			canv_[NJ][NStep]->RedrawAxis();
+			canv_[NJ][NStep]->GetFrame()->Draw();
 
 			l_[NJ][NStep] = new TLegend(lx1,ly1,lx2,ly2);
 			l_[NJ][NStep]->SetFillColor(0);
@@ -203,9 +203,9 @@
 
 			for(int nSam = 0; nSam < nSample; nSam++){
 				histo_Sample[NJ][NStep][nSam] = new TH1F(Form("histo_Sample_%d_%d_%d",NJ,NStep,nSam),Form(""),nbin,xmin,xmax);
-				if(nSam == 0)tree[nSam]->Project(Form("histo_Sample_%d_%d_%d",NJ,NStep,nSam),Variable,ttttHad_Ch+NBJet+Step_Cut[NStep]);
-				if(nSam == 1)tree[nSam]->Project(Form("histo_Sample_%d_%d_%d",NJ,NStep,nSam),Variable,ttbarHad_Ch+NBJet+Step_Cut[NStep]);
-				if(nSam > 1)tree[nSam]->Project(Form("histo_Sample_%d_%d_%d",NJ,NStep,nSam),Variable,Step_Cut[NStep]);
+				if(nSam == 0)tree[nSam+19]->Project(Form("histo_Sample_%d_%d_%d",NJ,NStep,nSam),Variable,ttttHad_Ch+NBJet+Step_Cut[NStep]);
+				if(nSam == 1)tree[nSam+19]->Project(Form("histo_Sample_%d_%d_%d",NJ,NStep,nSam),Variable,ttbarHad_Ch+NBJet+Step_Cut[NStep]);
+				if(nSam > 1)tree[nSam+19]->Project(Form("histo_Sample_%d_%d_%d",NJ,NStep,nSam),Variable,Step_Cut[NStep]);
 				histo_Sample[NJ][NStep][nSam]->SetLineWidth(2);
 				if(nSam == 0){
 					histo_Sample[NJ][NStep][nSam]->SetLineColor(TTTT_c);
@@ -226,11 +226,10 @@
 				histo_Sample[NJ][NStep][nSam]->GetYaxis()->SetTitle(Form("# of Normalized Events"));
 				histo_Sample[NJ][NStep][nSam]->GetXaxis()->SetTitle(Variable);
 
-
 				histo_Sample_gen[NJ][NStep][nSam] = new TH1F(Form("histo_Sample_gen_%d_%d_%d",NJ,NStep,nSam),Form(""),nbin,xmin,xmax);
-				if(nSam == 0)tree[nSam]->Project(Form("histo_Sample_gen_%d_%d_%d",NJ,NStep,nSam),Variable,ttttHad_Ch);
-				if(nSam == 1)tree[nSam]->Project(Form("histo_Sample_gen_%d_%d_%d",NJ,NStep,nSam),Variable,ttbarHad_Ch);
-				if(nSam > 1)tree[nSam]->Project(Form("histo_Sample_gen_%d_%d_%d",NJ,NStep,nSam),Variable);
+				if(nSam == 0)tree[nSam+19]->Project(Form("histo_Sample_gen_%d_%d_%d",NJ,NStep,nSam),Variable,ttttHad_Ch);
+				if(nSam == 1)tree[nSam+19]->Project(Form("histo_Sample_gen_%d_%d_%d",NJ,NStep,nSam),Variable,ttbarHad_Ch);
+				if(nSam > 1)tree[nSam+19]->Project(Form("histo_Sample_gen_%d_%d_%d",NJ,NStep,nSam),Variable);
 
 				l_[NJ][NStep]->AddEntry(histo_Sample[NJ][NStep][nSam],Legend_Name[nSam], "lp");
 			}
@@ -239,10 +238,10 @@
 
 			for(int NQ = 0; NQ < nQCD; NQ++){
 				histo_nQCD[NJ][NStep][NQ] = new TH1F(Form("histo_nQCD_%d_%d_%d",NJ,NStep,NQ),Form(""),nbin,xmin,xmax);
-				tree[NQ+4]->Project(Form("histo_nQCD_%d_%d_%d",NJ,NStep,NQ),Variable,Step_Cut[NStep]);//==========tree check
+				tree[NQ]->Project(Form("histo_nQCD_%d_%d_%d",NJ,NStep,NQ),Variable,Step_Cut[NStep]);
 
 				histo_nQCD_gen[NJ][NStep][NQ] = new TH1F(Form("histo_nQCD_gen_%d_%d_%d",NJ,NStep,NQ),Form(""),nbin,xmin,xmax);
-				tree[NQ+4]->Project(Form("histo_nQCD_gen_%d_%d_%d",NJ,NStep,NQ),Variable);//=================tree check
+				tree[NQ]->Project(Form("histo_nQCD_gen_%d_%d_%d",NJ,NStep,NQ),Variable);
 			}
 
 			///////////////////////////////////////////// candidate ///////////////////////////////////////////
@@ -257,8 +256,8 @@
 			cout<<""<<endl;
 			cout<<""<<endl;
 
-			TString Sample_name[] = {"TTTT","TTbar","DYJets","WJets"};
-			double Sample_xsec[] = {0.009103,832.76,6025.2,61526.7};//======================================>check
+			TString Sample_name[] = {"TTTT","TTbar","DYJets","WJets"};//======================================check
+			double Sample_xsec[] = {0.009103,832.76,6025.2,61526.7};//======================================check
 
 			/////////////////////////////////////////////// Samples ///////////////////////////////////////////////////
 
@@ -306,8 +305,6 @@
 				QCD_S0 += nQCDS0[NQ];
 			}
 			//------------------------------------------------------------------------------
-			/*double QCD_S1 = nQCDS1[0]+nQCDS1[1]+nQCDS1[2]+nQCDS1[3]+nQCDS1[4]+nQCDS1[5]+nQCDS1[6]+nQCDS1[7]+nQCDS1[8]+nQCDS1[9]+nQCDS1[10]+nQCDS1[11]+nQCDS1[12]+nQCDS1[13]+nQCDS1[14]+nQCDS1[15]+nQCDS1[16]+nQCDS1[17]+nQCDS1[18];
-			double QCD_S0 = nQCDS0[0]+nQCDS0[1]+nQCDS0[2]+nQCDS0[3]+nQCDS0[4]+nQCDS0[5]+nQCDS0[6]+nQCDS0[7]+nQCDS0[8]+nQCDS0[9]+nQCDS0[10]+nQCDS0[11]+nQCDS0[12]+nQCDS0[13]+nQCDS0[14]+nQCDS0[15]+nQCDS0[16]+nQCDS0[17]+nQCDS0[18];*/
 
 			cout<< (QCD_S1/QCD_S0)*100<<"%"<<", "<<", QCD " <<endl;
 			cout<<""<<endl;
@@ -326,9 +323,6 @@
 				QCD_ev += nQCD_ev[NQ];
 			}
 			//------------------------------------------------------------------------------------------
-			/*double QCD_Integral = QCD_Int[0]+QCD_Int[1]+QCD_Int[2]+QCD_Int[3]+QCD_Int[4]+QCD_Int[5]+QCD_Int[6]+QCD_Int[7]+QCD_Int[8]+QCD_Int[9]+QCD_Int[10]+QCD_Int[11]+QCD_Int[12]+QCD_Int[13]+QCD_Int[14]+QCD_Int[15]+QCD_Int[16]+QCD_Int[17]+QCD_Int[18];
-
-			double QCD_ev = nQCD_ev[0]+nQCD_ev[1]+nQCD_ev[2]+nQCD_ev[3]+nQCD_ev[4]+nQCD_ev[5]+nQCD_ev[6]+nQCD_ev[7]+nQCD_ev[8]+nQCD_ev[9]+nQCD_ev[10]+nQCD_ev[11]+nQCD_ev[12]+nQCD_ev[13]+nQCD_ev[14]+nQCD_ev[15]+nQCD_ev[16]+nQCD_ev[17]+nQCD_ev[18];*/
 
 			cout<<"QCD expected events: "<<QCD_ev <<endl;
 			cout<<"QCD yield Integral(1,nbin+1): "<<QCD_Integral<<endl;
@@ -367,7 +361,7 @@
 			lt3.DrawLatex(x_2,y_2,"Preliminary");
 			lt4.DrawLatex(tx,ty,"13 TeV, 36 fb^{-1}");
 			l_[NJ][NStep]->Draw();
-			canvIso_[NJ][NStep]->SaveAs(Save_dir+Step_txt[NStep]+".png");
+			canv_[NJ][NStep]->SaveAs(Save_dir+Step_txt[NStep]+".png");
 		}
 	}
 	cout<<"13TeV"<<endl;
