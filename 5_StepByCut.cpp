@@ -95,7 +95,7 @@
 
 	TString Step_3;
 	Step_3 = "Jet_Pt[0] > 90 && Jet_Pt[1] > 70 && Jet_Pt[2] > 60 && Jet_Pt[3] > 50 &&";
-	
+
 	TString Step_4;
 	Step_4 = "Jet_HT > 500 &&";
 
@@ -265,8 +265,10 @@
 				SampleS1[nSam] = histo_Sample[NJ][NStep][nSam]->GetEntries();
 				SampleS0[nSam] = histo_Sample_gen[NJ][NStep][nSam]->GetEntries();
 				Sample_ev[nSam] = Sample_xsec[nSam]*lumi*(SampleS1[nSam]/SampleS0[nSam]);
-				if(nSam==0)histo_Sample[NJ][NStep][nSam]->Scale(Sample_xsec[nSam]*lumi*BR*BR*BR*BR/SampleS0[nSam]);
-				if(nSam==1)histo_Sample[NJ][NStep][nSam]->Scale(Sample_xsec[nSam]*lumi*BR*BR/SampleS0[nSam]);
+				if(nSam==0){histo_Sample[NJ][NStep][nSam]->Scale(Sample_xsec[nSam]*lumi*BR*BR*BR*BR/SampleS0[nSam]);
+					Sample_ev[nSam] = Sample_xsec[nSam]*lumi*BR*BR*BR*BR*(SampleS1[nSam]/SampleS0[nSam]);}
+				if(nSam==1){histo_Sample[NJ][NStep][nSam]->Scale(Sample_xsec[nSam]*lumi*BR*BR/SampleS0[nSam]);
+					Sample_ev[nSam] = Sample_xsec[nSam]*lumi*BR*BR*(SampleS1[nSam]/SampleS0[nSam]);}
 				if(nSam > 1)histo_Sample[NJ][NStep][nSam]->Scale(Sample_xsec[nSam]*lumi/SampleS0[nSam]);
 			}
 			//--------------------------------------------Print-----------------------------------------------
