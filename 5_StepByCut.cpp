@@ -2,6 +2,11 @@
 	gROOT->SetStyle("Plain");//"Pub","Plain"
 	gStyle->SetOptStat(0);//To display the mean and RMS: SetOptStat("mr"), nemruoi, ;
 	gStyle->SetOptDate(1);//display date position
+	/*gStyle->SetCanvasDefH(600);//Height of canvas
+	  gStyle->SetCanvasDefW(600);//Width of canvas
+	  gStyle->SetCanvasDefX(0);//POsition on screen
+	  gStyle->SetCanvasDefY(0);*/
+
 	//---------------------------------------------------
 
 	TLatex lt1;
@@ -14,7 +19,7 @@
 	TLatex lt2;
 	lt2.SetTextAlign(12);
 	lt2.SetNDC();
-	lt2.SetTextFont(62);
+	lt2.SetTextFont(61);
 	lt2.SetTextAngle(0);
 	lt2.SetTextSize(0.058);
 
@@ -94,19 +99,21 @@
 	Step_2 = "IsHadronTrig == 1 &&";
 
 	TString Step_3;
-	Step_3 = "Jet_Pt[0] > 90 && Jet_Pt[1] > 70 && Jet_Pt[2] > 60 && Jet_Pt[3] > 50 &&";
+	//Step_3 = "Jet_Pt[0] > 90 && Jet_Pt[1] > 70 && Jet_Pt[2] > 60 && Jet_Pt[3] > 50 &&";
+	Step_3 = "Jet_Pt[0] > 90 && Jet_Pt[1] > 70 && Jet_Pt[2] > 60 && Jet_Pt[3] > 50 && Jet_Pt[0] < 700 && Jet_Pt[1] < 500 && Jet_Pt[2] < 300 && Jet_Pt[3] < 250 &&";
 
 	TString Step_4;
-	Step_4 = "Jet_HT > 500 &&";
+	//Step_4 = "Jet_HT > 500 &&";
+	Step_4 = "Jet_HT > 500 && Jet_HT < 2500 &&";
 
 	TString Step_5;
 	Step_5 = "(NLooseMuon+NLooseElectron)==0 &&";
 
 	TString Step_6;
-	Step_6 = "NBJet>=3 &&";
+	Step_6 = "Nt >= 2 && NJet >= 10 &&";
 
 	TString Step_7;
-	Step_7 = "NJet>=10 &&";
+	Step_7 = "NW >= 3 && NBJet >= 3 &&";
 
 	TString Step_Cut[] = {Step_1, Step_2+Step_1, Step_2+Step_3+Step_1, Step_2+Step_3+Step_4+Step_1, Step_2+Step_3+Step_4+Step_5+Step_1, Step_2+Step_3+Step_4+Step_5+Step_6+Step_1, Step_2+Step_3+Step_4+Step_5+Step_6+Step_7+Step_1};
 
@@ -167,7 +174,7 @@
 		for(int NStep = 0; NStep < JetStepCut; NStep++){
 			float nbin = 60;
 			float xmin = 0;
-			float xmax = 2800;
+			float xmax = 2500;
 			float size = 0.8;
 			int TTTT_c = 4;
 			int ttbar_c = 2;
