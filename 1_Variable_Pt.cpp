@@ -59,20 +59,20 @@
 	float ly2 = 0.78;
 
 	const int NVariable = 6;//Pt Cut number
-	const int NChannel = 2;
+	const int nChannel = 2;
 	const int nSample = 4;//==============================check
 	const int nQCD = 19;
 
-	TH1F *histo_Sample[NVariable][NChannel][nSample];
-	TH1F *histo_Sample_gen[NVariable][NChannel][nSample];
+	TH1F *histo_Sample[NVariable][nChannel][nSample];
+	TH1F *histo_Sample_gen[NVariable][nChannel][nSample];
 
-	TH1F *histo_nQCD[NVariable][NChannel][nQCD];
-	TH1F *histo_nQCD_gen[NVariable][NChannel][nQCD];
+	TH1F *histo_nQCD[NVariable][nChannel][nQCD];
+	TH1F *histo_nQCD_gen[NVariable][nChannel][nQCD];
 
-	TH1F *histo_QCD[NVariable][NChannel];
+	TH1F *histo_QCD[NVariable][nChannel];
 
-	TCanvas *canv_[NVariable][NChannel];
-	TLegend *l_[NVariable][NChannel];
+	TCanvas *canv_[NVariable][nChannel];
+	TLegend *l_[NVariable][nChannel];
 
 	TString PATH_samples;
 	PATH_samples = "/xrootd/store/user/yjeong/4TopFullHadronic/";//KISTI
@@ -81,19 +81,19 @@
 
 	TString Variable[NVariable] = {"Jet_Pt[0]","Jet_Pt[1]", "Jet_Pt[2]","Jet_Pt[3]","Jet_Pt[4]","Jet_Pt[5]"};
 
-	TString Triger[NChannel] = {"IsHadronTrig == 1","IsMuonTrig == 1 && IsElectronTrig == 1"};
+	TString Triger[nChannel] = {"IsHadronTrig == 1","IsMuonTrig == 1 && IsElectronTrig == 1"};
 
-	TString ttttHad_Ch[NChannel] = {"nq==8 && nl==0 &&","nq == 8 && nl == 1 &&"};
-	TString ttbarHad_Ch[NChannel] = {"nq==4 && nl==0 && ","nq == 4 && nl == 1 &&"};
-	TString nRecolep[NChannel] = {"&& (NLooseMuon+NLooseElectron)==0", "&& (NLooseMuon+NLooseElectron)==1"};
+	TString ttttHad_Ch[nChannel] = {"nq==8 && nl==0 &&","nq == 8 && nl == 1 &&"};
+	TString ttbarHad_Ch[nChannel] = {"nq==4 && nl==0 && ","nq == 4 && nl == 1 &&"};
+	TString nRecolep[nChannel] = {"&& (NLooseMuon+NLooseElectron)==0", "&& (NLooseMuon+NLooseElectron)==1"};
 
-	TString Cut_base_text[NChannel] = {"Hadronic","Leptonic"};
+	TString Cut_base_text[nChannel] = {"Hadronic","Leptonic"};
 
 	////////////////////////////////Get Samples/////////////////////////////////
 	const int Sample_Num = 23;//================================check
 	TString Sample_name[Sample_Num] = {"QCDPt80to120EM","QCDPt80to120Mu","QCDPt1000toInfMu","QCDPt120to170EM","QCDPt120to170Mu","QCDPt15to20Mu","QCDPt170to300EM","QCDPt170to300Mu","QCDPt20to30EM","QCDPt20to30Mu","QCDPt300to470Mu","QCDPt300toInfEM","QCDPt30to50EM","QCDPt30to50Mu","QCDPt470to600Mu","QCDPt50to80EM","QCDPt50to80Mu","QCDPt600to800Mu","QCDPt800to1000Mu","vallot","TT_powheg","DYJets","WJets"};//========================check
 
-	TString Legend_Name[] = {"TTTT","ttbar","DYJets","WJets"};//=================================check
+	TString Legend_Name[nSample] = {"TTTT","ttbar","DYJets","WJets"};//=================================check
 
 	TFile *tfile[Sample_Num];
 
@@ -114,7 +114,7 @@
 		cout<< hNJet->GetBinContent(i) << endl;
 	}
 
-	for(int nCh = 0; nCh < NChannel; nCh++){
+	for(int nCh = 0; nCh < nChannel; nCh++){
 		for(int NVar = 0; NVar < NVariable; NVar++){
 			float nbin[] = {35,35,35,35,35,35,35};
 			float xmin = 0;
