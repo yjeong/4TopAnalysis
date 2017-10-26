@@ -96,8 +96,8 @@
 	   Step_2 = "IsHadronTrig == 1 &&";
 	   */
 	TString Step_1;
-	Step_1 = "Jet_Pt[0] > 90 && Jet_Pt[1] > 70 && Jet_Pt[2] > 60 && Jet_Pt[3] > 50";
-	//Step_1 = "Jet_Pt[0] > 90 && Jet_Pt[1] > 70 && Jet_Pt[2] > 60 && Jet_Pt[3] > 50 && Jet_Pt[0] < 700 && Jet_Pt[1] < 500 && Jet_Pt[2] < 300 && Jet_Pt[3] < 250";
+	//Step_1 = "Jet_Pt[0] > 90 && Jet_Pt[1] > 70 && Jet_Pt[2] > 60 && Jet_Pt[3] > 50";
+	Step_1 = "Jet_Pt[0] > 90 && Jet_Pt[1] > 70 && Jet_Pt[2] > 60 && Jet_Pt[3] > 50 && Jet_Pt[0] < 700 && Jet_Pt[1] < 500 && Jet_Pt[2] < 300 && Jet_Pt[3] < 250";
 
 	TString Step_2;
 	Step_2 = "&& IsHadronTrig == 1 && Jet_HT > 500 && Jet_HT < 2500";
@@ -118,12 +118,15 @@
 	//TString Step_txt[] = {"step1","step2","step3","step4","step5","step6","step7"};
 	TString Step_txt[nStepCut] = {"step1","step2","step3","step4","step5"};
 
-	TString tttt_Ch[NChannel] = {"nq==8 && nl==0 ","nq==8 && nl==1 && nTau==1 && abs(dTau)==1"};
-	TString ttbar_Ch[NChannel] = {"nq==4 && nl==0 ","nq==4 && nl==1 && nTau==1 && abs(dTau)==1"};
+	TString tttt_Ch[NChannel] = {"nq==8 && nl==0 ","(nq==8 && nl==1) || nTau==1 || abs(dTau)==1"};
+	TString ttbar_Ch[NChannel] = {"nq==4 && nl==0 ","(nq==4 && nl==1) || nTau==1 || abs(dTau)==1"};
+	//TString tttt_Ch[NChannel] = {"(nq==8 && nl==0) || nTau==1 || abs(dTau)==0"};
+	//TString ttbar_Ch[NChannel] = {"(nq==4 && nl==0) || nTau==1 || abs(dTau)==0"};
 
 	NBJet = "&& NBJet &&";
 
 	TString Cut_base_text[NChannel] = {"Hadronic ","Lepton "};
+	//TString Cut_base_text[NChannel] = {"Lepton "};
 
 	////////////////////////////////Get Samples/////////////////////////////////
 
@@ -298,27 +301,19 @@
 				SampleS1[nSam] = histo_Sample[NCh][NStep][nSam]->GetEntries();
 				SampleS0[nSam] = histo_Sample_gen[NCh][NStep][nSam]->GetEntries();
 
-				//Sample_ev[nSam] = Sample_xsec[nSam]*lumi*(SampleS1[nSam]/SampleS0[nSam]);
-				for(int nch = 0; nch < NChannel; ++nch){
-					if(nSam==0&&nch==1){//TTTT change 0 -> 1 (different channel)
-						histo_Sample[NCh][NStep][nSam]->Scale(Sample_xsec[nSam]*skim_eff[nSam][nch]*trig_eff[nSam][nch]*BR*BR*BR*BR*lumi/SampleS0[nSam]);
-						Sample_ev[nSam] = Sample_xsec[nSam]*lumi*BR*BR*BR*BR*skim_eff[nSam][nch]*trig_eff[nSam][nch]*(SampleS1[nSam]/SampleS0[nSam]);
-					}
-					if(nSam==1&&nch==1){//ttbar change 0 -> 1 (different channel)
-						cout<<"eff_skim: "<<skim_eff[nSam][nch]<<endl;
-						cout<<"eff_trig: "<<trig_eff[nSam][nch]<<endl;
-						histo_Sample[NCh][NStep][nSam]->Scale(Sample_xsec[nSam]*skim_eff[nSam][nch]*trig_eff[nSam][nch]*lumi*BR*BR/SampleS0[nSam]);
-						Sample_ev[nSam] = Sample_xsec[nSam]*lumi*BR*BR*skim_eff[nSam][nch]*trig_eff[nSam][nch]*(SampleS1[nSam]/SampleS0[nSam]);
-					}
-					if(nSam>1&&nch==1){//bkg
-						//histo_Sample[NCh][NStep][nSam]->Scale(Sample_xsec[nSam]*lumi/SampleS0[nSam]);
-						//Sample_ev[nSam] = Sample_xsec[nSam]*lumi*(SampleS1[nSam]/SampleS0[nSam]);
-						histo_Sample[NCh][NStep][nSam]->Scale(Sample_xsec[nSam]*skim_eff[nSam][nch]*trig_eff[nSam][nch]*lumi/SampleS0[nSam]);
-						Sample_ev[nSam] = Sample_xsec[nSam]*lumi*skim_eff[nSam][nch]*trig_eff[nSam][nch]*(SampleS1[nSam]/SampleS0[nSam]);
-					}
+				if(nSam==0){//TTTT change 0 -> 1 (different channel)
+					histo_Sample[NCh][NStep][nSam]->Scale(Sample_xsec[nSam]*skim_eff[nSam][NCh]*trig_eff[nSam][NCh]*BR*BR*BR*BR*lumi/SampleS0[nSam]);
+					Sample_ev[nSam] = Sample_xsec[nSam]*lumi*BR*BR*BR*BR*skim_eff[nSam][NCh]*trig_eff[nSam][NCh]*(SampleS1[nSam]/SampleS0[nSam]);
 				}
-				if(nSam > 1){
-					histo_Sample[NCh][NStep][nSam]->Scale(Sample_xsec[nSam]*lumi/SampleS0[nSam]);//DYJets, WJets, others...
+				if(nSam==1){//ttbar change 0 -> 1 (different channel)
+					cout<<"eff_skim: "<<skim_eff[nSam][NCh]<<endl;
+					cout<<"eff_trig: "<<trig_eff[nSam][NCh]<<endl;
+					histo_Sample[NCh][NStep][nSam]->Scale(Sample_xsec[nSam]*skim_eff[nSam][NCh]*trig_eff[nSam][NCh]*lumi*BR*BR/SampleS0[nSam]);
+					Sample_ev[nSam] = Sample_xsec[nSam]*lumi*BR*BR*skim_eff[nSam][NCh]*trig_eff[nSam][NCh]*(SampleS1[nSam]/SampleS0[nSam]);
+				}
+				if(nSam>1){//bkg
+					histo_Sample[NCh][NStep][nSam]->Scale(Sample_xsec[nSam]*skim_eff[nSam][NCh]*trig_eff[nSam][NCh]*lumi/SampleS0[nSam]);
+					Sample_ev[nSam] = Sample_xsec[nSam]*lumi*skim_eff[nSam][NCh]*trig_eff[nSam][NCh]*(SampleS1[nSam]/SampleS0[nSam]);
 				}
 			}
 			//--------------------------------------------Print-----------------------------------------------
@@ -361,13 +356,9 @@
 			cout<<""<<endl;
 			//---------------------------------------------------------------------------------
 			for(int NQ = 0; NQ < nQCD; NQ++){
-				for(int nch = 0; nch < NChannel; ++nch){
-					if(nch==1){//change 0 -> 1 (different channel)
-						histo_nQCD[NCh][NStep][NQ]->Scale(QCD_xsec[NQ]*skim_eff[NQ][nch]*trig_eff[NQ][nch]*lumi/nQCDS0[NQ]);
-						QCD_Int[NQ] = histo_nQCD[NCh][NStep][NQ]->Integral(1,nbin+1);
-						nQCD_ev[NQ] = QCD_xsec[NQ]*lumi*(nQCDS1[NQ]*skim_eff[NQ][nch]*trig_eff[NQ][nch]/nQCDS0[NQ]);
-					}
-				}
+				histo_nQCD[NCh][NStep][NQ]->Scale(QCD_xsec[NQ]*skim_eff[NQ][NCh]*trig_eff[NQ][NCh]*lumi/nQCDS0[NQ]);
+				QCD_Int[NQ] = histo_nQCD[NCh][NStep][NQ]->Integral(1,nbin+1);
+				nQCD_ev[NQ] = QCD_xsec[NQ]*lumi*(nQCDS1[NQ]*skim_eff[NQ][NCh]*trig_eff[NQ][NCh]/nQCDS0[NQ]);
 			}
 
 			double QCD_Integral = 0, QCD_ev = 0;//histo Integral, QCD total expected events
