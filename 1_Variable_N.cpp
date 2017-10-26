@@ -59,7 +59,7 @@
 	float ly2 = 0.78;
 
 	const int NVar = 7;//Variable number
-	const int NCut = 1;
+	const int NCut = 2;//Cut_base_Trig
 	const int nSample = 4;//=======================check
 	const int nQCD = 19;
 
@@ -85,21 +85,16 @@
 	TString Save_dir;
 	Save_dir = "/cms/scratch/yjeong/catMacro/plots/";//KISTI
 
-	TString Cut_base_text;
 	TString Ch_Cut;
 	TString nlep_Ch;
 
 	//TString Variable[] = {"Muon_Pt","Electron_Pt","Jet_Pt","Muon_Eta","Electron_Eta","Jet_Eta"};
 	//TString Variable[] = {"Jet_Pt[0]","Jet_Pt[1]", "Jet_Pt[2]","Jet_Pt[3]","Jet_Pt[4]","Jet_Pt[5]","Jet_Pt[6]","Jet_Pt[7]","Jet_Pt[8]","Jet_Pt[9]","Jet_Pt[10]"};
-	TString Variable[] = {"NJet","NBJet","NLooseMuon+NLooseElectron","NMuon+NElectron","NVertex","NW","Nt"};
+	TString Variable[NVar] = {"NJet","NBJet","NLooseMuon+NLooseElectron","NMuon+NElectron","NVertex","NW","Nt"};
 
-	//TString Cut_base[] = {"IsHadronTrig==1",""," Jet_Pt[0] > 80 && Jet_Pt[1] > 70 && Jet_Pt[2] > 60 && Jet_Pt[3] > 50 "};
-	TString Cut_base[] = {"IsHadronTrig==1"};
-	ttttHad_Ch = "nl==0 && nq==8";
-	ttbarHad_Ch = "nl==0 && nq==4";
-	nlep_Ch = "nl==0";
+	TString Cut_base[NCut] = {"IsHadronTrig == 1","IsMuonTrig == 1 && IsElectronTrig == 1"};
 
-	Cut_base_text = "Hadronic";
+	TString Cut_base_text[NCut] = {"Hadronic","Leptonic"};
 
 	////////////////////////////////Get Samples/////////////////////////////////
 	const int Sample_Num = 23;//========================check
@@ -124,7 +119,7 @@
 	tree[19]->Project(Form("hNJet"),"NJet");
 	cout<<"NJet events number"<<endl;
 
-	for(int i = 1; i < 17; i++){
+	for(int i = 7; i < 17; i++){
 		cout<< hNJet->GetBinContent(i) << endl;
 	}
 
@@ -248,7 +243,7 @@
 			double nev_qcd = histo_QCD[NV][NC]->GetEntries();
 			histo_QCD[NV][NC]->Scale(1/nev_qcd);
 
-			double ymax[] = {0.5,0.7,0.8,1.1,0.1,0.5,0.9};
+			double ymax[] = {0.8,1.1,0.8,1.1,0.1,0.8,0.9};//NJet,NBJet,NLooseMuon+NLooseElectron,NMuon+NElectron,NVertex,NW,Nt
 			//double ymax = 0;
 			//ymax = histo_QCD[NV][NC]->GetMaximum();
 			//histo_QCD[NV][NC]->SetMaximum(ymax*1.3);
@@ -258,12 +253,12 @@
 				histo_Sample[NV][NC][nSam]->Draw("same");
 			}
 
-			lt1.DrawLatex(xx_1,yy_1,Cut_base_text);
+			lt1.DrawLatex(xx_1,yy_1,Cut_base_text[NC]);
 			lt2.DrawLatex(x_1,y_1,"CMS");
 			lt3.DrawLatex(x_2,y_2,"Preliminary");
 			lt4.DrawLatex(tx,ty,"13 TeV, 36 fb^{-1}");
 			l_[NV][NC]->Draw();
-			canv_[NV][NC]->SaveAs(Save_dir+Variable[NV]+".png");
+			canv_[NV][NC]->SaveAs(Save_dir+Cut_base_text[NC]+"_"+Variable[NV]+".png");
 		}
 	}
 	cout<<"13TeV"<<endl;
