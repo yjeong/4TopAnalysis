@@ -120,8 +120,6 @@
 
 	TString tttt_Ch[NChannel] = {"nq==8 && nl==0 ","(nq==8 && nl==1) || nTau==1 || abs(dTau)==1"};
 	TString ttbar_Ch[NChannel] = {"nq==4 && nl==0 ","(nq==4 && nl==1) || nTau==1 || abs(dTau)==1"};
-	//TString tttt_Ch[NChannel] = {"(nq==8 && nl==0) || nTau==1 || abs(dTau)==0"};
-	//TString ttbar_Ch[NChannel] = {"(nq==4 && nl==0) || nTau==1 || abs(dTau)==0"};
 
 	NBJet = "&& NBJet &&";
 
