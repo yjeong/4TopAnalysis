@@ -96,8 +96,8 @@
 	   Step_2 = "IsHadronTrig == 1 &&";
 	   */
 	TString Step_1;
-	//Step_1 = "Jet_Pt[0] > 90 && Jet_Pt[1] > 70 && Jet_Pt[2] > 60 && Jet_Pt[3] > 50";
-	Step_1 = "Jet_Pt[0] > 90 && Jet_Pt[1] > 70 && Jet_Pt[2] > 60 && Jet_Pt[3] > 50 && Jet_Pt[0] < 700 && Jet_Pt[1] < 500 && Jet_Pt[2] < 300 && Jet_Pt[3] < 250";
+	Step_1 = "Jet_Pt[0] > 90 && Jet_Pt[1] > 70 && Jet_Pt[2] > 60 && Jet_Pt[3] > 50";
+	//Step_1 = "Jet_Pt[0] > 90 && Jet_Pt[1] > 70 && Jet_Pt[2] > 60 && Jet_Pt[3] > 50 && Jet_Pt[0] < 700 && Jet_Pt[1] < 500 && Jet_Pt[2] < 300 && Jet_Pt[3] < 250";
 
 	TString Step_2;
 	Step_2 = "&& IsHadronTrig == 1 && Jet_HT > 500 && Jet_HT < 2500";
@@ -111,20 +111,17 @@
 	TString Step_5;
 	Step_5 = "&& NBJet >= 4 && Nt > 3";
 
-	//TString Step_Cut[] = {Step_1, Step_2+Step_1, Step_2+Step_3+Step_1, Step_2+Step_3+Step_4+Step_1, Step_2+Step_3+Step_4+Step_5+Step_1, Step_2+Step_3+Step_4+Step_5+Step_6+Step_1, Step_2+Step_3+Step_4+Step_5+Step_6+Step_7+Step_1};//Hadronic Channel
 	TString Step_Cut[nStepCut] = {Step_1, Step_1+Step_2, Step_1+Step_2+Step_3, Step_1+Step_2+Step_3+Step_4, Step_1+Step_2+Step_3+Step_4+Step_5};//Hadronic Channel
-
 
 	//TString Step_txt[] = {"step1","step2","step3","step4","step5","step6","step7"};
 	TString Step_txt[nStepCut] = {"step1","step2","step3","step4","step5"};
 
-	TString tttt_Ch[NChannel] = {"nq==8 && nl==0 ","(nq==8 && nl==1) || nTau==1 || abs(dTau)==1"};
-	TString ttbar_Ch[NChannel] = {"nq==4 && nl==0 ","(nq==4 && nl==1) || nTau==1 || abs(dTau)==1"};
+	TString tttt_Ch[NChannel] = {"nq==8 && nl==0 ","nq==6 && nl==1 && abs(dTau)==1 && nTau==1"};
+	TString ttbar_Ch[NChannel] = {"nq==4 && nl==0 ","nq==2 && nl==1 && abs(dTau)==1 && nTau==1"};
 
 	NBJet = "&& NBJet &&";
 
 	TString Cut_base_text[NChannel] = {"Hadronic ","Lepton "};
-	//TString Cut_base_text[NChannel] = {"Lepton "};
 
 	////////////////////////////////Get Samples/////////////////////////////////
 
