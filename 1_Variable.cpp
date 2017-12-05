@@ -58,7 +58,7 @@
 	float lx2 = 0.94;
 	float ly2 = 0.78;
 
-	const int NVar = 9;//Variable number
+	const int NVar = 10;//Variable number
 	const int nChannel = 1;//Cut_base_Trig
 	const int nSample = 4;//=======================check
 	const int nQCD = 19;
@@ -90,7 +90,7 @@
 
 	//TString Variable[] = {"Muon_Pt","Electron_Pt","Jet_Pt","Muon_Eta","Electron_Eta","Jet_Eta"};
 	//TString Variable[] = {"Jet_Pt[0]","Jet_Pt[1]", "Jet_Pt[2]","Jet_Pt[3]","Jet_Pt[4]","Jet_Pt[5]","Jet_Pt[6]","Jet_Pt[7]","Jet_Pt[8]","Jet_Pt[9]","Jet_Pt[10]"};
-	TString Variable[NVar] = {"NJet","NBJet","NLooseMuon+NLooseElectron","NMuon+NElectron","NVertex","NW","Nt","Jet_Pt","Jet_HT"};
+	TString Variable[NVar] = {"NJet","NBJet","NLooseMuon+NLooseElectron","NMuon+NElectron","NVertex","NW","Nt","Jet_Pt","Jet_HT","MET"};
 
 	//TString Cut_base[nChannel] = {"IsHadronTrig == 1","IsMuonTrig == 1 && IsElectronTrig == 1"};
 	TString Cut_base[nChannel] = {"IsMuonTrig == 1 && IsElectronTrig == 1"};
@@ -151,9 +151,9 @@
 	  cout << nev_4T_tot << " , " << nev_tt_tot << " , " << "total" << endl;
 	  cout << "Branching Ratio : " << TTTT_had/TTTT_tot << " , " << tt_had/tt_tot << endl;
 	  */
-	float nbin[NVar] = {18,8,6,6,50,8,8,50,40};
+	float nbin[NVar] = {18,8,6,6,50,8,8,50,40,50};
 	float xmin = 0;
-	float xmax[NVar] = {18,8,6,6,50,8,8,1000,4000};//
+	float xmax[NVar] = {18,8,6,6,50,8,8,1000,4000,1000};//
 
 	for(int nCh = 0; nCh < nChannel; nCh++){
 		for(int NV = 0; NV < NVar; NV++){
@@ -246,7 +246,7 @@
 			double nev_qcd = histo_QCD[NV][nCh]->GetEntries();
 			histo_QCD[NV][nCh]->Scale(1/nev_qcd);
 
-			double ymax[NVar] = {0.8,1.1,1.1,1.1,0.15,0.8,0.9,0.5,0.5};//NJet,NBJet,NLooseMuon+NLooseElectron,NMuon+NElectron,NVertex,NW,Nt
+			double ymax[NVar] = {0.8,1.1,1.1,1.1,0.15,0.8,0.9,0.5,0.5,0.5};//NJet,NBJet,NLooseMuon+NLooseElectron,NMuon+NElectron,NVertex,NW,Nt
 			//double ymax = 0;
 			//ymax = histo_QCD[NV][nCh]->GetMaximum();
 			//histo_QCD[NV][nCh]->SetMaximum(ymax*1.3);
