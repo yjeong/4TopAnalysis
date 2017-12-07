@@ -14,7 +14,7 @@
 	TLatex lt2;
 	lt2.SetTextAlign(12);
 	lt2.SetNDC();
-	lt2.SetTextFont(62);
+	lt2.SetTextFont(61);
 	lt2.SetTextAngle(0);
 	lt2.SetTextSize(0.058);
 
@@ -53,7 +53,7 @@
 	float lx2 = 0.94;
 	float ly2 = 0.78;
 
-	const int JetPtCut = 4;//Pt Cut number
+	const int JetPtCut = 1;//Pt Cut number
 	const int NJetNum = 1;//Variable
 	//int NJet[] = {4,5,6,7,8,9,10};
 	const int nSample = 4;//===========================check
@@ -79,7 +79,7 @@
 	TString ttttHad_Ch;
 	TString ttbarHad_Ch;
 	TString dyHad_Ch;
-	TString HadronTrig;
+	TString TrigCut;
 	TString Jet_HT_Cut;
 	TString nlep_Cut;
 	TString NBJet;
@@ -88,26 +88,30 @@
 	TString Variable;
 	Variable = "Jet_HT";
 
-	TString Pt_0;
-	Pt_0 = "Jet_Pt[0] > 90 &&";
+	/*TString Pt_0;
+	Pt_0 = "Jet_Pt[0] < 400 &&";
 	TString Pt_1;
-	Pt_1 = "Jet_Pt[1] > 70 &&";
+	Pt_1 = "Jet_Pt[1] < 300 &&";
 	TString Pt_2;
-	Pt_2 = "Jet_Pt[2] > 60 &&";
+	Pt_2 = "Jet_Pt[2] < 180 &&";
 	TString Pt_3;
-	Pt_3 = "Jet_Pt[3] > 50 &&";
+	Pt_3 = "Jet_Pt[3] > 50 &&";*/
 
-	TString Pt_Cut[] = {Pt_0, Pt_0+Pt_1, Pt_0+Pt_1+Pt_2, Pt_0+Pt_1+Pt_2+Pt_3};
+	TString HT_Cut;
+	HT_Cut = "MET > 40";
 
 	//Cut_base = "fabs(Muon_Pt) > 30 && fabs(Muon_Eta) < 2.4 &&";
-	ttttHad_Ch = "nq==8 && nl==0 &&";
-	ttbarHad_Ch = "nq==4 && nl==0 &&";
-	nRecolep = "(NLooseMuon+NLooseElectron)==0 &&";
-	NBJet = "NBJet>=2 && NJet >= 6";
+	//ttttHad_Ch = "nq==8 && nl==0 &&";
+	//ttbarHad_Ch = "nq==4 && nl==0 &&";
+	ttttHad_Ch = "nq==6 && nl==1 && abs(dTau)==1 && nTau==1 &&";
+	ttbarHad_Ch = "nq==2 && nl==1 && abs(dTau)==1 && nTau==1 &&";
+	nRecolep = "(NLooseMuon+NLooseElectron)!=0 &&";
+	NBJet = "NBJet>=3 && NJet >= 9 &&";
 
-	HadronTrig = "IsHadronTrig==1 &&";
+	TrigCut = "IsMuonTrig == 0 && IsElectronTrig == 1 &&";
 
-	Cut_base_text = "Hadronic ";
+	//Cut_base_text = "Hadronic ";
+	Cut_base_text = "Lepton ";
 
 	//////////////////////////////////////Get Samples///////////////////////////////////
 	const int Sample_Num = 23;//=========================check
@@ -165,9 +169,9 @@
 
 			for(int nSam = 0; nSam < nSample; nSam++){//===========================check
 				histo_Sample[NJ][NPt][nSam] = new TH1F(Form("histo_Sample_%d_%d_%d",NJ,NPt,nSam),Form(""),nbin,xmin,xmax);
-				if(nSam==0)tree[nSam+19]->Project(Form("histo_Sample_%d_%d_%d",NJ,NPt,nSam),Variable,nRecolep+ttttHad_Ch+Pt_Cut[NPt]+HadronTrig+NBJet);
-				if(nSam==1)tree[nSam+19]->Project(Form("histo_Sample_%d_%d_%d",NJ,NPt,nSam),Variable,nRecolep+ttbarHad_Ch+Pt_Cut[NPt]+HadronTrig+NBJet);
-				if(nSam > 1)tree[nSam+19]->Project(Form("histo_Sample_%d_%d_%d",NJ,NPt,nSam),Variable,nRecolep+Pt_Cut[NPt]+HadronTrig+NBJet);
+				if(nSam==0)tree[nSam+19]->Project(Form("histo_Sample_%d_%d_%d",NJ,NPt,nSam),Variable,nRecolep+ttttHad_Ch+TrigCut+NBJet+HT_Cut);
+				if(nSam==1)tree[nSam+19]->Project(Form("histo_Sample_%d_%d_%d",NJ,NPt,nSam),Variable,nRecolep+ttbarHad_Ch+TrigCut+NBJet+HT_Cut);
+				if(nSam > 1)tree[nSam+19]->Project(Form("histo_Sample_%d_%d_%d",NJ,NPt,nSam),Variable,nRecolep+TrigCut+NBJet+HT_Cut);
 				histo_Sample[NJ][NPt][nSam]->SetLineWidth(2);
 				if(nSam == 0){
 					histo_Sample[NJ][NPt][nSam]->SetLineColor(TTTT_c);
@@ -192,7 +196,7 @@
 
 			for(int NQ = 0; NQ < nQCD; NQ++){
 				histo_nQCD[NJ][NPt][NQ] = new TH1F(Form("histo_nQCD_%d_%d_%d",NJ,NPt,NQ),Form(""),nbin,xmin,xmax);
-				tree[NQ]->Project(Form("histo_nQCD_%d_%d_%d",NJ,NPt,NQ),Variable,nRecolep+Pt_Cut[NPt]+HadronTrig+NBJet);
+				tree[NQ]->Project(Form("histo_nQCD_%d_%d_%d",NJ,NPt,NQ),Variable,nRecolep+TrigCut+NBJet+HT_Cut);
 			}
 
 			histo_QCD[NJ][NPt] = new TH1F(Form("histo_QCD_%d_%d",NJ,NPt),Form(""),nbin,xmin,xmax);
@@ -225,12 +229,12 @@
                                 if(nSam!=1)histo_Sample[NJ][NPt][nSam]->Draw("same");
                         }
 
-			lt1.DrawLatex(xx_1,yy_1,HadronTrig);
+			lt1.DrawLatex(xx_1,yy_1,TrigCut);
 			lt2.DrawLatex(x_1,y_1,"CMS");
 			lt3.DrawLatex(x_2,y_2,"Preliminary");
 			lt4.DrawLatex(tx,ty,"13 TeV, 36 fb^{-1}");
 			l_[NJ][NPt]->Draw();
-			canv_[NJ][NPt]->SaveAs(Save_dir+Pt_Cut[NPt]+Variable+".png");
+			canv_[NJ][NPt]->SaveAs(Save_dir+Variable+".png");
 		}
 	}
 	cout<<"13TeV"<<endl;
