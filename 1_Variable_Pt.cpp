@@ -81,13 +81,13 @@
 
 	TString Variable[NVariable] = {"Jet_Pt[0]","Jet_Pt[1]", "Jet_Pt[2]","Jet_Pt[3]","Jet_Pt[4]","Jet_Pt[5]"};
 
-	TString Triger[nChannel] = {"IsHadronTrig == 1","IsMuonTrig == 1 && IsElectronTrig == 1"};
+	TString Triger[nChannel] = {"IsHadronTrig == 1","IsMuonTrig == 0 && IsHadronTrig == 1"};
 
-	TString ttttHad_Ch[nChannel] = {"nq==8 && nl==0 &&","nq == 8 && nl == 1 &&"};
-	TString ttbarHad_Ch[nChannel] = {"nq==4 && nl==0 && ","nq == 4 && nl == 1 &&"};
+	TString ttttHad_Ch[nChannel] = {"nq==8 && nl==0 &&","nq==6 && nl==1 && abs(dTau)==1 && nTau==1 &&"};
+	TString ttbarHad_Ch[nChannel] = {"nq==4 && nl==0 && ","nq==2 && nl==1 && abs(dTau)==1 && nTau==1 &&"};
 	TString nRecolep[nChannel] = {"&& (NLooseMuon+NLooseElectron)==0", "&& (NLooseMuon+NLooseElectron)==1"};
 
-	TString Cut_base_text[nChannel] = {"Hadronic","Leptonic"};
+	TString Cut_base_text[nChannel] = {"Hadronic","Lepton"};
 
 	////////////////////////////////Get Samples/////////////////////////////////
 	const int Sample_Num = 23;//================================check
@@ -116,10 +116,10 @@
 
 	for(int nCh = 0; nCh < nChannel; nCh++){
 		for(int NVar = 0; NVar < NVariable; NVar++){
-			float nbin[] = {35,35,35,35,35,35,35};
+			float nbin[] = {45,45,45,45,45,45,45};
 			float xmin = 0;
 			//float xmax = 350;
-			float xmax = 500-(500-250)/10*NVar;
+			float xmax = 800-(800-250)/10*NVar;
 			float size = 0.8;
 			int TTTT_c = 4;
 			int ttbar_c = 2;

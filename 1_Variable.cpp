@@ -58,8 +58,8 @@
 	float lx2 = 0.94;
 	float ly2 = 0.78;
 
-	const int NVar = 10;//Variable number
-	const int nChannel = 1;//Cut_base_Trig
+	const int NVar = 11;//Variable number
+	const int nChannel = 2;//Cut_base_Trig
 	const int nSample = 4;//=======================check
 	const int nQCD = 19;
 
@@ -90,14 +90,15 @@
 
 	//TString Variable[] = {"Muon_Pt","Electron_Pt","Jet_Pt","Muon_Eta","Electron_Eta","Jet_Eta"};
 	//TString Variable[] = {"Jet_Pt[0]","Jet_Pt[1]", "Jet_Pt[2]","Jet_Pt[3]","Jet_Pt[4]","Jet_Pt[5]","Jet_Pt[6]","Jet_Pt[7]","Jet_Pt[8]","Jet_Pt[9]","Jet_Pt[10]"};
-	TString Variable[NVar] = {"NJet","NBJet","NLooseMuon+NLooseElectron","NMuon+NElectron","NVertex","NW","Nt","Jet_Pt","Jet_HT","MET"};
+	TString Variable[NVar] = {"NJet","NBJet","NLooseMuon+NLooseElectron","NMuon+NElectron","NVertex","NW","Nt","Jet_Pt","Jet_HT","MET","nqjet"};
 
-	//TString Cut_base[nChannel] = {"IsHadronTrig == 1","IsMuonTrig == 1 && IsElectronTrig == 1"};
-	TString Cut_base[nChannel] = {"IsMuonTrig == 1 && IsElectronTrig == 1"};
+	TString Cut_base[nChannel] = {"IsHadronTrig == 1","IsMuonTrig == 0"};//Hadronic Channel
+	//TString Cut_base[nChannel] = {"IsMuonTrig == 0 && IsElectronTrig == 0"};
 
-	//TString Cut_base_text[nChannel] = {"Hadronic","Lepton"};
-	TString Cut_base_text[nChannel] = {"Lepton"};
+	TString Cut_base_text[nChannel] = {"Hadronic","Lepton"};
+	//TString Cut_base_text[nChannel] = {"Lepton"};
 
+	TString Sample_Name[nSample] = {"TTTT","ttbar","DYJets","WJets"};
 	////////////////////////////////Get Samples/////////////////////////////////
 	const int Sample_Num = 23;//========================check
 	TString Sample_name[Sample_Num] = {"QCDPt80to120EM","QCDPt80to120Mu","QCDPt1000toInfMu","QCDPt120to170EM","QCDPt120to170Mu","QCDPt15to20Mu","QCDPt170to300EM","QCDPt170to300Mu","QCDPt20to30EM","QCDPt20to30Mu","QCDPt300to470Mu","QCDPt300toInfEM","QCDPt30to50EM","QCDPt30to50Mu","QCDPt470to600Mu","QCDPt50to80EM","QCDPt50to80Mu","QCDPt600to800Mu","QCDPt800to1000Mu","vallot","TT_powheg","DYJets","WJets"};//=====================check
@@ -151,9 +152,9 @@
 	  cout << nev_4T_tot << " , " << nev_tt_tot << " , " << "total" << endl;
 	  cout << "Branching Ratio : " << TTTT_had/TTTT_tot << " , " << tt_had/tt_tot << endl;
 	  */
-	float nbin[NVar] = {18,8,6,6,50,8,8,50,40,50};
+	float nbin[NVar] = {18,8,6,6,50,8,8,50,40,50,11};
 	float xmin = 0;
-	float xmax[NVar] = {18,8,6,6,50,8,8,1000,4000,1000};//
+	float xmax[NVar] = {18,8,6,6,50,8,8,1000,4000,1000,11};//
 
 	for(int nCh = 0; nCh < nChannel; nCh++){
 		for(int NV = 0; NV < NVar; NV++){
@@ -230,12 +231,12 @@
 				histo_QCD[NV][nCh]->Add(histo_nQCD[NV][nCh][NQ]);
 			}
 
-			TString Sample_Name[] = {"TTTT","ttbar","DYJets","WJets"};
+			cout<<""<<endl;
 			for(int nSam = 0; nSam < nSample; nSam++){
 				cout<<"original "<<Sample_Name[nSam] <<" Entries: "<< histo_Sample[NV][nCh][nSam]->GetEntries()<<endl;
 			}
-
 			cout<<"original QCD Entries: "<<histo_QCD[NV][nCh]->GetEntries()<<endl;
+			cout<<""<<endl;
 
 			double nev_[nSample];
 			for(int nSam = 0; nSam < nSample; nSam++){
@@ -246,7 +247,7 @@
 			double nev_qcd = histo_QCD[NV][nCh]->GetEntries();
 			histo_QCD[NV][nCh]->Scale(1/nev_qcd);
 
-			double ymax[NVar] = {0.8,1.1,1.1,1.1,0.15,0.8,0.9,0.5,0.5,0.5};//NJet,NBJet,NLooseMuon+NLooseElectron,NMuon+NElectron,NVertex,NW,Nt
+			double ymax[NVar] = {0.8,1.1,1.1,1.1,0.15,0.8,0.9,0.5,0.5,0.5,1.1};//NJet,NBJet,NLooseMuon+NLooseElectron,NMuon+NElectron,NVertex,NW,Nt
 			//double ymax = 0;
 			//ymax = histo_QCD[NV][nCh]->GetMaximum();
 			//histo_QCD[NV][nCh]->SetMaximum(ymax*1.3);

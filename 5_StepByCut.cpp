@@ -59,7 +59,7 @@
 	float ly2 = 0.78;
 
 	const int nStepCut = 5;//Step Num 5
-	const int NChannel = 2;//number of Channel
+	const int NChannel = 1;//number of Channel
 	//int NJet[] = {4,5,6,7,8,9,10};
 	//int NJet[] = {6};
 	const int nSample = 4;//number of samples
@@ -96,32 +96,35 @@
 	   Step_2 = "IsHadronTrig == 1 &&";
 	   */
 	TString Step_1;
-	Step_1 = "Jet_Pt[0] > 90 && Jet_Pt[1] > 70 && Jet_Pt[2] > 60 && Jet_Pt[3] > 50";
+	Step_1 = "Jet_Pt[0] < 600";
 	//Step_1 = "Jet_Pt[0] > 90 && Jet_Pt[1] > 70 && Jet_Pt[2] > 60 && Jet_Pt[3] > 50 && Jet_Pt[0] < 700 && Jet_Pt[1] < 500 && Jet_Pt[2] < 300 && Jet_Pt[3] < 250";
 
+	//TString Step_2 = "&& IsHadronTrig == 1 && Jet_HT > 500 && Jet_HT < 2500";
 	TString Step_2;
-	Step_2 = "&& IsHadronTrig == 1 && Jet_HT > 500 && Jet_HT < 2500";
+	Step_2 = "&& (NLooseMuon+NLooseElectron)==1 && IsHadronTrig == 1";
 
 	TString Step_3;
-	Step_3 = "&&(NLooseMuon+NLooseElectron)==0";
+	Step_3 = "&& Jet_HT > 500 && Jet_HT < 2000";
 
 	TString Step_4;
-	Step_4 = "&& NJet >= 10";
-
+	Step_4 = "&& NBJet >= 3";
 	TString Step_5;
-	Step_5 = "&& NBJet >= 4 && Nt > 3";
+	Step_5 = "&& nqjet >= 4";
 
 	TString Step_Cut[nStepCut] = {Step_1, Step_1+Step_2, Step_1+Step_2+Step_3, Step_1+Step_2+Step_3+Step_4, Step_1+Step_2+Step_3+Step_4+Step_5};//Hadronic Channel
+	//TString Step_Cut[nStepCut] = {"MET > 40","MET > 40 && IsMuonTrig == 0","MET > 40 && IsMuonTrig == 0 && (NLooseMuon+NLooseElectron)==1 && Jet_HT < 2000","MET > 40 && IsMuonTrig == 0 && (NLooseMuon+NLooseElectron)==1 && Jet_HT < 2000 && NJet >= 8","MET > 40 && IsMuonTrig == 0 && (NLooseMuon+NLooseElectron)==1 && Jet_HT < 2000 && NJet >= 8 && NBJet >= 3"};//Hadronic Channel
 
-	//TString Step_txt[] = {"step1","step2","step3","step4","step5","step6","step7"};
 	TString Step_txt[nStepCut] = {"step1","step2","step3","step4","step5"};
 
-	TString tttt_Ch[NChannel] = {"nq==8 && nl==0 ","nq==6 && nl==1 && abs(dTau)==1 && nTau==1"};
-	TString ttbar_Ch[NChannel] = {"nq==4 && nl==0 ","nq==2 && nl==1 && abs(dTau)==1 && nTau==1"};
+	/*TString tttt_Ch[NChannel] = {"nq==8 && nl==0 ","nq==6 && nl==1 && abs(dTau)==1 && nTau==1"};
+	TString ttbar_Ch[NChannel] = {"nq==4 && nl==0 ","nq==2 && nl==1 && abs(dTau)==1 && nTau==1"};//----*/
+	TString tttt_Ch[NChannel] = {"nq==6 && nl==1 && abs(dTau)==1 && nTau==1"};
+	TString ttbar_Ch[NChannel] = {"nq==2 && nl==1 && abs(dTau)==1 && nTau==1"};//----*/
 
 	NBJet = "&& NBJet &&";
 
-	TString Cut_base_text[NChannel] = {"Hadronic ","Lepton "};
+	//TString Cut_base_text[NChannel] = {"Hadronic ","Lepton "};
+	TString Cut_base_text[NChannel] = {"Lepton "};
 
 	////////////////////////////////Get Samples/////////////////////////////////
 
@@ -196,7 +199,7 @@
 		for(int NStep = 0; NStep < nStepCut; NStep++){
 			float nbin = 60;
 			float xmin = 0;
-			float xmax = 2500;
+			float xmax = 2800;
 			float size = 0.8;
 			int TTTT_c = 4;
 			int ttbar_c = 2;
@@ -311,6 +314,8 @@
 					Sample_ev[nSam] = Sample_xsec[nSam]*lumi*skim_eff[nSam][NCh]*trig_eff[nSam][NCh]*(SampleS1[nSam]/SampleS0[nSam]);
 				}
 			}
+			cout<<""<<endl;
+			cout<<""<<endl;
 			//--------------------------------------------Print-----------------------------------------------
 			for(int nSam = 0; nSam < nSample; nSam++){
 				cout<<(SampleS1[nSam]/SampleS0[nSam])*100<<"%"<<" , "<<Legend_Name[nSam]<<endl;
