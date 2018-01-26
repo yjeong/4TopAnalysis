@@ -359,7 +359,9 @@
 			}
 
 			double QCD_S1 = 0, QCD_S0 = 0;//selected events, total events
+			double QCD_nev = 0;
 			for(int NQ = 0; NQ < nQCD; NQ++){
+				QCD_nev += nQCDS1[NQ];
 				QCD_S1 += nQCDS1[NQ]*skim_eff[NQ][NCh]*trig_eff[NQ][NCh];
 				QCD_S0 += nQCDS0[NQ];
 			}
@@ -383,6 +385,7 @@
 				QCD_ev += nQCD_ev[NQ];
 			}
 
+			cout<<"QCD number of events: "<<QCD_nev <<endl;
 			cout<<"QCD expected events: "<<QCD_ev <<endl;
 			cout<<"QCD yield Integral(1,nbin+1): "<<QCD_Integral<<endl;
 			cout<<""<<endl;
@@ -390,6 +393,7 @@
 
 			//----------------------------------expected events, yield----------------------------
 			for(int NQ = 0; NQ < nQCD; NQ++){
+				cout << QCD_name[NQ] << " number of events: "<< nQCDS1[NQ] << endl;
 				cout <<"number of "<< QCD_name[NQ] << " expected events: " << nQCD_ev[NQ] << endl;
 				cout << QCD_name[NQ] << " yield Integral(1,nbin+1): " << QCD_Int[NQ] <<endl;
 				cout << QCD_name[NQ] << " err events: " << nQCD_expected_err[NQ] << endl;
