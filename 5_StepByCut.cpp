@@ -96,20 +96,20 @@
 	   Step_2 = "IsHadronTrig == 1 &&";
 	   */
 	TString Step_1;
-	Step_1 = "Jet_Pt[0] < 600";
+	Step_1 = "Jet_Pt[0] < 600 && Jet_Pt[1] < 500 && Jet_Pt[2] < 300";
 	//Step_1 = "Jet_Pt[0] > 90 && Jet_Pt[1] > 70 && Jet_Pt[2] > 60 && Jet_Pt[3] > 50 && Jet_Pt[0] < 700 && Jet_Pt[1] < 500 && Jet_Pt[2] < 300 && Jet_Pt[3] < 250";
 
 	//TString Step_2 = "&& IsHadronTrig == 1 && Jet_HT > 500 && Jet_HT < 2500";
 	TString Step_2;
-	Step_2 = "&& (NLooseMuon+NLooseElectron)==1 && IsHadronTrig == 1";
+	Step_2 = "&& (NLooseMuon+NLooseElectron)==0 && IsHadronTrig == 1";
 
 	TString Step_3;
-	Step_3 = "&& Jet_HT > 500 && Jet_HT < 2000";
+	Step_3 = "&& Jet_HT > 350 && Jet_HT < 2000";
 
 	TString Step_4;
-	Step_4 = "&& NBJet >= 3";
+	Step_4 = "&& NJet >= 10";
 	TString Step_5;
-	Step_5 = "&& nqjet >= 4";
+	Step_5 = "&& NBJet >= 3";
 
 	TString Step_Cut[nStepCut] = {Step_1, Step_1+Step_2, Step_1+Step_2+Step_3, Step_1+Step_2+Step_3+Step_4, Step_1+Step_2+Step_3+Step_4+Step_5};//Hadronic Channel
 	//TString Step_Cut[nStepCut] = {"MET > 40","MET > 40 && IsMuonTrig == 0","MET > 40 && IsMuonTrig == 0 && (NLooseMuon+NLooseElectron)==1 && Jet_HT < 2000","MET > 40 && IsMuonTrig == 0 && (NLooseMuon+NLooseElectron)==1 && Jet_HT < 2000 && NJet >= 8","MET > 40 && IsMuonTrig == 0 && (NLooseMuon+NLooseElectron)==1 && Jet_HT < 2000 && NJet >= 8 && NBJet >= 3"};//Hadronic Channel
@@ -315,16 +315,26 @@
 				}
 			}
 			cout<<""<<endl;
+			cout<<Cut_base_text[NCh]<<"Channel"<<endl;
+			cout<<""<<endl;
 			cout<<""<<endl;
 			//--------------------------------------------Print-----------------------------------------------
+			double Sample_Eff[nSample];
+			double Sample_Err[nSample];
+			double Sample_Err_ev[nSample];
 			for(int nSam = 0; nSam < nSample; nSam++){
-				cout<<(SampleS1[nSam]/SampleS0[nSam])*100<<"%"<<" , "<<Legend_Name[nSam]<<endl;
+				Sample_Eff[nSam] = SampleS1[nSam]/SampleS0[nSam];
+				cout<<Sample_Eff[nSam]*100<<"%"<<" , "<<Legend_Name[nSam]<<endl;
+				Sample_Err[nSam]=sqrt(Sample_Eff[nSam]*(1-Sample_Eff[nSam])/SampleS0[nSam]);
+				Sample_Err_ev[nSam] = Sample_xsec[nSam]*lumi*skim_eff[nSam][NCh]*trig_eff[nSam][NCh]*Sample_Err[nSam];
 				cout<<""<<endl;
 				cout<<"number of " <<Sample_name[nSam]<< " expected events " << Sample_ev[nSam] << endl;
 				cout<<""<<endl;
 				cout<<Legend_Name[nSam] <<" yield Integral(1,nbin+1): "<<histo_Sample[NCh][NStep][nSam]->Integral(1,nbin+1)<<endl;
 				cout<<""<<endl;
 				cout<<Legend_Name[nSam] <<" Sum: "<<histo_Sample[NCh][NStep][nSam]->GetSum()<<endl;
+				cout<<""<<endl;
+				cout<<Legend_Name[nSam] <<" Err events: "<< Sample_Err_ev[nSam] <<endl;
 				cout<<""<<endl;
 				cout<<""<<endl;
 			}
@@ -337,6 +347,9 @@
 
 			double nQCDS1[nQCD];
 			double nQCDS0[nQCD];
+			double nQCD_Eff[nQCD];
+			double nQCD_Err[nQCD];
+			double nQCD_expected_err[nQCD];
 			double nQCD_ev[nQCD];
 			double QCD_Int[nQCD];
 
@@ -347,18 +360,21 @@
 
 			double QCD_S1 = 0, QCD_S0 = 0;//selected events, total events
 			for(int NQ = 0; NQ < nQCD; NQ++){
-				QCD_S1 += nQCDS1[NQ];
+				QCD_S1 += nQCDS1[NQ]*skim_eff[NQ][NCh]*trig_eff[NQ][NCh];
 				QCD_S0 += nQCDS0[NQ];
 			}
-			//----------------------------------Cut Effciency----------------------------------
 
-			cout<< (QCD_S1/QCD_S0)*100<<"%"<<", "<<", QCD " <<endl;
+			//----------------------------------Cut Effciency----------------------------------
+			cout<< QCD_S1/QCD_S0*100<<"%"<<", "<<", QCD " <<endl;
 			cout<<""<<endl;
 			//---------------------------------------------------------------------------------
 			for(int NQ = 0; NQ < nQCD; NQ++){
 				histo_nQCD[NCh][NStep][NQ]->Scale(QCD_xsec[NQ]*skim_eff[NQ][NCh]*trig_eff[NQ][NCh]*lumi/nQCDS0[NQ]);
 				QCD_Int[NQ] = histo_nQCD[NCh][NStep][NQ]->Integral(1,nbin+1);
 				nQCD_ev[NQ] = QCD_xsec[NQ]*lumi*(nQCDS1[NQ]*skim_eff[NQ][NCh]*trig_eff[NQ][NCh]/nQCDS0[NQ]);
+				nQCD_Eff[NQ] = nQCDS1[NQ]/nQCDS0[NQ]*(skim_eff[NQ][NCh]*trig_eff[NQ][NCh]);
+				nQCD_Err[NQ] = sqrt(nQCD_Eff[NQ]*(1-nQCD_Eff[NQ])/nQCDS0[NQ]);
+				nQCD_expected_err[NQ] = QCD_xsec[NQ]*lumi*nQCD_Err[NQ];
 			}
 
 			double QCD_Integral = 0, QCD_ev = 0;//histo Integral, QCD total expected events
@@ -376,6 +392,7 @@
 			for(int NQ = 0; NQ < nQCD; NQ++){
 				cout <<"number of "<< QCD_name[NQ] << " expected events: " << nQCD_ev[NQ] << endl;
 				cout << QCD_name[NQ] << " yield Integral(1,nbin+1): " << QCD_Int[NQ] <<endl;
+				cout << QCD_name[NQ] << " err events: " << nQCD_expected_err[NQ] << endl;
 				cout<<""<<endl;
 			}
 			//--------------------------------------------------------------------------------
